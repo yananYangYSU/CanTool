@@ -3,7 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>用户登录页面</title>
+<title>用户认证连接</title>
 <meta http-equiv="Content-type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta http-equiv="Cache-Control" content="no-transform" />
@@ -177,12 +177,12 @@
 		function login(){
 			if(document.getElementById("userName").value==""){
 				document.getElementById("notice").style.display="block";
-				document.getElementById("notice").innerHTML="请填写用户名!";
+				document.getElementById("notice").innerHTML="请填写设备名!";
 				return 0;
 			}
 			if(document.getElementById("password").value==""){
 				document.getElementById("notice").style.display="block";
-				document.getElementById("notice").innerHTML="请填写密码!";
+				document.getElementById("notice").innerHTML="请填写口令!";
 				return 0;
 			}
 			document.loginForm.submit();
@@ -203,7 +203,7 @@
 						<div class='titleCenter titleCenter8'>
 							<div class='titleText titleText8'>
 								<div class='titleTextIcon icon-titleText'>&nbsp;</div>
-								<div class='textContent'>用户登录</div>
+								<div class='textContent'>认证连接</div>
 							</div>
 							<div class='formBannerMore formBannerMore8'></div>
 						</div>
@@ -217,12 +217,12 @@
 								<div id='mLogin'>
 									<div class='loginHeader webHeaderBg'>
 										<a href='/index.jsp' class='g_close icon-gClose'></a><span
-											class='title  pageTitle'>用户登录</span>
+											class='title  pageTitle'>认证连接</span>
 									</div>
 									<div class='loginContent'>
 									<c:choose>
 										<c:when test="${message<0}">
-											<div class="notice" id="notice">用户名或密码错误</div>
+											<div class="notice" id="notice">连接失败</div>
 										</c:when>
 										<c:otherwise>
 											<div class="notice" id="notice" style="display:none"></div>
@@ -232,26 +232,26 @@
 										<form id="loginForm" name="loginForm" action="login.do" method="post">
 											<div class='g_globalLine'>
 												<input type='text' maxlength='50' id='userName' name='userName'
-													class='itemEdit g_input mustItem' placeholder='请输入帐号' value="${userName}"><span
+													class='itemEdit g_input mustItem' placeholder='请输入设备名' value="${userName}"><span
 													class='icon-userIcon g_mainColor'></span>
 											</div>
 											<div class='g_globalLine'>
 												<input type='password' maxlength='20' id='password' name='password'
-													class='itemEdit g_input  mustItem' placeholder='请输入密码' value="${password}"><span
+													class='itemEdit g_input  mustItem' placeholder='请输入口令' value="${password}"><span
 													class='icon-pswIcon g_mainColor'></span>
 											</div>
 											<div class='g_globalLine'><span class='icon-userTypeIcon g_mainColor'></span>
 										      <label for="select"></label>
 											    <select name="select" class="itemEdit g_select  mustItem" id="selectUserType" onChange="setType()">
 											      <option value="client">终端用户</option>
-											      <option value="operator">运营商用户</option>
+											      <!-- <option value="operator">运营商用户</option> -->
 											      <option value="adminer">超级管理员</option>
 									          </select>
 									          <input type="hidden" name="roleName" id="roleName" value="client">
 										  </div>
 											<div class='g_globalLine'>
 												<input type='button' class=' g_button sendIcon'
-													onclick='login();' style="cursor:pointer" value='登录' />
+													onclick='login();' style="cursor:pointer" value='连接' />
 											</div>
 											<div class='loginBottom g_globalLine'>
 												<a class='g_mainColor freeRegister' href='#'></a>
