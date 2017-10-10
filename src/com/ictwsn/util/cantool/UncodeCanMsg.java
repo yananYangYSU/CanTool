@@ -3,6 +3,8 @@ package com.ictwsn.util.cantool;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.ictwsn.bean.CanDataBean;
 import com.ictwsn.bean.CanSignalBean;
@@ -65,9 +67,15 @@ public class UncodeCanMsg {
 		// TODO Auto-generated method stub
 		String dataStr="T12FFFFF7800111213141516FF0000\\r";
 		UncodeCanMsg t=new UncodeCanMsg();
-		System.out.println("id:"+Integer.parseInt("12FFFFF7",16));
+		System.out.println("message="+dataStr);
+		System.out.println("解析后id:"+Integer.parseInt("12FFFFF7",16));
 		t.parseCanData(t.splitDataStr(dataStr));
-		/*	
+		/*Pattern p=Pattern.compile("[a-]{1,}@[0-9]{1}",Pattern.DOTALL);
+		Matcher m=p.matcher("SG_ CDU_HVACAutoModeButtonSt : 2|00001@0+ (1,0) [0|1] \"\"  HVAC");
+		while(m.find()){
+			System.out.println(m.group());
+		}*/
+			
 		ArrayList<String> dataList=t.splitDataStr(dataStr).getData();
 		StringBuffer BitStrIntel=new StringBuffer();
 		StringBuffer BitStrMotorola=new StringBuffer();
@@ -75,12 +83,12 @@ public class UncodeCanMsg {
 		int size=dataList.size();
 		//intel
 		for(int i=size-1;i>=0;i--){
-			BitStrIntel.append(t.hexToBinary(dataList.get(i)));
+			BitStrIntel.append(DataFormat.hexToBinary(dataList.get(i)));
 		}
 		System.out.println("----intel matrix-----");
 
 		for(int i=0;i<size;i++){
-			System.out.println(t.hexToBinary(dataList.get(i)));
+			System.out.println(DataFormat.hexToBinary(dataList.get(i)));
 
 		}
 		System.out.println("intel "+BitStrIntel);
@@ -90,7 +98,7 @@ public class UncodeCanMsg {
 		boolean flag=true;
 		//	for(int i=size-1;i>=0;i--){
 		for(int i=0;i<size;i++){
-			BitStrMotorola.append(t.hexToBinary(dataList.get(i)));
+			BitStrMotorola.append(DataFormat.hexToBinary(dataList.get(i)));
 			/*if(flag==true){
 				BitStrMotorola.append(t.hexToBinary(dataList.get(i)));
 				flag=!flag;
@@ -98,19 +106,19 @@ public class UncodeCanMsg {
 				BitStrMotorola.append(t.reverseStr(t.hexToBinary(dataList.get(i))));
 				flag=!flag;
 			}		*/	
-		//}
-		/*	System.out.println("----moto matrix-----");
+		}
+			System.out.println("----moto matrix-----");
 		for(int i=0;i<size;i++){
-			System.out.println(t.hexToBinary(dataList.get(i)));
+			System.out.println(DataFormat.hexToBinary(dataList.get(i)));
 
 		}
 
 		System.out.println("motol "+BitStrMotorola);
 
 		System.out.println(t.matrixSubBinStr(BitStrIntel.toString(), 16, 12, 1));
-		System.out.println("motol ");
-		System.out.println(t.matrixSubBinStr(BitStrMotorola.toString(), 11, 12,0));
-		 */
+		//System.out.println("motol ");
+		//System.out.println(t.matrixSubBinStr(BitStrMotorola.toString(), 11, 12,0));
+		 
 	}
 
 
