@@ -10,8 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.ictwsn.dao.systemSet.SystemSetDao;
 
-@Service(value="aService")
-@Scope("prototype")
+@Service
 public class SystemSetServiceImpl implements SystemSetService{
 
 	@Resource SystemSetDao dao;

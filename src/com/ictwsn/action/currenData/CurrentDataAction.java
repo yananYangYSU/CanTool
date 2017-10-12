@@ -30,7 +30,7 @@ public class CurrentDataAction {
 	static Logger logger=Logger.getLogger(CurrentDataAction.class.getName());
 	Random rand =new Random();
 
-	@Resource CurrentDataService lService;	
+	@Resource CurrentDataService cService;	
 
 	/**
 	 * 初始化进入页面
@@ -41,7 +41,7 @@ public class CurrentDataAction {
 	 * @throws UnsupportedEncodingException
 	 */
 	@RequestMapping("/currentDataIndex.do")
-	public String index(HttpServletRequest request,HttpServletResponse response,Model model){
+	public String currentDataIndex(HttpServletRequest request,HttpServletResponse response,Model model){
 		try{
 			/**
 			 * 图1 solrCloud
@@ -51,7 +51,7 @@ public class CurrentDataAction {
 			StringBuffer HSeries=new StringBuffer();
 			strName.append("{name:'dataSeries',");//type: 'area',
 			strData.append("data:[");
-			int time=rand.nextInt();
+			int time=rand.nextInt(10);
 			for(int i=0;i<59;i++){
 				strData.append("[").append(System.currentTimeMillis()).append(",").append(time).append("],");
 			}
@@ -74,10 +74,11 @@ public class CurrentDataAction {
 	 * @param model
 	 * @throws UnsupportedEncodingException
 	 */
-	@RequestMapping("/currentData.do")
-	public void solrRequest(HttpServletRequest request,HttpServletResponse response){
+	@RequestMapping("/currentDataRequest.do")
+	public void currentDataRequest(HttpServletRequest request,HttpServletResponse response){
 		try{
-			response.getWriter().print(rand.nextInt());
+			response.getWriter().print(rand.nextInt(10));
+			
 		}catch(Exception e){
 			logger.error("login error"+e);
 			e.printStackTrace();

@@ -35,7 +35,7 @@ import com.ictwsn.util.format.DateFormat;
 public class ExportDataAction {
 	static Logger logger = Logger.getLogger(ExportDataAction.class.getName());
 	
-	@Resource ExportDataService cService;	
+	@Resource ExportDataService eService;	
 
 	/**
 	 * 添加设备之前,获取一些参数

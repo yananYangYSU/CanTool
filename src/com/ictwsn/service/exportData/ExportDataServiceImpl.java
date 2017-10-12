@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
  
 import com.ictwsn.dao.exportData.ExportDataDao;
 
-@Service(value="oService")
-@Scope("prototype")
+ 
+@Service
 public class ExportDataServiceImpl implements ExportDataService {
 	
 	@Resource ExportDataDao dao;

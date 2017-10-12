@@ -10,9 +10,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
  
 import com.ictwsn.dao.exportData.ExportDataDao;
-
-@Service(value="oService")
-@Scope("prototype")
+@Service
 public class DatabaseServiceImpl implements DatabaseService {
 	
 	@Resource ExportDataDao dao;
