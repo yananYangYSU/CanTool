@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.ictwsn.bean.RoleBean;
+ 
 import com.ictwsn.service.login.LoginService;
 import com.ictwsn.util.GetHttpType;
 
@@ -48,20 +48,11 @@ public class LoginAction{
 			@RequestParam(value="password",required=true) String password,
 			@RequestParam(value="roleName",required=true) String roleName) throws UnsupportedEncodingException{
 		try{
-			if(session.getAttribute("RoleBean")!=null){
-				return GetHttpType.isMobileDevice(request)?"pages/manageCenter":"MobilePages/manageCenter";
-			}
-			RoleBean rb=lService.Login(userName,password,roleName); //获取登录的用户权限
-			if(rb.getAuthroity()!=null&&!rb.getAuthroity().equals("")){
-				session.setAttribute("RoleBean",rb);
-				return GetHttpType.isMobileDevice(request)?"pages/manageCenter":"MobilePages/manageCenter";
-			}else{
-				model.addAttribute("message",lService.getErrorType(userName, password, roleName));//-1 用户名或者密码错误 -2用户类型不匹配
+			
 				model.addAttribute("userName",userName);
 				model.addAttribute("password",password);
 				return "login";
-			}
-
+			
 		}catch(Exception e){
 			logger.error("login error"+e);
 			e.printStackTrace();

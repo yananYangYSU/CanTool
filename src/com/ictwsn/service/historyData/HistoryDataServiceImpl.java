@@ -8,7 +8,7 @@ import javax.annotation.Resource;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
-import com.ictwsn.bean.ClientBean;
+
 import com.ictwsn.dao.exportData.ExportDataDao;
 
 @Service(value="oService")

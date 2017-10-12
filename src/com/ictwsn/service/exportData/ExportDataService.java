@@ -3,8 +3,6 @@ package com.ictwsn.service.exportData;
 import java.util.List;
 import java.util.Map;
 
-import com.ictwsn.bean.ClientBean;
- 
 /**
  * 运营商service层接口类
  * @author YangYanan

@@ -17,9 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.ictwsn.bean.ClientBean;
-import com.ictwsn.bean.DeviceBean;
-import com.ictwsn.bean.RoleBean;
+ 
 
 import com.ictwsn.service.currentData.CurrentDataService;
 import com.ictwsn.service.exportData.ExportDataService;

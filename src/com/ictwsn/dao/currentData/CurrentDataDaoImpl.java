@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
-import com.ictwsn.bean.ClientBean;
+
 import com.ictwsn.dao.MySQLBaseDao;
 import com.ictwsn.util.CurrentConn;
 

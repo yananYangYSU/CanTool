@@ -1,3 +1,4 @@
+package com.ictwsn.util.rxtx;
 //package com.ictwsn.rxtx;  
 //  
 //import gnu.io.CommPortIdentifier;  
@@ -19,19 +20,20 @@
 //import java.util.Enumeration;  
 //import java.util.TooManyListenersException;  
 //  
+//  
 ///** 
-// * @项目名称 :串口监听 
-// * @文件名称 : 
-// * @所在包 : 
+// * @项目名称 :illegalsms 
+// * @文件名称 :SerialPort.java 
+// * @所在包 :org.serial 
 // * @功能描述 : 
-// *    串口类 
-// * @创建者 :hhc 
-// * @创建日期 :2015.02.06 
+// *  串口类 
+// * @创建者 :集成显卡   1053214511@qq.com 
+// * @创建日期 :2012-9-13 
 // * @修改记录 : 
 // */  
-//public class SerialPortCOM2 implements Runnable, SerialPortEventListener {  
-//    static int sleep=5000;
-//    private String appName = "串口通讯";  
+//public class SerialPortCOM1 implements Runnable, SerialPortEventListener {  
+//  
+//    private String appName = "串口通讯测试";  
 //    private int timeout = 2000;//open 端口时的等待时间  
 //    private int threadTime = 0;  
 //      
@@ -47,49 +49,62 @@
 //     */  
 //    @SuppressWarnings("rawtypes")  
 //    public void listPort(){  
-//        CommPortIdentifier cpid;//当前串口对象  
-//        Enumeration en = CommPortIdentifier.getPortIdentifiers();  
-//        System.out.print("列出所有端口：");  
+//        CommPortIdentifier cpid;  //代表一个端口
+//        Enumeration en = CommPortIdentifier.getPortIdentifiers();  //端口列表
+//          
+//        System.out.println("now to list all Port of this PC：");  
+//          
 //        while(en.hasMoreElements()){  
 //            cpid = (CommPortIdentifier)en.nextElement();  
-//            //检测端口类型是否为串口  
 //            if(cpid.getPortType() == CommPortIdentifier.PORT_SERIAL){  
-//                System.out.println(cpid.getName() + ", " + cpid.isCurrentlyOwned());  
+//                System.out.println(cpid.getName());  
 //            }  
 //        }  
 //    }  
 //      
 //      
 //    /** 
-//     * @方法名称 :openPort 
-//     * @功能描述 :选择一个端口，比如：COM1 并实例 SerialPort 
+//     * @方法名称 :selectPort 
+//     * @功能描述 :选择一个端口，比如：COM1 
 //     * @返回值类型 :void 
-//     * @param portName 
+//     *  @param portName 
 //     */  
-//    private void openPort(String portName){  
-//        /* 打开该指定串口 */  
+//    @SuppressWarnings("rawtypes")  
+//    public void selectPort(String portName){  
+//          
 //        this.commPort = null;  
 //        CommPortIdentifier cpid;  
 //        Enumeration en = CommPortIdentifier.getPortIdentifiers();  
-//  
+//          
 //        while(en.hasMoreElements()){  
 //            cpid = (CommPortIdentifier)en.nextElement();  
-//            if(cpid.getPortType() == CommPortIdentifier.PORT_SERIAL && cpid.getName().equals(portName)){  
+//            if(cpid.getPortType() == CommPortIdentifier.PORT_SERIAL  
+//                    && cpid.getName().equals(portName)){  
 //                this.commPort = cpid;  
 //                break;  
 //            }  
 //        }  
-//        /* 实例 SerialPort*/  
+//          
+//        openPort();  
+//    }  
+//      
+//    /** 
+//     * @方法名称 :openPort 
+//     * @功能描述 :打开SerialPort 
+//     * @返回值类型 :void 
+//     */  
+//    private void openPort(){  
 //        if(commPort == null)  
-//            log(String.format("无法找到名字为'%1$s'的串口！", portName));  
+//            log(String.format("无法找到名字为'%1$s'的串口！", commPort.getName()));  
 //        else{  
-//            log("当前端口："+commPort.getName());  
+//            log("端口选择成功，当前端口："+commPort.getName()+",现在实例化 SerialPort:");  
+//              
 //            try{  
-//                //应用程序名【随意命名】，等待的毫秒数  
 //                serialPort = (SerialPort)commPort.open(appName, timeout);  
+//                log("实例 SerialPort 成功！");  
 //            }catch(PortInUseException e){  
-//                 // 端口已经被占用   
-//                throw new RuntimeException(String.format("端口'%1$s'正在使用中！",commPort.getName()));  
+//                throw new RuntimeException(String.format("端口'%1$s'正在使用中！",   
+//                        commPort.getName()));  
 //            }  
 //        }  
 //    }  
@@ -101,7 +116,8 @@
 //     */  
 //    private void checkPort(){  
 //        if(commPort == null)  
-//            throw new RuntimeException("没有选择端口，请使用 " +"selectPort(String portName) 方法选择端口");  
+//            throw new RuntimeException("没有选择端口，请使用 " +  
+//                    "selectPort(String portName) 方法选择端口");  
 //          
 //        if(serialPort == null){  
 //            throw new RuntimeException("SerialPort 对象无效！");  
@@ -112,44 +128,39 @@
 //     * @方法名称 :write 
 //     * @功能描述 :向端口发送数据，请在调用此方法前 先选择端口，并确定SerialPort正常打开！ 
 //     * @返回值类型 :void 
-//     *    @param message 
-//     * @throws IOException  
+//     *  @param message 
 //     */  
-//      
-//    public void write(String message) throws InterruptedException {  
+//    public void write(String message) {  
 //        checkPort();  
+//          
 //        try{  
 //            outputStream = new BufferedOutputStream(serialPort.getOutputStream());  
-//            outputStream.write(message.getBytes());  
-//            log("消息:'"+message+"'发送成功!");  
-//            outputStream.close();  
 //        }catch(IOException e){  
-//            throw new RuntimeException("向端口发送信息时出错："+e.getMessage());  
+//            throw new RuntimeException("获取端口的OutputStream出错："+e.getMessage());  
 //        }  
 //          
-//        /*另一种 
-//         try { 
-//            // 进行输入输出操作 
-//            OutputStreamWriter writer = new OutputStreamWriter(serialPort.getOutputStream()); 
-//            BufferedWriter bw = new BufferedWriter(writer); 
-//            bw.write(message); 
-//            bw.flush(); 
-//            bw.close(); 
-//            writer.close(); 
-//            System.out.println("消息:'"+message+"'发送成功!"); 
-//        } catch (IOException e) { 
-//            throw new RuntimeException("向端口发送信息时出错："+e.getMessage()); 
-//        }*/  
+//        try{  
+//            outputStream.write(message.getBytes());  
+//            log("信息发送成功！");  
+//        }catch(IOException e){  
+//            throw new RuntimeException("向端口发送信息时出错："+e.getMessage());  
+//        }finally{  
+//            try{  
+//                outputStream.close();  
+//            }catch(Exception e){  
+//            }  
+//        }  
 //    }  
 //      
 //    /** 
 //     * @方法名称 :startRead 
 //     * @功能描述 :开始监听从端口中接收的数据 
 //     * @返回值类型 :void 
-//     *    @param time  监听程序时间，单位为秒，0 则是一直监听 
+//     *  @param time  监听程序的存活时间，单位为秒，0 则是一直监听 
 //     */  
 //    public void startRead(int time){  
 //        checkPort();  
+//          
 //        try{  
 //            inputStream = new BufferedInputStream(serialPort.getInputStream());  
 //        }catch(IOException e){  
@@ -158,27 +169,18 @@
 //          
 //        try{  
 //            serialPort.addEventListener(this);  
-//            // 设置可监听   
-//            serialPort.notifyOnDataAvailable(true);  
-//            log(String.format("开始监听来自'%1$s'的数据--------------", commPort.getName()));  
-//            serialPort.setSerialPortParams(9600,SerialPort.DATABITS_8,SerialPort.STOPBITS_1,SerialPort.PARITY_NONE);  
 //        }catch(TooManyListenersException e){  
-//             //端口监听者过多;    
 //            throw new RuntimeException(e.getMessage());  
-//        } catch (UnsupportedCommOperationException e) {  
-//            //"端口操作命令不支持";    
-//            e.printStackTrace();  
 //        }  
 //          
+//        serialPort.notifyOnDataAvailable(true);  
 //          
-//          
-//          
-//        /* 关闭监听 */  
+//        log(String.format("开始监听来自'%1$s'的数据--------------", commPort.getName()));  
 //        if(time > 0){  
 //            this.threadTime = time*1000;  
 //            Thread t = new Thread(this);  
 //            t.start();  
-//            log(String.format("监听程序将在%1$d秒后关闭。。。。", time));  
+//            log(String.format("监听程序将在%1$d秒后关闭。。。。", threadTime));  
 //        }  
 //    }  
 //      
@@ -192,6 +194,7 @@
 //        serialPort.close();  
 //        serialPort = null;  
 //        commPort = null;  
+//        System.out.println("端口关闭");
 //    }  
 //      
 //      
@@ -204,7 +207,7 @@
 //     * 数据接收的监听处理函数 
 //     */  
 //    @Override  
-//    public void serialEvent(SerialPortEvent arg0){  
+//    public void serialEvent(SerialPortEvent arg0) {  
 //        switch(arg0.getEventType()){  
 //        case SerialPortEvent.BI:/*Break interrupt,通讯中断*/   
 //        case SerialPortEvent.OE:/*Overrun error，溢位错误*/   
@@ -220,28 +223,20 @@
 //            byte[] readBuffer = new byte[1024];  
 //            String readStr="";  
 //            String s2 = "";  
+//              
 //            try {  
+//                  
 //                while (inputStream.available() > 0) {  
 //                    inputStream.read(readBuffer);  
 //                    readStr += new String(readBuffer).trim();  
 //                }  
-//                log("接收到端口返回数据(长度为"+readStr.length()+")："+readStr); 
-//                sleep=Integer.parseInt(readStr);
+//                  
+//                s2 = new String(readBuffer).trim();  
+//                  
+//                log("接收到端口返回数据(长度为"+readStr.length()+")："+readStr);  
+//                log(s2);  
 //            } catch (IOException e) {  
-//                throw new RuntimeException(e.getMessage());  
 //            }  
-//              
-//           /* 另一种// 进行输入输出操作 
-//            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream)); 
-//            String line = null; 
-//            try { 
-//                while ((line = reader.readLine()) != null) { 
-//                    System.out.println(line); 
-//                } 
-//                reader.close(); 
-//            } catch (IOException e) { 
-//                //e.printStackTrace(); 
-//            }*/  
 //        }  
 //    }  
 //  
@@ -251,29 +246,27 @@
 //        try{  
 //            Thread.sleep(threadTime);  
 //            serialPort.close();  
-//            log(String.format("端口'%1$s'监听关闭了！", commPort.getName()));  
+//            log(String.format("端口''监听关闭了！", commPort.getName()));  
 //        }catch(Exception e){  
 //            e.printStackTrace();  
 //        }  
 //    }  
-//      
-//    /** 
-//     * 测试 
-//     * */  
-//    public static void main(String[] args) throws InterruptedException {  
-//            SerialPortCOM2 sp = new SerialPortCOM2();  
-//            /* 列出所有*/  
-//            sp.listPort();  
-//            /* 开打相应端口*/  
-//            sp.openPort("COM2");  
-//            /* 设置为一直监听*/  
-//            sp.startRead(0);    
-//            int i=0;
-//            while(i<100) {
-//            	i++;
-//            	 Thread.sleep(sleep);  
-//            	 sp.write("你");  
-//            }
-//           
-//    }  
+//    
+//    public static void main(String[] args) {  
+//        
+//        SerialPortCOM1 sp = new SerialPortCOM1();  
+//          
+//        sp.listPort();  
+//          
+//        sp.selectPort("COM1"); 
+//        sp.startRead(20000);
+//        try {
+//			Thread.sleep(15000);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//        sp.write("1000");
+//         
+//    }
 //}

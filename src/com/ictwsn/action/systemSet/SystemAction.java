@@ -12,9 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import com.ictwsn.bean.OperatorBean;
-import com.ictwsn.bean.RoleBean;
+ 
 import com.ictwsn.service.systemSet.SystemSetService;
 import com.ictwsn.util.GetHttpType;
 /**
