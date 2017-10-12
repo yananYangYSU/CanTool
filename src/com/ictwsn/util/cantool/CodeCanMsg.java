@@ -167,6 +167,7 @@ public class CodeCanMsg {
 	 * @param cd
 	 */
 	public void parseCanData(CanDataBean cd){
+		DataFormat dataFormat=DataFormat.getInstance();
 		int id=Integer.parseInt(cd.getId(),16);
 		ArrayList<CanSignalBean> canSignalList=canSignalMap.get(id);
 		if(canSignalList==null||canSignalList.size()==0){
@@ -179,13 +180,13 @@ public class CodeCanMsg {
 			 * intel can二进制矩阵字符串
 			 */
 			for(int i=dataSize-1;i>=0;i--){
-				BitStrIntel.append(DataFormat.hexToBinary(cd.getData().get(i)));
+				BitStrIntel.append(dataFormat.hexToBinary(cd.getData().get(i)));
 			}
 			/**
 			 * motorola can二进制矩阵字符串
 			 */
 			for(int i=0;i<dataSize;i++){
-				BitStrMotorola.append(DataFormat.hexToBinary(cd.getData().get(i)));
+				BitStrMotorola.append(dataFormat.hexToBinary(cd.getData().get(i)));
 			}
 			/**
 			 * 遍历相同id下的信号数据库信息,把can信息从can矩阵中提取解析出来

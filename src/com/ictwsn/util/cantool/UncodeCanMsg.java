@@ -60,10 +60,12 @@ public class UncodeCanMsg {
 		canSignalMap.put(318767095,canSignalList);
 		canSignalMap.put(65,null);
 	}
+	
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		DataFormat dataFormat=DataFormat.getInstance();
 		// TODO Auto-generated method stub
 		String dataStr="T12FFFFF7800111213141516FF0000\\r";
 		UncodeCanMsg t=new UncodeCanMsg();
@@ -83,12 +85,12 @@ public class UncodeCanMsg {
 		int size=dataList.size();
 		//intel
 		for(int i=size-1;i>=0;i--){
-			BitStrIntel.append(DataFormat.hexToBinary(dataList.get(i)));
+			BitStrIntel.append(dataFormat.hexToBinary(dataList.get(i)));
 		}
 		System.out.println("----intel matrix-----");
 
 		for(int i=0;i<size;i++){
-			System.out.println(DataFormat.hexToBinary(dataList.get(i)));
+			System.out.println(dataFormat.hexToBinary(dataList.get(i)));
 
 		}
 		System.out.println("intel "+BitStrIntel);
@@ -98,7 +100,7 @@ public class UncodeCanMsg {
 		boolean flag=true;
 		//	for(int i=size-1;i>=0;i--){
 		for(int i=0;i<size;i++){
-			BitStrMotorola.append(DataFormat.hexToBinary(dataList.get(i)));
+			BitStrMotorola.append(dataFormat.hexToBinary(dataList.get(i)));
 			/*if(flag==true){
 				BitStrMotorola.append(t.hexToBinary(dataList.get(i)));
 				flag=!flag;
@@ -109,7 +111,7 @@ public class UncodeCanMsg {
 		}
 			System.out.println("----moto matrix-----");
 		for(int i=0;i<size;i++){
-			System.out.println(DataFormat.hexToBinary(dataList.get(i)));
+			System.out.println(dataFormat.hexToBinary(dataList.get(i)));
 
 		}
 
@@ -175,6 +177,7 @@ public class UncodeCanMsg {
 	 * @param cd
 	 */
 	public void parseCanData(CanDataBean cd){
+		DataFormat dataFormat=DataFormat.getInstance();
 		int id=Integer.parseInt(cd.getId(),16);
 		ArrayList<CanSignalBean> canSignalList=canSignalMap.get(id);
 		if(canSignalList==null||canSignalList.size()==0){
@@ -187,13 +190,13 @@ public class UncodeCanMsg {
 			 * intel can二进制矩阵字符串
 			 */
 			for(int i=dataSize-1;i>=0;i--){
-				BitStrIntel.append(DataFormat.hexToBinary(cd.getData().get(i)));
+				BitStrIntel.append(dataFormat.hexToBinary(cd.getData().get(i)));
 			}
 			/**
 			 * motorola can二进制矩阵字符串
 			 */
 			for(int i=0;i<dataSize;i++){
-				BitStrMotorola.append(DataFormat.hexToBinary(cd.getData().get(i)));
+				BitStrMotorola.append(dataFormat.hexToBinary(cd.getData().get(i)));
 			}
 			/**
 			 * 遍历相同id下的信号数据库信息,把can信息从can矩阵中提取解析出来

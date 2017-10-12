@@ -36,11 +36,9 @@ import com.ictwsn.util.format.DateFormat;
 @Controller
 public class ExportDataAction {
 	static Logger logger = Logger.getLogger(ExportDataAction.class.getName());
-	DateFormat pd=new DateFormat();
+	
+	@Resource ExportDataService cService;	
 
-	@Resource CurrentDataService cService;	
-	@Resource ExportDataService oService;
-	@Resource SystemSetService aService;
 	/**
 	 * 添加设备之前,获取一些参数
 	 * @param request
@@ -51,27 +49,11 @@ public class ExportDataAction {
 	@RequestMapping("/exportData.do")
 	public String exportData(HttpServletRequest request,HttpSession session,Model model){
 		try{
-			RoleBean rb=(RoleBean)session.getAttribute("RoleBean");
-			if(rb!=null){
-				List<ClientBean> clientList=new ArrayList<ClientBean>();
-				if(rb.getRoleName()!=null&&rb.getRoleName().equals("client")){
-					ClientBean cb=new ClientBean();
-					cb.setName(rb.getUserName());
-					cb.setId(rb.getUserId());
-					clientList.add(cb);
-				}else{ 
-					if(rb.getRoleName()!=null&&rb.getRoleName().equals("adminer")){
-						model.addAttribute("operatorList",aService.searchOperator(rb.getUserId(),0,99999,rb.getRoleName()));
-					}
-					clientList=oService.searchClient(rb.getUserId(),0,99999,rb.getRoleName());//查询出该用户下属的所有终端用户姓名及id
-				}
-				
-				model.addAttribute("clientList",clientList);
 			
-				return GetHttpType.isMobileDevice(request)?"pages/client/addDevice":"MobilePages/client/addDevice";
-			}else{
+				model.addAttribute("clientList",null);
+			
 				return "redirect:/login.jsp";
-			}
+			
 
 		}catch(Exception e){
 			logger.error("add device error"+e);

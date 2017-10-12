@@ -8,6 +8,7 @@ import java.util.GregorianCalendar;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 /**
  * 自定义日期格式化类
  * @author YangYanan
@@ -15,10 +16,21 @@ import java.util.regex.Pattern;
  * @date 2017-8-18
  */
 public class DateFormat {
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMddhhmmssSSS");
+	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	private SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMddhhmmssSSS");
 
-	Calendar calendar = Calendar.getInstance();
+	private Calendar calendar = Calendar.getInstance();
+	
+	private static DateFormat dateFormat=null;
+	
+	private DateFormat(){}
+	
+	public synchronized static DateFormat getInstance() {
+		if (dateFormat == null) {  
+			dateFormat = new DateFormat();
+		}  
+		return dateFormat;
+	}
 	/**
 	 * 日期格式转换
 	 * @param date 时间字符串

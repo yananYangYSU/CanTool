@@ -6,12 +6,22 @@ package com.ictwsn.util.format;
  * @date 2017-8-18
  */
 public class DataFormat {
+	private static DataFormat dataFormat=null;
+	
+	private DataFormat(){}
+	
+	public synchronized static DataFormat getInstance() {
+		if (dataFormat == null) {  
+			dataFormat = new DataFormat();
+		}  
+		return dataFormat;
+	}
 	/**
 	 * 2位16进制数转8位2进制
 	 * @param hexStr 2位16进制数 例如 1F 
 	 * @return 8位2进制,左端补0
 	 */
-	public static String hexToBinary(String hexStr){
+	public String hexToBinary(String hexStr){
 		String zeroStr="00000000";
 		String binStr=Integer.toBinaryString(Integer.parseInt(hexStr,16));//16进制转2进制
 		return zeroStr.substring(0,8-binStr.length())+binStr;//进行补位操作,左端补0凑成8位二进制数
