@@ -18,7 +18,7 @@ import com.ictwsn.service.exportData.ExportDataService;
 import com.ictwsn.service.historyData.HistoryDataService;
 import com.ictwsn.service.systemSet.SystemSetService;
 import com.ictwsn.util.GetHttpType;
-import com.ictwsn.util.format.DateFormat;
+import com.ictwsn.util.format.DateFormats;
 
 /**
  * 运营商控制类

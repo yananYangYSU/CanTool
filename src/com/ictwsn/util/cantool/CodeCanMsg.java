@@ -6,7 +6,7 @@ import java.util.Map;
 
 import com.ictwsn.bean.CanMsgDataBean;
 import com.ictwsn.bean.CanSignalBean;
-import com.ictwsn.util.format.DataFormat;
+import com.ictwsn.util.format.DataFormats;
 /**
  * can信息编码类
  * @author YangYanan
@@ -167,7 +167,7 @@ public class CodeCanMsg {
 	 * @param cd
 	 */
 	public void parseCanData(CanMsgDataBean cd){
-		DataFormat dataFormat=DataFormat.getInstance();
+		DataFormats dataFormat=DataFormats.getInstance();
 		int id=Integer.parseInt(cd.getId(),16);
 		ArrayList<CanSignalBean> canSignalList=canSignalMap.get(id);
 		if(canSignalList==null||canSignalList.size()==0){

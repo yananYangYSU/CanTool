@@ -15,19 +15,19 @@ import java.util.regex.Pattern;
  * @desc 
  * @date 2017-8-18
  */
-public class DateFormat {
+public class DateFormats {
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMddhhmmssSSS");
 
 	private Calendar calendar = Calendar.getInstance();
 	
-	private static DateFormat dateFormat=null;
+	private static DateFormats dateFormat=null;
 	
-	private DateFormat(){}
+	private DateFormats(){}
 	
-	public synchronized static DateFormat getInstance() {
+	public synchronized static DateFormats getInstance() {
 		if (dateFormat == null) {  
-			dateFormat = new DateFormat();
+			dateFormat = new DateFormats();
 		}  
 		return dateFormat;
 	}
@@ -45,8 +45,8 @@ public class DateFormat {
 		}
 	}
 	public static void main(String args[]){
-		System.out.println(new DateFormat().getNowDate1());
-		System.out.println(new DateFormat().getNowDate1());
+		System.out.println(new DateFormats().getNowDate1());
+		System.out.println(new DateFormats().getNowDate1());
 	}
 	/**
 	 * 日期格式转换

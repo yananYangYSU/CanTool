@@ -1,5 +1,6 @@
 package com.ictwsn.util.cantool;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -7,8 +8,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.ictwsn.bean.CanMsgDataBean;
+import com.ictwsn.bean.CanPhyDataBean;
 import com.ictwsn.bean.CanSignalBean;
-import com.ictwsn.util.format.DataFormat;
+import com.ictwsn.util.CurrentConn;
+import com.ictwsn.util.format.DataFormats;
+import com.ictwsn.util.format.DateFormats;
 /**
  * can信息解码类
  * @author YangYanan
@@ -16,7 +20,6 @@ import com.ictwsn.util.format.DataFormat;
  * @date 2017-10-05
  */
 public class UncodeCanMsg {
-
 	private final static int[] byteIndexArray={
 		7,6,5,4,3,2,1,0,
 		15,14,13,12,11,10,9,8,
@@ -25,13 +28,41 @@ public class UncodeCanMsg {
 		39,28,37,36,35,34,33,32,
 		47,46,45,44,43,42,41,40,
 		55,54,53,52,51,50,49,48,
-		63,62,61,60,59,58,57,56};
+		63,62,61,60,59,58,57,56
+		};
+	
+	private static UncodeCanMsg uncodeCanMsg = null;  //CurrentConn类单例对象
 
+	private UncodeCanMsg(){}
+
+	//静态工厂方法 ,保证只有该类只有一个实例,节省内存
+	public synchronized static UncodeCanMsg getInstance() {
+		if (uncodeCanMsg == null) {  
+			uncodeCanMsg = new UncodeCanMsg();
+		}  
+		return uncodeCanMsg;
+	}
+
+	/**
+	 * 根据can信息字符串和信号名称解析得到对应的物理信息实体
+	 * @param signalName 信号名称
+	 * @param canMsgStr can信息字符串
+	 * @return CanPhyDataBean实体 例如该条信息为:CDU_HVACACCfg 2185.0 ℃ high
+	 */
+    public CanPhyDataBean getCanPhyData(String signalName,String canMsgStr){
+    	ArrayList<CanPhyDataBean> cpdbList=this.parseCanData(this.splitDataStr(canMsgStr));
+    	for(CanPhyDataBean cpdb:cpdbList){
+    		if(cpdb.getSignalName().equals(signalName)){
+    			return cpdb;
+    		}
+    	}
+    	return null;
+    } 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		DataFormat dataFormat=DataFormat.getInstance();
+		DataFormats dataFormat=DataFormats.getInstance();
 		// TODO Auto-generated method stub
 		String dataStr="T12FFFFF7800111213141516FF0000\\r";
 		UncodeCanMsg t=new UncodeCanMsg();
@@ -43,7 +74,7 @@ public class UncodeCanMsg {
 		while(m.find()){
 			System.out.println(m.group());
 		}*/
-			
+
 		ArrayList<String> dataList=t.splitDataStr(dataStr).getData();
 		StringBuffer BitStrIntel=new StringBuffer();
 		StringBuffer BitStrMotorola=new StringBuffer();
@@ -75,7 +106,7 @@ public class UncodeCanMsg {
 				flag=!flag;
 			}		*/	
 		}
-			System.out.println("----moto matrix-----");
+		System.out.println("----moto matrix-----");
 		for(int i=0;i<size;i++){
 			System.out.println(dataFormat.hexToBinary(dataList.get(i)));
 
@@ -86,7 +117,7 @@ public class UncodeCanMsg {
 		System.out.println(t.matrixSubBinStr(BitStrIntel.toString(), 16, 12, 1));
 		//System.out.println("motol ");
 		//System.out.println(t.matrixSubBinStr(BitStrMotorola.toString(), 11, 12,0));
-		 
+
 	}
 
 
@@ -97,7 +128,7 @@ public class UncodeCanMsg {
 	 * \r为换行符,尽量不要用\\r
 	 * @return CanData对象
 	 */
-	public CanMsgDataBean splitDataStr(String dataStr){
+	private CanMsgDataBean splitDataStr(String dataStr){
 		CanMsgDataBean cd=new CanMsgDataBean();
 		dataStr=dataStr.trim();
 		dataStr=dataStr.replace("\\r","");
@@ -141,14 +172,16 @@ public class UncodeCanMsg {
 	/**
 	 * canData对象信息解析
 	 * @param cd
+	 * @return 解析出物理属性的can信息实体数组
 	 */
-	public void parseCanData(CanMsgDataBean cd){
-		
-		DataFormat dataFormat=DataFormat.getInstance();
+	private ArrayList<CanPhyDataBean> parseCanData(CanMsgDataBean cd){
+
+		DataFormats dataFormat=DataFormats.getInstance();
 		int id=Integer.parseInt(cd.getId(),16);
 		ArrayList<CanSignalBean> canSignalList=LoadDataBase.getCanSignalMap().get(id);
 		if(canSignalList==null||canSignalList.size()==0){
 			System.err.print("id:"+id+"找不到对应数据库信息");
+			return null;
 		}else{
 			StringBuffer BitStrIntel=new StringBuffer();
 			StringBuffer BitStrMotorola=new StringBuffer();
@@ -168,8 +201,12 @@ public class UncodeCanMsg {
 			/**
 			 * 遍历相同id下的信号数据库信息,把can信息从can矩阵中提取解析出来
 			 */
+			ArrayList<CanPhyDataBean> cpdbList=new ArrayList<CanPhyDataBean>();
 			for(CanSignalBean csb:canSignalList){
-				String signalName=csb.getSignalName();
+				CanPhyDataBean cpdb=new CanPhyDataBean();
+
+				cpdb.setSignalName(csb.getSignalName());
+
 				String matrixSubBinStr="";
 				if(csb.getBitType()==0){//0代表Motorola格式
 					matrixSubBinStr=this.matrixSubBinStr(BitStrMotorola.toString(),csb.getStartBit(),csb.getStartBit(),0);
@@ -178,10 +215,17 @@ public class UncodeCanMsg {
 				}
 				double x=Integer.parseInt(matrixSubBinStr,2);
 				double phy=x*csb.getResolution()+csb.getOffset();
-				String unit=csb.getUnit();
-				System.out.println("该条信息为:"+signalName+" "+phy+" "+unit+" "+this.checkDataRange(phy,csb.getMaxValue(),csb.getMinValue()));
+				cpdb.setData(phy);
+				cpdb.setUnit(csb.getUnit());
+				cpdb.setTime(DateFormats.getInstance().getNowDate());
+				
+				cpdbList.add(cpdb);
+				
+				System.out.println(cpdb.toString());
 			}
+			return cpdbList;
 		}
+
 	}
 
 

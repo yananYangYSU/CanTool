@@ -16,21 +16,22 @@ import java.util.ArrayList;
 public class CanPhyDataBean {
 	
 	private int autoId;
-	private String ecuName;
+	private String signalName;
 	private double data;
     private String unit;
     private String time;
+   
 	public int getAutoId() {
 		return autoId;
 	}
 	public void setAutoId(int autoId) {
 		this.autoId = autoId;
 	}
-	public String getEcuName() {
-		return ecuName;
+	public String getSignalName() {
+		return signalName;
 	}
-	public void setEcuName(String ecuName) {
-		this.ecuName = ecuName;
+	public void setSignalName(String signalName) {
+		this.signalName = signalName;
 	}
 	public double getData() {
 		return data;
@@ -49,6 +50,9 @@ public class CanPhyDataBean {
 	}
 	public void setTime(String time) {
 		this.time = time;
+	}
+	public String toString(){
+		return signalName+" "+data+" "+unit+" "+time;
 	}
 
 }

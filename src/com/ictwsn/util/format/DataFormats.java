@@ -9,14 +9,14 @@ import java.util.List;
  * @desc 进制转换,字符串倒置等
  * @date 2017-8-18
  */
-public class DataFormat {
-	private static DataFormat dataFormat=null;
+public class DataFormats {
+	private static DataFormats dataFormat=null;
 
-	private DataFormat(){}
+	private DataFormats(){}
 
-	public synchronized static DataFormat getInstance() {
+	public synchronized static DataFormats getInstance() {
 		if (dataFormat == null) {  
-			dataFormat = new DataFormat();
+			dataFormat = new DataFormats();
 		}  
 		return dataFormat;
 	}

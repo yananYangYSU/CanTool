@@ -8,5 +8,6 @@ package com.ictwsn.service.currentData;
  * @date 2017-8-18
  */
 public interface CurrentDataService{
+	public String getRealDataInitStr(String id,String ecuName);
 	
 }

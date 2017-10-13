@@ -12,6 +12,14 @@ public class CurrentDataServiceImpl implements CurrentDataService {
 
 	@Resource CurrentDataDao dao;
 
+
+
+	@Override
+	public String getRealDataInitStr(String id,String ecuName) {
+		// TODO Auto-generated method stub
+		return dao.getRealDataInitStr(id,ecuName);
+	}
+
 	
 
 

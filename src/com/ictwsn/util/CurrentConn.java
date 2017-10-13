@@ -54,7 +54,6 @@ public class CurrentConn{
 	public Connection getConn(){
 		try{
 			Connection conn= DriverManager.getConnection(url, user, password);
-			System.out.println("连接成功");
 			return conn;
 		}catch (Exception e) {
 			e.printStackTrace();

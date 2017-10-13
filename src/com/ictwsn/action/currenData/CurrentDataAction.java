@@ -18,7 +18,7 @@ import com.ictwsn.service.currentData.CurrentDataService;
 import com.ictwsn.service.exportData.ExportDataService;
 import com.ictwsn.service.systemSet.SystemSetService;
 import com.ictwsn.util.GetHttpType;
-import com.ictwsn.util.format.DateFormat;
+import com.ictwsn.util.format.DateFormats;
 /**
  * 运营商控制类
  * @author YangYanan
@@ -40,7 +40,9 @@ public class CurrentDataAction {
 	 * @return
 	 */
 	@RequestMapping("/currentDataIndex.do")
-	public String currentDataIndex(HttpServletRequest request,HttpServletResponse response,Model model){
+	public String currentDataIndex(HttpServletRequest request,HttpServletResponse response,Model model,
+			@RequestParam(value="id",required=true) String id,
+			@RequestParam(value="ecuName",required=true) String ecuName){
 		try{
 			/**
 			 * 图1 solrCloud
@@ -50,13 +52,15 @@ public class CurrentDataAction {
 			StringBuffer HSeries=new StringBuffer();
 			strName.append("{name:'dataSeries',");//type: 'area',
 			strData.append("data:[");
-			int time=rand.nextInt(10);
+			String[] dataStr=cService.getRealDataInitStr(id,ecuName).split("#");
+			long time=DateFormats.getInstance().dateStringToTime(dataStr[1]);
 			for(int i=0;i<59;i++){
-				strData.append("[").append(System.currentTimeMillis()).append(",").append(time).append("],");
+				strData.append("[").append(time).append(",").append(dataStr[0]).append("],");
 			}
-			strData.append("[").append(System.currentTimeMillis()).append(",").append(time).append("]]");
+			strData.append("[").append(time).append(",").append(dataStr[0]).append("]]");
 			HSeries.append(strName).append(strData).append(",marker: {enabled: true}}");
 
+			
 			model.addAttribute("dataSeries",HSeries.toString());
 			
 			return "currentData";
@@ -73,10 +77,11 @@ public class CurrentDataAction {
 	 * @param model
 	 */
 	@RequestMapping("/currentDataRequest.do")
-	public void currentDataRequest(HttpServletRequest request,HttpServletResponse response){
+	public void currentDataRequest(HttpServletRequest request,HttpServletResponse response,
+			@RequestParam(value="id",required=true) String id,
+			@RequestParam(value="ecuName",required=true) String ecuName){
 		try{
-			response.getWriter().print(rand.nextInt(10));
-			
+			response.getWriter().print(cService.getRealDataInitStr(id, ecuName));
 		}catch(Exception e){
 			logger.error("login error"+e);
 			e.printStackTrace();

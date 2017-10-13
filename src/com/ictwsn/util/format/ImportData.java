@@ -1,4 +1,4 @@
-package com.ictwsn.dao.currentData;
+package com.ictwsn.util.format;
 
 import java.io.BufferedReader;
 import java.io.File;
