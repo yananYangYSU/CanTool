@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
  
+import com.ictwsn.bean.OperatorBean;
 import com.ictwsn.service.exportData.ExportDataService;
 import com.ictwsn.service.historyData.HistoryDataService;
 import com.ictwsn.service.systemSet.SystemSetService;
@@ -28,8 +29,57 @@ import com.ictwsn.util.format.DateFormat;
  */
 @Controller
 public class HistoryDataAction {
-	static Logger logger = Logger.getLogger(HistoryDataAction.class.getName());
+	private static Logger logger = Logger.getLogger(HistoryDataAction.class.getName());
+	
+	@Resource HistoryDataService hService;
+    
+	@RequestMapping("/goToHistoryData.do")
+	public String goToHistoryData(HttpServletRequest request,HttpServletResponse response,Model model){
+		try{
+			
+            /**
+             * 获取tree的字符串
+             */
+			model.addAttribute("dataSeries",null);
+			
+			return "historyData";
+		}catch(Exception e){
+			logger.error("login error"+e);
+			e.printStackTrace();
+		}
+		return null;
+	}
+	@RequestMapping("/searchHistoryData.do")
+	public String searchHistoryData(HttpServletRequest request,HttpServletResponse response,Model model,
+			@RequestParam(value="ecuName",required=true) String ecuName,
+			@RequestParam(value="page",required=true) int page,
+			@RequestParam(value="startTime",required=true) String startTime,
+			@RequestParam(value="endTime",required=true) String endTime){
+		try{
+			int totalCount=hService.getOperatorCount();  //查询该用户拥有的设备总数
+			int size=10;						  			   				   //每页显示大小
+			int maxPage=(totalCount%size==0)?totalCount/size:totalCount/size+1;//最大页数
+			page=(page==0)?1:page;			   					               //当前第几页
+			int number=(page-1)*size;	
 
-
-	@Resource HistoryDataService oService;
+			List<OperatorBean> oblist=aService.searchOperator(userId,number,size,roleName); //查询该用户对应数量的设备信息
+			model.addAttribute("oblist",oblist); 
+			model.addAttribute("maxPage",maxPage);
+			page=maxPage==0?0:page;
+			model.addAttribute("page",page);
+			model.addAttribute("totalCount",totalCount);
+			if(page>1){
+				model.addAttribute("prePageHref","searchOperator.do?userId="+userId+"&page="+(page-1)+"&roleName="+roleName);
+			}
+			if(page<maxPage){
+				model.addAttribute("nextPageHref","searchOperator.do?userId="+userId+"&page="+(page+1)+"&roleName="+roleName);
+			}
+			
+			return "historyData";
+		}catch(Exception e){
+			logger.error("login error"+e);
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

@@ -10,12 +10,12 @@ import com.ictwsn.bean.CanSignalBean;
  * @desc 将can信息与信号列表封装到静态map数组中,返回给调用的对象
  * @date 2017-10-13
  */
-public class ReadDataBase {
+public class LoadDataBase {
 	
 	private static Map<Integer,ArrayList<CanSignalBean>> canSignalMap=new HashMap<Integer,ArrayList<CanSignalBean>>();
 	private static Map<Integer,ArrayList<CanSignalBean>> tempCanSignalMap=new HashMap<Integer,ArrayList<CanSignalBean>>();
 	
-	private ReadDataBase(){}//禁止实例化
+	private LoadDataBase(){}//禁止实例化
 
 	static{   
 		loadCanSignal();//静态块,只初始化一次,读取can信息数据库到map中
@@ -37,8 +37,8 @@ public class ReadDataBase {
 		csb.setMinValue(0);
 		csb.setMaxValue(100);
 		csb.setUnit("℃");
-		String[] nodeNameList={"HVAC1","HAVC2","HAVC3"};
-		csb.setNodeNames(nodeNameList);
+		
+		csb.setNodeNames("HVAC1,HAVC2,HAVC3");
 		canSignalList.add(csb);
 
 		csb=new CanSignalBean();
@@ -51,7 +51,7 @@ public class ReadDataBase {
 		csb.setMinValue(0);
 		csb.setMaxValue(100);
 		csb.setUnit("℃");
-		csb.setNodeNames(nodeNameList);
+		csb.setNodeNames("HVAC4,HAVC5,HAVC6");
 		canSignalList.add(csb);
 
 		tempCanSignalMap.clear();

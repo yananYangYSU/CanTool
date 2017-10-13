@@ -1,8 +1,9 @@
 package com.ictwsn.bean;
 /**
  * canMessageBean实体类
+ * @desc 对应数据库can_message表,
+ * 该数据结构用于存储例如:"BO_ 792 BCM_BCAN_1: 8 BCM"的message数据库信息
  * @author yanan
- *
  */
 public class CanMessageBean {
 	private int id;                //id,唯一值

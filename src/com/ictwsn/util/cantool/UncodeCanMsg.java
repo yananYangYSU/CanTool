@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.ictwsn.bean.CanDataBean;
+import com.ictwsn.bean.CanMsgDataBean;
 import com.ictwsn.bean.CanSignalBean;
 import com.ictwsn.util.format.DataFormat;
 /**
@@ -97,8 +97,8 @@ public class UncodeCanMsg {
 	 * \r为换行符,尽量不要用\\r
 	 * @return CanData对象
 	 */
-	public CanDataBean splitDataStr(String dataStr){
-		CanDataBean cd=new CanDataBean();
+	public CanMsgDataBean splitDataStr(String dataStr){
+		CanMsgDataBean cd=new CanMsgDataBean();
 		dataStr=dataStr.trim();
 		dataStr=dataStr.replace("\\r","");
 		dataStr=dataStr.replace("\r","");
@@ -142,11 +142,11 @@ public class UncodeCanMsg {
 	 * canData对象信息解析
 	 * @param cd
 	 */
-	public void parseCanData(CanDataBean cd){
+	public void parseCanData(CanMsgDataBean cd){
 		
 		DataFormat dataFormat=DataFormat.getInstance();
 		int id=Integer.parseInt(cd.getId(),16);
-		ArrayList<CanSignalBean> canSignalList=ReadDataBase.getCanSignalMap().get(id);
+		ArrayList<CanSignalBean> canSignalList=LoadDataBase.getCanSignalMap().get(id);
 		if(canSignalList==null||canSignalList.size()==0){
 			System.err.print("id:"+id+"找不到对应数据库信息");
 		}else{

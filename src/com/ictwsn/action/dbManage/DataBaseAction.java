@@ -30,7 +30,7 @@ public class DataBaseAction {
 	@Resource DatabaseService dService;
 	
 	@RequestMapping("/dataBaseTree.do")
-	public String currentDataIndex(HttpServletRequest request,HttpServletResponse response,Model model){
+	public String dataBaseTree(HttpServletRequest request,HttpServletResponse response,Model model){
 		try{
 			
             /**

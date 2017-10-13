@@ -1,4 +1,8 @@
 package com.ictwsn.util.format;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 数据格式化工具类
  * @author YangYanan
@@ -7,9 +11,9 @@ package com.ictwsn.util.format;
  */
 public class DataFormat {
 	private static DataFormat dataFormat=null;
-	
+
 	private DataFormat(){}
-	
+
 	public synchronized static DataFormat getInstance() {
 		if (dataFormat == null) {  
 			dataFormat = new DataFormat();
@@ -36,11 +40,11 @@ public class DataFormat {
 		return OctalStr;
 	}*/
 	/**
-     * 字符串倒置输出
-     * @param oldStr 旧字符串 例如:"12345"
-     * @return 倒置后的新字符串 例如:"54321"
-     */
-	/*public static String reverseStr(String oldStr){
+	 * 字符串倒置输出
+	 * @param oldStr 旧字符串 例如:"12345"
+	 * @return 倒置后的新字符串 例如:"54321"
+	 */
+	/*public String reverseStr(String oldStr){
 		char[] tmp=oldStr.toCharArray();
 		int length=tmp.length;
 		String newStr="";
@@ -48,5 +52,6 @@ public class DataFormat {
 			newStr+=tmp[i];
 		return newStr;
 	}*/
+	
 
 }

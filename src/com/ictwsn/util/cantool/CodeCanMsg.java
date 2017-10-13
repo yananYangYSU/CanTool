@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.ictwsn.bean.CanDataBean;
+import com.ictwsn.bean.CanMsgDataBean;
 import com.ictwsn.bean.CanSignalBean;
 import com.ictwsn.util.format.DataFormat;
 /**
@@ -38,8 +38,8 @@ public class CodeCanMsg {
 		csb.setMinValue(0);
 		csb.setMaxValue(100);
 		csb.setUnit("℃");
-		String[] nodeNameList={"HVAC1","HAVC2","HAVC3"};
-		csb.setNodeNames(nodeNameList);
+		
+		csb.setNodeNames("HVAC1,HAVC2,HAVC3");
 		canSignalList.add(csb);
 
 		csb=new CanSignalBean();
@@ -52,7 +52,7 @@ public class CodeCanMsg {
 		csb.setMinValue(0);
 		csb.setMaxValue(100);
 		csb.setUnit("℃");
-		csb.setNodeNames(nodeNameList);
+		csb.setNodeNames("HVAC4,HAVC5,HAVC6");
 		canSignalList.add(csb);
 
 		canSignalMap.put(318767095,canSignalList);
@@ -121,8 +121,8 @@ public class CodeCanMsg {
 	 * \r为换行符,尽量不要用\\r
 	 * @return CanData对象
 	 */
-	public CanDataBean splitDataStr(String dataStr){
-		CanDataBean cd=new CanDataBean();
+	public CanMsgDataBean splitDataStr(String dataStr){
+		CanMsgDataBean cd=new CanMsgDataBean();
 		dataStr=dataStr.trim();
 		dataStr=dataStr.replace("\\r","");
 		dataStr=dataStr.replace("\r","");
@@ -166,7 +166,7 @@ public class CodeCanMsg {
 	 * canData对象信息解析
 	 * @param cd
 	 */
-	public void parseCanData(CanDataBean cd){
+	public void parseCanData(CanMsgDataBean cd){
 		DataFormat dataFormat=DataFormat.getInstance();
 		int id=Integer.parseInt(cd.getId(),16);
 		ArrayList<CanSignalBean> canSignalList=canSignalMap.get(id);

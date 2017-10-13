@@ -1,6 +1,8 @@
 package com.ictwsn.bean;
 /**
  * canSignalBean实体类
+ * @desc 对应数据库can_signal表,
+ * 该数据结构用于存储例如:"SG_ BCM_KeySt : 1|2@0+ (1,0) [1|3] ""  PEPS,ICM,AVM,CDU,HVAC"的数据库信息
  * @author yanan
  * 
  */
@@ -14,7 +16,7 @@ public class CanSignalBean {
 	private double minValue;   //物理值最大值
 	private double maxValue;   //物理值最小值
 	private String unit;       //物理单位
-	private String[] nodeNames;  //要发送的节点名称
+	private String nodeNames;  //要发送的节点名称,逗号分隔
 	
 	public String getSignalName() {
 		return signalName;
@@ -70,10 +72,10 @@ public class CanSignalBean {
 	public void setUnit(String unit) {
 		this.unit = unit;
 	}
-	public String[] getNodeNames() {
+	public String getNodeNames() {
 		return nodeNames;
 	}
-	public void setNodeNames(String[] nodeNames) {
+	public void setNodeNames(String nodeNames) {
 		this.nodeNames = nodeNames;
 	}
 

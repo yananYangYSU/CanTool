@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * interval:表示range 00000-FFFF,代表周期发送的毫秒数。
  * 0000代表是发送一次，0001-FFFF代表CanTool装置以mmmm为周期，发送该命令到总线
  */
-public class CanDataBean {
+public class CanMsgDataBean {
 	
 	private String id;
 	private int dcl;
@@ -48,5 +48,18 @@ public class CanDataBean {
 	public String toString(){
 		return "id:"+this.id+"dcl:"+this.dcl+"interval:"+this.interval+"dataSize:"+this.data.toString();
 		
+	}
+	/**
+	 * ArrayList转字符串
+	 * @param list String类型的ArrayList数组例如 {"1A","2B","FF"}
+	 * @return "1A 2B FF "
+	 */
+	public String listToString(){
+		if(this.data.size()==0)
+			return "";
+		StringBuffer str=new StringBuffer();
+		for(String i:this.data)
+			str.append(i).append(" ");
+		return str.toString();
 	}
 }
