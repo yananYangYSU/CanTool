@@ -26,41 +26,7 @@ public class UncodeCanMsg {
 		47,46,45,44,43,42,41,40,
 		55,54,53,52,51,50,49,48,
 		63,62,61,60,59,58,57,56};
-	private static Map<Integer,ArrayList<CanSignalBean>> canSignalMap=new HashMap<Integer,ArrayList<CanSignalBean>>();
 
-	static{   
-		ArrayList<CanSignalBean> canSignalList=new ArrayList<CanSignalBean>();
-		CanSignalBean csb=new CanSignalBean();
-		csb.setSignalName("CDU_HVACACCfg");
-		csb.setStartBit(12);
-		csb.setBitLength(12);
-		csb.setBitType(0);
-		csb.setResolution(1);
-		csb.setOffset(0);
-		csb.setMinValue(0);
-		csb.setMaxValue(100);
-		csb.setUnit("℃");
-		String[] nodeNameList={"HVAC1","HAVC2","HAVC3"};
-		csb.setNodeNames(nodeNameList);
-		canSignalList.add(csb);
-
-		csb=new CanSignalBean();
-		csb.setSignalName("CDU_HVACAirCirCfg");
-		csb.setStartBit(16);
-		csb.setBitLength(12);
-		csb.setBitType(0);
-		csb.setResolution(1);
-		csb.setOffset(0);
-		csb.setMinValue(0);
-		csb.setMaxValue(100);
-		csb.setUnit("℃");
-		csb.setNodeNames(nodeNameList);
-		canSignalList.add(csb);
-
-		canSignalMap.put(318767095,canSignalList);
-		canSignalMap.put(65,null);
-	}
-	
 	/**
 	 * @param args
 	 */
@@ -177,9 +143,10 @@ public class UncodeCanMsg {
 	 * @param cd
 	 */
 	public void parseCanData(CanDataBean cd){
+		
 		DataFormat dataFormat=DataFormat.getInstance();
 		int id=Integer.parseInt(cd.getId(),16);
-		ArrayList<CanSignalBean> canSignalList=canSignalMap.get(id);
+		ArrayList<CanSignalBean> canSignalList=ReadDataBase.getCanSignalMap().get(id);
 		if(canSignalList==null||canSignalList.size()==0){
 			System.err.print("id:"+id+"找不到对应数据库信息");
 		}else{

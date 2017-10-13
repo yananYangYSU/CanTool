@@ -2,19 +2,20 @@ package com.ictwsn.bean;
 /**
  * canSignalBean实体类
  * @author yanan
- *
+ * 
  */
 public class CanSignalBean {
-	private String signalName;
-	private int startBit;
-	private int bitLength;
-	private int bitType;
-	private double resolution;
-	private double offset;
-	private double minValue;
-	private double maxValue;
-	private String unit;
-	private String[] nodeNames;
+	private String signalName; //信号名称
+	private int startBit;      //开始字节位置索引
+	private int bitLength;     //字节段长度
+	private int bitType;       //格式类型 0 Motorola 1 Intel
+	private double resolution; //A的值
+	private double offset;     //B的值
+	private double minValue;   //物理值最大值
+	private double maxValue;   //物理值最小值
+	private String unit;       //物理单位
+	private String[] nodeNames;  //要发送的节点名称
+	
 	public String getSignalName() {
 		return signalName;
 	}

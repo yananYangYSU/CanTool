@@ -51,7 +51,7 @@ public class CurrentConn{
 	}
 
 
-	public static Connection getConn(){
+	public Connection getConn(){
 		try{
 			Connection conn= DriverManager.getConnection(url, user, password);
 			return conn;
@@ -63,7 +63,7 @@ public class CurrentConn{
 
 	}
 
-	public static void closeConnection(Connection conn) {
+	public void closeConnection(Connection conn) {
 
 		if (conn != null) {
 			try {
@@ -75,7 +75,7 @@ public class CurrentConn{
 
 	}
 
-	public static void closePreparedStatement(PreparedStatement ps) {
+	public void closePreparedStatement(PreparedStatement ps) {
 
 		if (ps != null) {
 			try {
@@ -87,7 +87,7 @@ public class CurrentConn{
 
 	}
 
-	public static void closeResultSet(ResultSet rs) {
+	public void closeResultSet(ResultSet rs) {
 
 		if (rs != null) {
 			try {

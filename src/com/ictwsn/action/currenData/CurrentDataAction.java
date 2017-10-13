@@ -33,12 +33,11 @@ public class CurrentDataAction {
 	@Resource CurrentDataService cService;	
 
 	/**
-	 * 初始化进入页面
+	 * 初始化进入实时数据页面
 	 * @param request
 	 * @param response
 	 * @param model
 	 * @return
-	 * @throws UnsupportedEncodingException
 	 */
 	@RequestMapping("/currentDataIndex.do")
 	public String currentDataIndex(HttpServletRequest request,HttpServletResponse response,Model model){
@@ -68,11 +67,10 @@ public class CurrentDataAction {
 		return null;
 	}
 	/**
-	 * solr单线程请求
+	 * 实时数据单次请求
 	 * @param request
 	 * @param response
 	 * @param model
-	 * @throws UnsupportedEncodingException
 	 */
 	@RequestMapping("/currentDataRequest.do")
 	public void currentDataRequest(HttpServletRequest request,HttpServletResponse response){

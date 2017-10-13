@@ -163,7 +163,7 @@
     */
     Highcharts.chart('container1', {
         chart: {
-            type: 'scatter',
+            type: 'spline',
             animation: Highcharts.svg, // don't animate in old IE
             marginRight: 10,
             events: {

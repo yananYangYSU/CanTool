@@ -26,7 +26,23 @@ import com.ictwsn.util.format.DateFormat;
  */
 @Controller
 public class DataBaseAction {
-	static Logger logger=Logger.getLogger(DataBaseAction.class.getName());
-
-	@Resource DatabaseService aService;
+	private static Logger logger=Logger.getLogger(DataBaseAction.class.getName());
+	@Resource DatabaseService dService;
+	
+	@RequestMapping("/dataBaseTree.do")
+	public String currentDataIndex(HttpServletRequest request,HttpServletResponse response,Model model){
+		try{
+			
+            /**
+             * 获取tree的字符串
+             */
+			model.addAttribute("dataSeries",null);
+			
+			return "dataBaseTree";
+		}catch(Exception e){
+			logger.error("login error"+e);
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
