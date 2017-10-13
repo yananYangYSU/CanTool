@@ -12,8 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
- 
-import com.ictwsn.bean.OperatorBean;
+
+import com.ictwsn.bean.CanPhyDataBean;
 import com.ictwsn.service.exportData.ExportDataService;
 import com.ictwsn.service.historyData.HistoryDataService;
 import com.ictwsn.service.systemSet.SystemSetService;
@@ -56,23 +56,23 @@ public class HistoryDataAction {
 			@RequestParam(value="startTime",required=true) String startTime,
 			@RequestParam(value="endTime",required=true) String endTime){
 		try{
-			int totalCount=hService.getOperatorCount();  //查询该用户拥有的设备总数
+			int totalCount=hService.getHistoryDataCount(ecuName, page, startTime, endTime);  //查询该用户拥有的设备总数
 			int size=10;						  			   				   //每页显示大小
 			int maxPage=(totalCount%size==0)?totalCount/size:totalCount/size+1;//最大页数
 			page=(page==0)?1:page;			   					               //当前第几页
 			int number=(page-1)*size;	
 
-			List<OperatorBean> oblist=aService.searchOperator(userId,number,size,roleName); //查询该用户对应数量的设备信息
+			List<CanPhyDataBean> oblist=hService.searchHistoryData(ecuName, maxPage, startTime, endTime); //查询该用户对应数量的设备信息
 			model.addAttribute("oblist",oblist); 
 			model.addAttribute("maxPage",maxPage);
 			page=maxPage==0?0:page;
 			model.addAttribute("page",page);
 			model.addAttribute("totalCount",totalCount);
 			if(page>1){
-				model.addAttribute("prePageHref","searchOperator.do?userId="+userId+"&page="+(page-1)+"&roleName="+roleName);
+				model.addAttribute("prePageHref","searchOperator.do?userId="+"&page="+(page-1)+"&roleName=");
 			}
 			if(page<maxPage){
-				model.addAttribute("nextPageHref","searchOperator.do?userId="+userId+"&page="+(page+1)+"&roleName="+roleName);
+				model.addAttribute("nextPageHref","searchOperator.do?userId="+"&page="+(page+1)+"&roleName=");
 			}
 			
 			return "historyData";
