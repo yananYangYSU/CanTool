@@ -10,12 +10,6 @@ import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.core.io.ClassPathResource;
-
-import com.ictwsn.bean.CanMessageBean;
-import com.ictwsn.bean.CanSignalBean;
 import com.ictwsn.util.CurrentConn;
 
 //数据库导入函数
@@ -50,7 +44,7 @@ public class ImportData {
             			e.printStackTrace();
             		}
                 }
-                Pattern pattern2 = Pattern.compile("\\s(\\w*)\\s.\\s(\\d*).(\\d*).(.*).\\s.(.*)\\,(.*)\\)\\s\\[(.*)\\|(.*)\\]\\s\"(.*)\"\\s\\s(.*)");
+                Pattern pattern2 = Pattern.compile("\\s(\\w*)\\s.\\s(\\d*).(\\d*).(.*).\\s.(.*)\\,(.*)\\)\\s\\[(.*)\\|(.*)\\]\\s\"(.*)\"\\s*(\\w.*)");
             	Matcher matcher2=pattern2.matcher(data);
             	while(matcher2.find()) {
             		//System.out.print(flag+",");
