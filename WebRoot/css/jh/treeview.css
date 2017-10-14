@@ -5,13 +5,15 @@
 	list-style: none;
 }
 
-.treeview ul {
-	background-color:#CCC;
+.treeview ul {/*二级标题部分*/
+	background-color:#F0F8FF;
 	margin-top: 4px;
+	cursor: pointer;
 }
 
-.treeview .hitarea {
-	background: url(images/treeview-default.gif) -64px -25px no-repeat;
+.treeview .hitarea {/*一级标题的前面图标*/
+	background:url(../images/treeview-default.gif) -64px -25px no-repeat;
+	/* background: */
 	height: 16px;
 	width: 16px;
 	margin-left: -16px;
@@ -24,9 +26,10 @@
 	float:none;
 }
 
-.treeview li {
+.treeview li {/*无*/
 	margin: 0;
 	padding: 3px 0pt 3px 16px;
+	/* border: real solid 1px; */
 }
 
 .treeview a.selected {
@@ -35,21 +38,20 @@
 
 #treecontrol { margin: 1em 0; display: none; }
 
-.treeview .hover { color: red; cursor: pointer; }
-
-.treeview li { background: url(images/treeview-default-line.gif) 0 0 no-repeat; }
+.treeview .hover { color: #00BFFF; cursor: pointer; }/*一级标题的选择*/
+.treeview li { background: url(images/treeview-default-line.gif) 0 0 no-repeat; }<!--整个底部-->
 .treeview li.collapsable, .treeview li.expandable { background-position: 0 -176px; }
 
 .treeview .expandable-hitarea { background-position: -80px -3px; }
 
 .treeview li.last { background-position: 0 -1766px }
-.treeview li.lastCollapsable, .treeview li.lastExpandable { background-image: url(images/treeview-default.gif); }
+.treeview li.lastCollapsable, .treeview li.lastExpandable { background-image: url(images/treeview-default.gif);}/*最后一条一级标题*/
 .treeview li.lastCollapsable { background-position: 0 -111px }
 .treeview li.lastExpandable { background-position: -32px -67px }
 
 .treeview div.lastCollapsable-hitarea, .treeview div.lastExpandable-hitarea { background-position: 0; }
 
-.treeview-red li { background-image: url(images/treeview-red-line.gif); }
+.treeview-red li { background-color: blue; }/*background-image: url(images/treeview-red-line.gif);*/
 .treeview-red .hitarea, .treeview-red li.lastCollapsable, .treeview-red li.lastExpandable { background-image: url(images/treeview-red.gif); }
 
 .treeview-black li { background-image: url(images/treeview-black-line.gif); }

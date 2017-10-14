@@ -17,9 +17,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" href="css/jh.treeview.css" type="text/css"/>
+    <link rel="stylesheet" href="css/jh/treeview.css" type="text/css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
-    <script src="js/jh.treeview.js" type="text/javascript"></script>
+    <script src="css/jh/treeview.js" type="text/javascript"></script>
 
 <script type="text/javascript">
     $(document).ready(function(){
