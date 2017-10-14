@@ -1,9 +1,14 @@
 package com.ictwsn.util.cantool;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import com.ictwsn.bean.CanSignalBean;
+import com.ictwsn.util.CurrentConn;
 /**
  * can信息及信号数据库加载类
  * @author YangYanan
@@ -25,22 +30,30 @@ public class LoadDataBase {
 	 * 将can信息与信号列表封装到静态map数组中
 	 */
 	private static int loadCanSignal(){
-		
 		ArrayList<CanSignalBean> canSignalList=new ArrayList<CanSignalBean>();
 		CanSignalBean csb=new CanSignalBean();
-		csb.setSignalName("CDU_HVACACCfg");
-		csb.setStartBit(12);
-		csb.setBitLength(12);
-		csb.setBitType(0);
-		csb.setResolution(1);
-		csb.setOffset(0);
-		csb.setMinValue(0);
-		csb.setMaxValue(100);
-		csb.setUnit("℃");
-		
-		csb.setNodeNames("HVAC1,HAVC2,HAVC3");
-		canSignalList.add(csb);
-
+		Connection conn=CurrentConn.getInstance().getConn();
+		try {
+			String sql="select * form can_signal";
+			PreparedStatement ps=conn.prepareStatement(sql);
+			ResultSet rs=ps.executeQuery();
+			while(rs.next()) {
+				csb.setSignalName(rs.getString(3));
+				csb.setStartBit(rs.getInt(4));
+				csb.setBitLength(rs.getInt(5));
+				csb.setBitType(rs.getInt(6));
+				csb.setResolution(rs.getDouble(7));
+				csb.setOffset(rs.getDouble(8));
+				csb.setMinValue(rs.getDouble(9));
+				csb.setMaxValue(rs.getDouble(10));
+				csb.setUnit(rs.getString(11));
+				csb.setNodeNames(rs.getString(12));
+				canSignalList.add(csb);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		/*
 		csb=new CanSignalBean();
 		csb.setSignalName("CDU_HVACAirCirCfg");
 		csb.setStartBit(16);
@@ -53,7 +66,7 @@ public class LoadDataBase {
 		csb.setUnit("℃");
 		csb.setNodeNames("HVAC4,HAVC5,HAVC6");
 		canSignalList.add(csb);
-
+		*/
 		tempCanSignalMap.clear();
 		tempCanSignalMap.put(318767095,canSignalList);
 		tempCanSignalMap.put(65,null);
