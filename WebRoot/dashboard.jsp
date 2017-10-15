@@ -36,7 +36,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <body>
 
         <div id="container" style="min-width: 310px; max-width: 400px; height: 300px; margin: 0 auto"></div>
-
+	<div id="qie" style="margin-top: 50px;margin-left: 500px;">
+		<a href="currentData.jsp"><input type="button" value="曲线图"  style="width:50px;height:30px;background-color:rgb(21,124,176);color: white;" /></a>
+        <a href="dashboard.jsp"><input type="button" value="仪表盘"  style="width:50px;height:30px;background-color:rgb(21,124,176);color: white;" /></a>
+        <a href="distribution.jsp"><input type="button" value="分布图"  style="width:50px;height:30px;background-color:rgb(21,124,176);color: white;" /></a>
+	</div>
         <script>
 
            $(function () {

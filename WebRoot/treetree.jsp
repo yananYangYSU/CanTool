@@ -23,20 +23,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    
     <link rel="stylesheet" href="css/jh/pintuer.css">
     <link rel="stylesheet" href="css/jh/admin.css">
-    <script src="css/jh/jquery.js"></script>   
+    <script src="css/jh/jquery.js"></script> 
+  <style type="text/css">
+  body{
+	margin:0px;
+	padding:0px;}
+
+  </style>
 </head>
 <body style="background-color:#f2f9fd;">
 <div class="leftnav">
-  <!-- <div class="leftnav-title"><strong><span class="icon-list"></span>菜单列表</strong></div> -->
-  <!--<h2><span class="icon-adjust"></span>参数设置</h2>
-  <ul style="display:block">
-     
-  </ul>  -->
   <h2><span class="icon-pencil-square-o"><b>></b></span>BO_ 856 CDU_1: 8 CDU</h2>
   <ul>
-  <li><a href="operatorList.html" target="right"><span class="icon-caret-right"><b>></b></span>SG_ CDU_HVACOffButtonSt</a></li>
-   <li><a href="clientList.html" target="right"><span class="icon-caret-right"><b>></b></span>SG_ CDU_HVACOffButtonStVD</a></li>
-   <li><a href="operatorList.html" target="right"><span class="icon-caret-right"><b>></b></span>SG_ CDU_HVACOffButtonSt</a></li>
+  <li><a href="currentData.jsp" target="right"><span class="icon-caret-right"><b>></b></span>SG_ CDU_HVACOffButtonSt</a></li>
+   <li><a href="dashboard.jsp" target="right"><span class="icon-caret-right"><b>></b></span>SG_ CDU_HVACOffButtonStVD</a></li>
+   <li><a href="distribution.jsp" target="right"><span class="icon-caret-right"><b>></b></span>SG_ CDU_HVACOffButtonSt</a></li>
    <li><a href="clientList.html" target="right"><span class="icon-caret-right"><b>></b></span>SG_ CDU_HVACOffButtonStVD</a></li>
    <li><a href="operatorList.html" target="right"><span class="icon-caret-right"><b>></b></span>SG_ CDU_HVACAutoModeButtonSt</a></li>
       
