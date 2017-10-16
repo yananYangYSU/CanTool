@@ -40,77 +40,7 @@ font-weight: bold;
   
   <body>
     <div id="main" style="margin-left: 50px; font-family:"Microsoft YaHei","simsun","Helvetica Neue", Arial, Helvetica, sans-serif;">
-<ul id="treeview" class="filetree">
-    <li><span class="folder">BO_ 856 CDU_1: 8 CDU</span>
-        <ul>
-        <li><a href="currentData.jsp"><span class="file">SG_ CDU_HVACOffButtonSt</span></a></li>
-        <li><span class="file">SG_ CDU_HVACOffButtonStVD</span></li>
-        <li><span class="file">SG_ CDU_HVACAutoModeButtonSt</span></li>
-        <li><span class="file">SG_ CDU_HVACAutoModeButtonStVD</span></li>
-        <li><span class="file">SG_ CDU_HVACFDefrostButtonSt</span></li>
-        </ul>
-    </li>
-    <li><span class="folder">BO_ 61 CDU_4: 8 CDU</span>
-        <ul>
-        <li><span class="file">SG_ CDU_HVACACCfg</span></li>
-        <li><span class="file">SG_ CDU_HVACAirCirCfg</span></li>
-        <li><span class="file">SG_ CDU_HVACComfortCfg </span></li>
-        <li><span class="file">SG_ CDU_HVACACCfg</span></li>
-        <li><span class="file">SG_ CDU_HVACAirCirCfg</span></li>
-        <li><span class="file">SG_ CDU_HVACComfortCfg </span></li>
-        <li><span class="file">SG_ CDU_HVACACCfg</span></li>
-        <li><span class="file">SG_ CDU_HVACAirCirCfg</span></li>
-        <li><span class="file">SG_ CDU_HVACComfortCfg </span></li>
-        </ul>
-    </li>
-    <li><span class="folder">BO_ 1067 CDU_NM: 8 CDU</span>
-        <ul>
-        <li><span class="file">SG_ CDU_NMDestAddress</span></li>
-        <li><span class="file">SG_ CDU_NMAlive</span></li>
-        <li><span class="file">SG_ CDU_NMRing</span></li>
-        <li><span class="file">SG_ CDU_NMLimpHome</span></li>
-        <li><span class="file">SG_ CDU_NMDestAddress</span></li>
-        <li><span class="file">SG_ CDU_NMAlive</span></li>
-        <li><span class="file">SG_ CDU_NMRing</span></li>
-        <li><span class="file">SG_ CDU_NMLimpHome</span></li>
-        <li><span class="file">SG_ CDU_NMDestAddress</span></li>
-        <li><span class="file">SG_ CDU_NMAlive</span></li>
-        <li><span class="file">SG_ CDU_NMRing</span></li>
-        <li><span class="file">SG_ CDU_NMLimpHome</span></li>
-        </ul>
-    </li>
-      <li><span class="folder">BO_ 1067 CDU_NM: 8 CDU</span>
-        <ul>
-        <li><span class="file">SG_ CDU_NMDestAddress</span></li>
-        <li><span class="file">SG_ CDU_NMAlive</span></li>
-        <li><span class="file">SG_ CDU_NMRing</span></li>
-        <li><span class="file">SG_ CDU_NMLimpHome</span></li>
-        <li><span class="file">SG_ CDU_NMDestAddress</span></li>
-        <li><span class="file">SG_ CDU_NMAlive</span></li>
-        <li><span class="file">SG_ CDU_NMRing</span></li>
-        <li><span class="file">SG_ CDU_NMLimpHome</span></li>
-        <li><span class="file">SG_ CDU_NMDestAddress</span></li>
-        <li><span class="file">SG_ CDU_NMAlive</span></li>
-        <li><span class="file">SG_ CDU_NMRing</span></li>
-        <li><span class="file">SG_ CDU_NMLimpHome</span></li>
-        </ul>
-    </li>
-      <li><span class="folder">BO_ 1067 CDU_NM: 8 CDU</span>
-        <ul>
-        <li><span class="file">SG_ CDU_NMDestAddress</span></li>
-        <li><span class="file">SG_ CDU_NMAlive</span></li>
-        <li><span class="file">SG_ CDU_NMRing</span></li>
-        <li><span class="file">SG_ CDU_NMLimpHome</span></li>
-        <li><span class="file">SG_ CDU_NMDestAddress</span></li>
-        <li><span class="file">SG_ CDU_NMAlive</span></li>
-        <li><span class="file">SG_ CDU_NMRing</span></li>
-        <li><span class="file">SG_ CDU_NMLimpHome</span></li>
-        <li><span class="file">SG_ CDU_NMDestAddress</span></li>
-        <li><span class="file">SG_ CDU_NMAlive</span></li>
-        <li><span class="file">SG_ CDU_NMRing</span></li>
-        <li><span class="file">SG_ CDU_NMLimpHome</span></li>
-        </ul>
-    </li>
+<ul id="treeview" class="filetree">${treeStr }
 </ul>
 </div>
   </body>

@@ -11,6 +11,6 @@ import java.util.Map;
 public interface DatabaseService {
 	public boolean exportDataBase(String fileType);
 	public boolean importDataBase(String fileType,String fileName);
-	public Map<String, ArrayList<String>> getTreeData();
+	public String getTreeData();
 	public String getCurrentData(String data);
 }

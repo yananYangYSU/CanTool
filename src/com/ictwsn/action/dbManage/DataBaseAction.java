@@ -31,13 +31,13 @@ public class DataBaseAction {
 	@RequestMapping("/dataBaseTree.do")
 	public String dataBaseTree(HttpServletRequest request,HttpServletResponse response,Model model){
 		try{
-
+			
 			/**
 			 * 获取tree的字符串
 			 */
-			model.addAttribute("dataSeries",null);
+			model.addAttribute("treeStr",dService.getTreeData());
 
-			return "dataBaseTree";
+			return "tree";
 		}catch(Exception e){
 			logger.error("login error"+e);
 			e.printStackTrace();

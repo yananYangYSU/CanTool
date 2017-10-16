@@ -3,7 +3,9 @@ package com.ictwsn.service.dbManage;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import com.ictwsn.dao.dbManage.DatabaseDao;
 
@@ -24,8 +26,24 @@ public class DatabaseServiceImpl implements DatabaseService {
 		return dao.importDataBase(fileType, fileName);
 	}
 	 
-	public Map<String,ArrayList<String>> getTreeData() {
-		 return dao.getTreeData();
+	public String getTreeData() {
+		Map<String,ArrayList<String>> nameMap=dao.getTreeData();
+		Set<String> set=nameMap.keySet();
+		String[] id=null;
+		Iterator it=set.iterator();
+		StringBuffer treeStr=new StringBuffer();
+		while(it.hasNext()) {
+			String message=(String) it.next();
+            id=message.split(" ");
+			treeStr.append("<li><span class=\"folder\">").append(message).append("</span>\n").append("<ul>\n");
+			ArrayList<String> signalList=nameMap.get(message);		
+			for(String signal:signalList) {
+				System.out.println(signal);
+				treeStr.append("<li><a href=\"currentData.jsp?id=").append(id[1]).append("&signalName=").append(signal).append("\"><span class=\"file\">").append(signal).append("</span></a></li>\n");
+			}
+			treeStr.append("</ul></li>\n");
+		}
+		return treeStr.toString();
 	 }
 
 	 public String getCurrentData(String data) {
