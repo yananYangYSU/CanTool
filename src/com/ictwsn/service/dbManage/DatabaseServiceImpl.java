@@ -38,7 +38,6 @@ public class DatabaseServiceImpl implements DatabaseService {
 			treeStr.append("<li><span class=\"folder\">").append(message).append("</span>\n").append("<ul>\n");
 			ArrayList<String> signalList=nameMap.get(message);		
 			for(String signal:signalList) {
-				System.out.println(signal);
 				treeStr.append("<li><a href=\"currentData.jsp?id=").append(id[1]).append("&signalName=").append(signal).append("\"><span class=\"file\">").append(signal).append("</span></a></li>\n");
 			}
 			treeStr.append("</ul></li>\n");

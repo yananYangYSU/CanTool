@@ -199,24 +199,24 @@ public class DatabaseDaoImpl extends MySQLBaseDao implements DatabaseDao {
 		Map<String,ArrayList<String>> nameMap=new HashMap<String,ArrayList<String>>();
 		String sql=null;
 		conn=CurrentConn.getInstance().getConn();
+		ArrayList<String> signalName=new ArrayList<String>();
 		try {
-			sql="select * form can_message";
+			sql="select * from can_message";
 			pst=conn.prepareStatement(sql);
 			rs=pst.executeQuery();
 			while(rs.next()){
 				int id=rs.getInt(1);
 				try {
-					ArrayList<String> signalName=new ArrayList<String>();
-					sql="select signalName from can_signal where id="+id;
+					sql="select signalName from can_signal where messageId="+id;
 					pst=conn.prepareStatement(sql);
 					ResultSet rs2=pst.executeQuery();
 					while(rs2.next()) {
-						signalName.add(rs2.getString(1));
-						nameMap.put("BO_ "+id+rs.getString(2)+": "+rs.getInt(3)+" "+rs.getString(4), signalName);
+						signalName.add(rs2.getString(1));	
 					}
 				}catch(Exception e){
 					e.printStackTrace();
 				}
+				nameMap.put("BO_ "+id+" "+rs.getString(2)+": "+rs.getInt(3)+" "+rs.getString(4), signalName);
 			}
 		}catch(Exception e){
 			e.printStackTrace();
