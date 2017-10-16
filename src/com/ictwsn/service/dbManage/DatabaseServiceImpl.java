@@ -44,13 +44,4 @@ public class DatabaseServiceImpl implements DatabaseService {
 		}
 		return treeStr.toString();
 	 }
-
-	 public String getCurrentData(String data) {
-		 return dao.getCurrentData(data);
-	 }
-
-	
-	
-
-
 }

@@ -12,5 +12,4 @@ public interface DatabaseService {
 	public boolean exportDataBase(String fileType);
 	public boolean importDataBase(String fileType,String fileName);
 	public String getTreeData();
-	public String getCurrentData(String data);
 }

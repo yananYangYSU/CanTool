@@ -194,7 +194,10 @@ public class DatabaseDaoImpl extends MySQLBaseDao implements DatabaseDao {
 
 		return true;
 	}
-
+	/**
+	 * 查询数据库的message和signal信息，将属性组成组成字符串键值对，封装至map集合
+	 * @return map数据集合
+	 */
 	public Map<String,ArrayList<String>> getTreeData(){
 		Map<String,ArrayList<String>> nameMap=new HashMap<String,ArrayList<String>>();
 		String sql=null;
@@ -223,11 +226,4 @@ public class DatabaseDaoImpl extends MySQLBaseDao implements DatabaseDao {
 		}
 		return nameMap;
 	}
-
-	
-	public String getCurrentData(String data) {
-		//接收到数据后，解析并生成相应字段发送到实时数据表格
-		return null;
-	}
-
 }
