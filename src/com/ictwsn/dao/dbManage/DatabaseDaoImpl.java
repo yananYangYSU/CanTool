@@ -195,6 +195,39 @@ public class DatabaseDaoImpl extends MySQLBaseDao implements DatabaseDao {
 		return true;
 	}
 
+	public Map<String,ArrayList<String>> getTreeData(){
+		Map<String,ArrayList<String>> nameMap=new HashMap<String,ArrayList<String>>();
+		String sql=null;
+		conn=CurrentConn.getInstance().getConn();
+		try {
+			sql="select * form can_message";
+			pst=conn.prepareStatement(sql);
+			rs=pst.executeQuery();
+			while(rs.next()){
+				int id=rs.getInt(1);
+				try {
+					ArrayList<String> signalName=new ArrayList<String>();
+					sql="select signalName from can_signal where id="+id;
+					pst=conn.prepareStatement(sql);
+					ResultSet rs2=pst.executeQuery();
+					while(rs2.next()) {
+						signalName.add(rs2.getString(1));
+						nameMap.put("BO_ "+id+rs.getString(2)+": "+rs.getInt(3)+" "+rs.getString(4), signalName);
+					}
+				}catch(Exception e){
+					e.printStackTrace();
+				}
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return nameMap;
+	}
 
+	
+	public String getCurrentData(String data) {
+		//接收到数据后，解析并生成相应字段发送到实时数据表格
+		return null;
+	}
 
 }
