@@ -1,7 +1,5 @@
 package com.ictwsn.bean;
 
-import java.util.ArrayList;
-
 /**
  * can信息实体类
  * 用于cantool装置和cantoolApp直接的信息传递

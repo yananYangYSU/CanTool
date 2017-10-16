@@ -1,5 +1,8 @@
 package com.ictwsn.service.currentData;
 
+import com.ictwsn.bean.CanPhyDataBean;
+import com.ictwsn.bean.CanSignalBean;
+
 
 /**
  * 运营商service层接口类
@@ -8,6 +11,6 @@ package com.ictwsn.service.currentData;
  * @date 2017-8-18
  */
 public interface CurrentDataService{
-	public String getRealDataInitStr(String id,String ecuName);
-	
+	public CanPhyDataBean getRealPhyData(String id,String signalName);
+	public CanSignalBean getCanSignal(String id,String signalName);
 }
