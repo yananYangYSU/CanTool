@@ -1,11 +1,6 @@
 package com.ictwsn.dao.dbManage;
 
-
-import java.util.List;
-
-
-
 public interface DatabaseDao {
-	
-	
+	public boolean exportDataBase(String fileType);
+	public boolean importDataBase(String fileType,String fileName);
 }

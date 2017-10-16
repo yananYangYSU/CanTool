@@ -1,8 +1,5 @@
 package com.ictwsn.service.dbManage;
 
-import java.util.List;
-import java.util.Map;
-
  
 /**
  * 运营商service层接口类
@@ -11,5 +8,6 @@ import java.util.Map;
  * @date 2017-8-18
  */
 public interface DatabaseService {
-	
+	public boolean exportDataBase(String fileType);
+	public boolean importDataBase(String fileType,String fileName);
 }
