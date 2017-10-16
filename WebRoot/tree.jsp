@@ -17,8 +17,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" href="css/jh/treeview.css" type="text/css"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+    <link rel="stylesheet" href="css/jh/treeview.css" type="text/css"/><!-- css/jh/treeview.css -->
+    <script src="js/jquery-1.4.3.min.js"></script>
     <script src="css/jh/treeview.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -37,7 +37,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <ul id="treeview" class="filetree">
     <li><span class="folder">BO_ 856 CDU_1: 8 CDU</span>
         <ul>
-        <li><span class="file">SG_ CDU_HVACOffButtonSt</span></li>
+        <li><a href="currentData.jsp"><span class="file">SG_ CDU_HVACOffButtonSt</span></a></li>
         <li><span class="file">SG_ CDU_HVACOffButtonStVD</span></li>
         <li><span class="file">SG_ CDU_HVACAutoModeButtonSt</span></li>
         <li><span class="file">SG_ CDU_HVACAutoModeButtonStVD</span></li>
@@ -49,10 +49,56 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <li><span class="file">SG_ CDU_HVACACCfg</span></li>
         <li><span class="file">SG_ CDU_HVACAirCirCfg</span></li>
         <li><span class="file">SG_ CDU_HVACComfortCfg </span></li>
+        <li><span class="file">SG_ CDU_HVACACCfg</span></li>
+        <li><span class="file">SG_ CDU_HVACAirCirCfg</span></li>
+        <li><span class="file">SG_ CDU_HVACComfortCfg </span></li>
+        <li><span class="file">SG_ CDU_HVACACCfg</span></li>
+        <li><span class="file">SG_ CDU_HVACAirCirCfg</span></li>
+        <li><span class="file">SG_ CDU_HVACComfortCfg </span></li>
         </ul>
     </li>
     <li><span class="folder">BO_ 1067 CDU_NM: 8 CDU</span>
         <ul>
+        <li><span class="file">SG_ CDU_NMDestAddress</span></li>
+        <li><span class="file">SG_ CDU_NMAlive</span></li>
+        <li><span class="file">SG_ CDU_NMRing</span></li>
+        <li><span class="file">SG_ CDU_NMLimpHome</span></li>
+        <li><span class="file">SG_ CDU_NMDestAddress</span></li>
+        <li><span class="file">SG_ CDU_NMAlive</span></li>
+        <li><span class="file">SG_ CDU_NMRing</span></li>
+        <li><span class="file">SG_ CDU_NMLimpHome</span></li>
+        <li><span class="file">SG_ CDU_NMDestAddress</span></li>
+        <li><span class="file">SG_ CDU_NMAlive</span></li>
+        <li><span class="file">SG_ CDU_NMRing</span></li>
+        <li><span class="file">SG_ CDU_NMLimpHome</span></li>
+        </ul>
+    </li>
+      <li><span class="folder">BO_ 1067 CDU_NM: 8 CDU</span>
+        <ul>
+        <li><span class="file">SG_ CDU_NMDestAddress</span></li>
+        <li><span class="file">SG_ CDU_NMAlive</span></li>
+        <li><span class="file">SG_ CDU_NMRing</span></li>
+        <li><span class="file">SG_ CDU_NMLimpHome</span></li>
+        <li><span class="file">SG_ CDU_NMDestAddress</span></li>
+        <li><span class="file">SG_ CDU_NMAlive</span></li>
+        <li><span class="file">SG_ CDU_NMRing</span></li>
+        <li><span class="file">SG_ CDU_NMLimpHome</span></li>
+        <li><span class="file">SG_ CDU_NMDestAddress</span></li>
+        <li><span class="file">SG_ CDU_NMAlive</span></li>
+        <li><span class="file">SG_ CDU_NMRing</span></li>
+        <li><span class="file">SG_ CDU_NMLimpHome</span></li>
+        </ul>
+    </li>
+      <li><span class="folder">BO_ 1067 CDU_NM: 8 CDU</span>
+        <ul>
+        <li><span class="file">SG_ CDU_NMDestAddress</span></li>
+        <li><span class="file">SG_ CDU_NMAlive</span></li>
+        <li><span class="file">SG_ CDU_NMRing</span></li>
+        <li><span class="file">SG_ CDU_NMLimpHome</span></li>
+        <li><span class="file">SG_ CDU_NMDestAddress</span></li>
+        <li><span class="file">SG_ CDU_NMAlive</span></li>
+        <li><span class="file">SG_ CDU_NMRing</span></li>
+        <li><span class="file">SG_ CDU_NMLimpHome</span></li>
         <li><span class="file">SG_ CDU_NMDestAddress</span></li>
         <li><span class="file">SG_ CDU_NMAlive</span></li>
         <li><span class="file">SG_ CDU_NMRing</span></li>
