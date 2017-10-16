@@ -100,7 +100,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <h2><span class="icon-database"></span>数据库管理</h2>
   <ul>
     <li><a href="importExportBefore.do" target="right"><span class="icon-caret-right"></span>数据库导入</a></li>
-    <li><a href="tree.jsp" target="right"><span class="icon-caret-right"></span>树状显示数据库</a></li> 
+    <li><a href="dataBaseTree.do" target="right"><span class="icon-caret-right"></span>树状显示数据库</a></li> 
   </ul>
 </div>
 <script type="text/javascript">
