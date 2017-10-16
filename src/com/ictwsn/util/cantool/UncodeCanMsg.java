@@ -1,16 +1,9 @@
 package com.ictwsn.util.cantool;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import com.ictwsn.bean.CanMsgDataBean;
 import com.ictwsn.bean.CanPhyDataBean;
 import com.ictwsn.bean.CanSignalBean;
-import com.ictwsn.util.CurrentConn;
 import com.ictwsn.util.format.DataFormats;
 import com.ictwsn.util.format.DateFormats;
 /**
@@ -94,7 +87,7 @@ public class UncodeCanMsg {
 		System.out.println("sub "+BitStrIntel.substring(64-12-12,64-12));
 		System.out.println("----motorola-----");
 		//motorola
-		boolean flag=true;
+		
 		//	for(int i=size-1;i>=0;i--){
 		for(int i=0;i<size;i++){
 			BitStrMotorola.append(dataFormat.hexToBinary(dataList.get(i)));
@@ -214,7 +207,7 @@ public class UncodeCanMsg {
 					matrixSubBinStr=this.matrixSubBinStr(BitStrIntel.toString(),csb.getStartBit(),csb.getBitLength(),1);
 				}
 				double x=Integer.parseInt(matrixSubBinStr,2);
-				double phy=x*csb.getResolution()+csb.getOffset();
+				double phy=x*csb.getResolutionValue()+csb.getOffsetValue();
 				cpdb.setData(phy);
 				cpdb.setUnit(csb.getUnit());
 				cpdb.setTime(DateFormats.getInstance().getNowDate());

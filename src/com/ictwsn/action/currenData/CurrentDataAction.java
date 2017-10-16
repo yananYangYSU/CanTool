@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
+import com.ictwsn.bean.CanPhyDataBean;
+import com.ictwsn.bean.CanSignalBean;
 import com.ictwsn.service.currentData.CurrentDataService;
 import com.ictwsn.service.exportData.ExportDataService;
 import com.ictwsn.service.systemSet.SystemSetService;
@@ -42,7 +44,7 @@ public class CurrentDataAction {
 	@RequestMapping("/currentDataIndex.do")
 	public String currentDataIndex(HttpServletRequest request,HttpServletResponse response,Model model,
 			@RequestParam(value="id",required=true) String id,
-			@RequestParam(value="ecuName",required=true) String ecuName){
+			@RequestParam(value="ecuName",required=true) String signalName){
 		try{
 			/**
 			 * 图1 solrCloud
@@ -52,16 +54,19 @@ public class CurrentDataAction {
 			StringBuffer HSeries=new StringBuffer();
 			strName.append("{name:'dataSeries',");//type: 'area',
 			strData.append("data:[");
-			String[] dataStr=cService.getRealDataInitStr(id,ecuName).split("#");
-			long time=DateFormats.getInstance().dateStringToTime(dataStr[1]);
+			CanPhyDataBean cpdb=cService.getRealPhyData(id,signalName);
+			CanSignalBean csb=cService.getCanSignal(id,signalName);
+			long time=DateFormats.getInstance().dateStringToTime(cpdb.getTime());
 			for(int i=0;i<59;i++){
-				strData.append("[").append(time).append(",").append(dataStr[0]).append("],");
+				strData.append("[").append(time).append(",").append(cpdb.getData()).append("],");
 			}
-			strData.append("[").append(time).append(",").append(dataStr[0]).append("]]");
+			strData.append("[").append(time).append(",").append(cpdb.getData()).append("]]");
 			HSeries.append(strName).append(strData).append(",marker: {enabled: true}}");
 
-			
 			model.addAttribute("dataSeries",HSeries.toString());
+			model.addAttribute("maxPhyValue",csb.getMaxPhyValue());
+			model.addAttribute("minPhyValue",csb.getMinPhyValue());
+			model.addAttribute("unit",csb.getUnit());
 			
 			return "currentData";
 		}catch(Exception e){
@@ -81,7 +86,7 @@ public class CurrentDataAction {
 			@RequestParam(value="id",required=true) String id,
 			@RequestParam(value="ecuName",required=true) String ecuName){
 		try{
-			response.getWriter().print(cService.getRealDataInitStr(id, ecuName));
+			response.getWriter().print(cService.getRealPhyData(id, ecuName));
 		}catch(Exception e){
 			logger.error("login error"+e);
 			e.printStackTrace();

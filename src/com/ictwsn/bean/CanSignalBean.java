@@ -11,10 +11,10 @@ public class CanSignalBean {
 	private int startBit;      //开始字节位置索引
 	private int bitLength;     //字节段长度
 	private int bitType;       //格式类型 0 Motorola 1 Intel
-	private double resolution; //A的值
-	private double offset;     //B的值
-	private double minValue;   //物理值最大值
-	private double maxValue;   //物理值最小值
+	private double resolutionValue; //A的值
+	private double offsetValue;     //B的值
+	private double minPhyValue;   //物理值最大值
+	private double maxPhyValue;   //物理值最小值
 	private String unit;       //物理单位
 	private String nodeNames;  //要发送的节点名称,逗号分隔
 	
@@ -42,29 +42,29 @@ public class CanSignalBean {
 	public void setBitType(int bitType) {
 		this.bitType = bitType;
 	}
-	public double getResolution() {
-		return resolution;
+	public double getResolutionValue() {
+		return resolutionValue;
 	}
-	public void setResolution(double resolution) {
-		this.resolution = resolution;
+	public void setResolutionValue(double resolutionValue) {
+		this.resolutionValue = resolutionValue;
 	}
-	public double getOffset() {
-		return offset;
+	public double getOffsetValue() {
+		return offsetValue;
 	}
-	public void setOffset(double offset) {
-		this.offset = offset;
+	public void setOffsetValue(double offsetValue) {
+		this.offsetValue = offsetValue;
 	}
-	public double getMinValue() {
-		return minValue;
+	public double getMinPhyValue() {
+		return minPhyValue;
 	}
-	public void setMinValue(double minValue) {
-		this.minValue = minValue;
+	public void setMinPhyValue(double minPhyValue) {
+		this.minPhyValue = minPhyValue;
 	}
-	public double getMaxValue() {
-		return maxValue;
+	public double getMaxPhyValue() {
+		return maxPhyValue;
 	}
-	public void setMaxValue(double maxValue) {
-		this.maxValue = maxValue;
+	public void setMaxPhyValue(double maxPhyValue) {
+		this.maxPhyValue = maxPhyValue;
 	}
 	public String getUnit() {
 		return unit;
@@ -78,5 +78,7 @@ public class CanSignalBean {
 	public void setNodeNames(String nodeNames) {
 		this.nodeNames = nodeNames;
 	}
+	
+	
 
 }

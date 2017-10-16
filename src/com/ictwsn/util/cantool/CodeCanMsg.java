@@ -33,10 +33,10 @@ public class CodeCanMsg {
 		csb.setStartBit(12);
 		csb.setBitLength(12);
 		csb.setBitType(0);
-		csb.setResolution(1);
-		csb.setOffset(0);
-		csb.setMinValue(0);
-		csb.setMaxValue(100);
+		csb.setResolutionValue(1);
+		csb.setOffsetValue(0);
+		csb.setMinPhyValue(0);
+		csb.setMaxPhyValue(100);
 		csb.setUnit("℃");
 		
 		csb.setNodeNames("HVAC1,HAVC2,HAVC3");
@@ -47,10 +47,10 @@ public class CodeCanMsg {
 		csb.setStartBit(16);
 		csb.setBitLength(12);
 		csb.setBitType(0);
-		csb.setResolution(1);
-		csb.setOffset(0);
-		csb.setMinValue(0);
-		csb.setMaxValue(100);
+		csb.setResolutionValue(1);
+		csb.setOffsetValue(0);
+		csb.setMinPhyValue(0);
+		csb.setMaxPhyValue(100);
 		csb.setUnit("℃");
 		csb.setNodeNames("HVAC4,HAVC5,HAVC6");
 		canSignalList.add(csb);
@@ -200,9 +200,9 @@ public class CodeCanMsg {
 					matrixSubBinStr=this.matrixSubBinStr(BitStrIntel.toString(),csb.getStartBit(),csb.getBitLength(),1);
 				}
 				double x=Integer.parseInt(matrixSubBinStr,2);
-				double phy=x*csb.getResolution()+csb.getOffset();
+				double phy=x*csb.getResolutionValue()+csb.getOffsetValue();
 				String unit=csb.getUnit();
-				System.out.println("该条信息为:"+signalName+" "+phy+" "+unit+" "+this.checkDataRange(phy,csb.getMaxValue(),csb.getMinValue()));
+				System.out.println("该条信息为:"+signalName+" "+phy+" "+unit+" "+this.checkDataRange(phy,csb.getMaxPhyValue(),csb.getMinPhyValue()));
 			}
 		}
 	}

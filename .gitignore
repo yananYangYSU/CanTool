@@ -5,3 +5,4 @@
 *.mymetadata
 *.project
 .settings/
+*.MF
