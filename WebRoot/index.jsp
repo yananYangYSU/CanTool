@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+﻿<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -28,14 +28,61 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   .leftnav-title{
   background-color:rgb(21,124,176);
   }
+  #switch{
+  width: 100px;
+  height: 100%;
+  border: teal solid 1px;
+  margin-left: 500px;
+  }
+  #div1{
+        width: 65px;
+        height: 100%;
+        border-radius: 50px;
+        position: relative;
+    }
+    #div2{
+        width: 40px;
+        height: 30px;
+        border-radius: 48px;
+        position: absolute;
+        background: white;
+        box-shadow: 0px 2px 4px rgba(0,0,0,0.4);
+    }
+    .open1{
+        background: rgba(0,184,0,0.8);
+    }
+    .open2{
+        top: 2px;
+        right: 1px;
+    }
+    .close1{
+        background: rgba(255,255,255,0.4);
+        border:3px solid rgba(0,0,0,0.15);
+        border-left: transparent;
+    }
+    .close2{
+        left: 0px;
+        top: 0px;
+        border:2px solid rgba(0,0,0,0.1);
+    }
   </style>   
 </head>
 <body style="background-color:#f2f9fd;"><!--  -->
 <div class="header bg-main">
   <div class="logo margin-big-left fadein-top">
     <h1><img src="images/y1.jpg" class="radius-circle rotate-hover" height="50" alt="" />CANTool后台管理中心</h1>
+  
   </div>
-  <div class="head-l"><a class="button button-little bg-green" href="" target="_blank"><span class="icon-home"></span> 前台首页</a> &nbsp;&nbsp; &nbsp;&nbsp;<a class="button button-little bg-red" href="login.html"><span class="icon-power-off"></span>断开连接</a> </div>
+  <div class="head-l"><a class="button button-little bg-green" href="" target="_blank"><span class="icon-home"></span> 前台首页</a> &nbsp;&nbsp; &nbsp;&nbsp;
+  					  <a class="button button-little bg-red" href="login.html"><span class="icon-power-off"></span>断开连接</a>
+  <div class="head-r">
+  <div id="div1" class="open1">
+        <div id="div2" class="open2">
+        </div>
+    </div>
+  </div>
+  </div>
+  
 </div>
 <div class="leftnav">
   <div class="leftnav-title"><strong><span class="icon-list"></span>菜单列表</strong></div>
@@ -45,7 +92,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </ul>  -->
   <h2><span class="icon-pencil-square-o"></span>CAN信息管理</h2>
   <ul>
-  <li><a href="operatorList.html" target="right"><span class="icon-caret-right"></span>显示CAN信息</a></li>
+  <li><a href="showCan.jsp" target="right"><span class="icon-caret-right"></span>显示CAN信息</a></li>
    <li><a href="setCan.jsp" target="right"><span class="icon-caret-right"></span>设置CAN参数</a></li>
    <!--<li><a href="operatorList.html" target="right"><span class="icon-caret-right"></span>CAN状态</a></li>CAN状态只有开和关，合并了-->
       
@@ -69,6 +116,18 @@ $(function(){
   })
 });
 </script>
+<script type="text/javascript">
+window.onload=function(){
+        var div2=document.getElementById("div2");
+        var div1=document.getElementById("div1");
+        div2.onclick=function(){
+         div1.className=(div1.className=="close1")?"open1":"close1";
+   		 div2.className=(div2.className=="close2")?"open2":"close2";
+        }
+    }
+    /*
+    */
+    </script>
 <ul class="bread">
   <li><a href="{:U('Index/info')}" target="right" class="icon-home"> 首页</a></li>
   <li><a href="##" id="a_leader_txt">管理中心</a></li>

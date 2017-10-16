@@ -20,13 +20,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link rel="stylesheet" href="css/jh/treeview.css" type="text/css"/><!-- css/jh/treeview.css -->
     <script src="js/jquery-1.4.3.min.js"></script>
     <script src="css/jh/treeview.js" type="text/javascript"></script>
-
 <style type="text/css">
 .folder{
 font-weight: bold;
 }
 </style>
-
 <script type="text/javascript">
     $(document).ready(function(){
         $("#treeview").treeview({
@@ -40,8 +38,17 @@ font-weight: bold;
   
   <body>
     <div id="main" style="margin-left: 50px; font-family:"Microsoft YaHei","simsun","Helvetica Neue", Arial, Helvetica, sans-serif;">
-<ul id="treeview" class="filetree">
-    <li><span class="folder">BO_ 856 CDU_1: 8 CDU</span>
+<table style="width: 500px; border:#CCC solid 1px;">
+<tr>
+<th style="border-right: #CCC solid 1px;">Time</th>
+<th style="border-right: #CCC solid 1px;">ID</th>
+<th style="border-right: #CCC solid 1px;">Name</th>
+<th style="border-right: #CCC solid 1px;">DLC</th>
+<th>Data</th>
+</tr>
+</table>
+<ul id="treeview" class="filetree" >
+    <li style="font-family:"Microsoft YaHei","simsun","Helvetica Neue", Arial, Helvetica, sans-serif;"><span class="folder">BO_ 856 CDU_1: 8 CDU</span>
         <ul>
         <li><a href="currentData.jsp"><span class="file">SG_ CDU_HVACOffButtonSt</span></a></li>
         <li><span class="file">SG_ CDU_HVACOffButtonStVD</span></li>
