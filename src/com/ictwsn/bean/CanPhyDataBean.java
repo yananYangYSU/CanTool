@@ -1,22 +1,13 @@
 package com.ictwsn.bean;
 
-/**
- * can信息实体类
- * 用于cantool装置和cantoolApp直接的信息传递
- * @author yanan
- * @describe
- * id:为CAN标准ID的范围0-0x7FF. 
- * dcl:表示数据长度DLC，范围0..8
- * data:表示1字节(8bit)16进制数据,DD的数量由L的数值决定
- * interval:表示range 00000-FFFF,代表周期发送的毫秒数。
- * 0000代表是发送一次，0001-FFFF代表CanTool装置以mmmm为周期，发送该命令到总线
- */
 public class CanPhyDataBean {
 	
 	private int autoId;
 	private String signalName;
-	private double data;
+	private double phyValue;
     private String unit;
+    private String binaryStr;
+    private String hexStr;
     private String time;
    
 	public int getAutoId() {
@@ -31,17 +22,29 @@ public class CanPhyDataBean {
 	public void setSignalName(String signalName) {
 		this.signalName = signalName;
 	}
-	public double getData() {
-		return data;
+	public double getPhyValue() {
+		return phyValue;
 	}
-	public void setData(double data) {
-		this.data = data;
+	public void setPhyValue(double phyValue) {
+		this.phyValue = phyValue;
 	}
 	public String getUnit() {
 		return unit;
 	}
 	public void setUnit(String unit) {
 		this.unit = unit;
+	}
+	public String getBinaryStr() {
+		return binaryStr;
+	}
+	public void setBinaryStr(String binaryStr) {
+		this.binaryStr = binaryStr;
+	}
+	public String getHexStr() {
+		return hexStr;
+	}
+	public void setHexStr(String hexStr) {
+		this.hexStr = hexStr;
 	}
 	public String getTime() {
 		return time;
@@ -50,7 +53,7 @@ public class CanPhyDataBean {
 		this.time = time;
 	}
 	public String toString(){
-		return signalName+" "+data+" "+unit+" "+time;
+		return signalName+" "+phyValue+" "+unit+" "+binaryStr+" "+hexStr;
 	}
 
 }

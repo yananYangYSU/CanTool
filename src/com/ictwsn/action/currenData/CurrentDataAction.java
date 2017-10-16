@@ -58,9 +58,9 @@ public class CurrentDataAction {
 			CanSignalBean csb=cService.getCanSignal(id,signalName);
 			long time=DateFormats.getInstance().dateStringToTime(cpdb.getTime());
 			for(int i=0;i<59;i++){
-				strData.append("[").append(time).append(",").append(cpdb.getData()).append("],");
+				strData.append("[").append(time).append(",").append(cpdb.getPhyValue()).append("],");
 			}
-			strData.append("[").append(time).append(",").append(cpdb.getData()).append("]]");
+			strData.append("[").append(time).append(",").append(cpdb.getPhyValue()).append("]]");
 			HSeries.append(strName).append(strData).append(",marker: {enabled: true}}");
 
 			model.addAttribute("dataSeries",HSeries.toString());

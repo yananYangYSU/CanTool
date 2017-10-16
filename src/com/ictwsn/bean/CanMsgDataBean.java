@@ -19,6 +19,7 @@ public class CanMsgDataBean {
 	private int dcl;
 	private ArrayList<String> data;
     private String interval;
+    private String time;
     
 	public String getId() {
 		return id;
@@ -44,7 +45,12 @@ public class CanMsgDataBean {
 	public void setInterval(String interval) {
 		this.interval = interval;
 	}
-    
+	public String getTime() {
+		return time;
+	}
+	public void setTime(String time) {
+		this.time = time;
+	}
 	public String toString(){
 		return "id:"+this.id+"dcl:"+this.dcl+"interval:"+this.interval+"dataSize:"+this.data.toString();
 		

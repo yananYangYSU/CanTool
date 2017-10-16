@@ -55,7 +55,8 @@ public class UncodeCanMsg {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		DataFormats dataFormat=DataFormats.getInstance();
+		System.out.println();
+		/*DataFormats dataFormat=DataFormats.getInstance();
 		// TODO Auto-generated method stub
 		String dataStr="T12FFFFF7800111213141516FF0000\\r";
 		UncodeCanMsg t=new UncodeCanMsg();
@@ -68,7 +69,7 @@ public class UncodeCanMsg {
 			System.out.println(m.group());
 		}*/
 
-		ArrayList<String> dataList=t.splitDataStr(dataStr).getData();
+		/*ArrayList<String> dataList=t.splitDataStr(dataStr).getData();
 		StringBuffer BitStrIntel=new StringBuffer();
 		StringBuffer BitStrMotorola=new StringBuffer();
 
@@ -98,7 +99,7 @@ public class UncodeCanMsg {
 				BitStrMotorola.append(t.reverseStr(t.hexToBinary(dataList.get(i))));
 				flag=!flag;
 			}		*/	
-		}
+		/*}
 		System.out.println("----moto matrix-----");
 		for(int i=0;i<size;i++){
 			System.out.println(dataFormat.hexToBinary(dataList.get(i)));
@@ -110,7 +111,7 @@ public class UncodeCanMsg {
 		System.out.println(t.matrixSubBinStr(BitStrIntel.toString(), 16, 12, 1));
 		//System.out.println("motol ");
 		//System.out.println(t.matrixSubBinStr(BitStrMotorola.toString(), 11, 12,0));
-
+*/
 	}
 
 
@@ -121,7 +122,7 @@ public class UncodeCanMsg {
 	 * \r为换行符,尽量不要用\\r
 	 * @return CanData对象
 	 */
-	private CanMsgDataBean splitDataStr(String dataStr){
+	public CanMsgDataBean splitDataStr(String dataStr){
 		CanMsgDataBean cd=new CanMsgDataBean();
 		dataStr=dataStr.trim();
 		dataStr=dataStr.replace("\\r","");
@@ -159,6 +160,8 @@ public class UncodeCanMsg {
 		}else{
 			System.err.print("can信息格式不正确");
 		}
+		cd.setTime(DateFormats.getInstance().getNowDate());//打上当前时间戳
+		
 		return cd;
 
 	}
@@ -208,13 +211,12 @@ public class UncodeCanMsg {
 				}
 				double x=Integer.parseInt(matrixSubBinStr,2);
 				double phy=x*csb.getResolutionValue()+csb.getOffsetValue();
-				cpdb.setData(phy);
+				cpdb.setPhyValue(phy);
 				cpdb.setUnit(csb.getUnit());
-				cpdb.setTime(DateFormats.getInstance().getNowDate());
-				
+				cpdb.setBinaryStr(matrixSubBinStr);//2进制串
+				cpdb.setHexStr(Integer.toHexString(Integer.parseInt(matrixSubBinStr,2)));//2进制转成16进制
+				cpdb.setTime(cd.getTime());
 				cpdbList.add(cpdb);
-				
-				System.out.println(cpdb.toString());
 			}
 			return cpdbList;
 		}
