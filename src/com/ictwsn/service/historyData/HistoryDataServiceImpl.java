@@ -25,10 +25,12 @@ public class HistoryDataServiceImpl implements HistoryDataService {
 		// TODO Auto-generated method stub
 		return dao.getHistoryDataCount(ecuName, page, startTime, endTime);
 	}
-	 
 
-	
-	
+	@Override
+	public String getHistoryData() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 
 }
