@@ -66,7 +66,7 @@ public class HistoryDataDaoImpl extends MySQLBaseDao implements HistoryDataDao {
 				}catch(Exception e){
 					e.printStackTrace();
 				}
-				message=rs.getDate(5)+rs.getString(2)+messageName+rs.getInt(3)+rs.getString(4); //key由time,id.name,dcl,data组成
+				message=rs.getDate(5)+"&nbsp;&nbsp;&nbsp;"+rs.getString(2)+"&nbsp;&nbsp;&nbsp;"+messageName+"&nbsp;&nbsp;&nbsp;"+rs.getInt(3)+"&nbsp;&nbsp;&nbsp;"+rs.getString(4); //key由time,id.name,dcl,data组成
 				//组装message字符串，组装表格所需数据
 				String messageStr=null;
 				if(rs.getString(2).length()==3) {
@@ -77,7 +77,7 @@ public class HistoryDataDaoImpl extends MySQLBaseDao implements HistoryDataDao {
 				canPhy=UncodeCanMsg.getInstance().parseCanData(UncodeCanMsg.getInstance().splitDataStr(messageStr));
 				for(int i=0;i<canPhy.size();i++) {
 					CanPhyDataBean canphy=canPhy.get(i);
-					String signalStr=canphy.getSignalName()+canphy.getPhyValue()+canphy.getUnit()+canphy.getHexStr()+canphy.getBinaryStr();
+					String signalStr=canphy.getSignalName()+"&nbsp;&nbsp;&nbsp;"+canphy.getPhyValue()+canphy.getUnit()+"&nbsp;&nbsp;&nbsp;"+canphy.getHexStr()+"&nbsp;&nbsp;&nbsp;"+canphy.getBinaryStr();
 					signal.add(signalStr);
 				}
 				DataMap.put(message, signal);

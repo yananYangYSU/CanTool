@@ -92,7 +92,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </ul>  -->
   <h2><span class="icon-pencil-square-o"></span>CAN信息管理</h2>
   <ul>
-  <li><a href="showCan.jsp" target="right"><span class="icon-caret-right"></span>显示CAN信息</a></li>
+  <li><a href="getHistoryData.do" target="right"><span class="icon-caret-right"></span>显示CAN信息</a></li>
    <li><a href="setCan.jsp" target="right"><span class="icon-caret-right"></span>设置CAN参数</a></li>
    <!--<li><a href="operatorList.html" target="right"><span class="icon-caret-right"></span>CAN状态</a></li>CAN状态只有开和关，合并了-->
       
