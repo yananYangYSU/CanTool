@@ -1,6 +1,9 @@
 package com.ictwsn.service.historyData;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -28,9 +31,19 @@ public class HistoryDataServiceImpl implements HistoryDataService {
 
 	@Override
 	public String getHistoryData() {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String,ArrayList<String>> map=dao.getHistoryData();
+		Set<String> set=map.keySet();
+		Iterator it=set.iterator();
+		StringBuffer historyData=new StringBuffer();
+		while(it.hasNext()) {
+			String key=(String) it.next();
+			historyData.append("<li><span class=\"folder\">").append(key).append("</span>\n").append("<ul>\n");
+			ArrayList<String> signalList=map.get(key);		
+			for(String signal:signalList) {
+				historyData.append("<li><span class=\"file\">").append(signal).append("</span></a></li>\n");
+			}
+			historyData.append("</ul></li>\n");
+		}
+		return historyData.toString();
 	}
-
-
 }

@@ -82,4 +82,20 @@ public class HistoryDataAction {
 		}
 		return null;
 	}
+	@RequestMapping("/getHistoryData.do")
+	public String getHistoryData(HttpServletRequest request,HttpServletResponse response,Model model) {
+		try{
+			
+            /**
+             * 获取实时数据表格信息
+             */
+			model.addAttribute("historyData",hService.getHistoryData());
+			
+			return "showCan";
+		}catch(Exception e){
+			logger.error("login error"+e);
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
