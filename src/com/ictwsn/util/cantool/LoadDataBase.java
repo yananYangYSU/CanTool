@@ -1,9 +1,14 @@
 package com.ictwsn.util.cantool;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import com.ictwsn.bean.CanSignalBean;
+import com.ictwsn.util.CurrentConn;
 /**
  * can信息及信号数据库加载类
  * @author YangYanan
@@ -23,41 +28,45 @@ public class LoadDataBase {
 	/**
 	 * 加载Can信息与信号数据库
 	 * 将can信息与信号列表封装到静态map数组中
+	 * @throws SQLException 
 	 */
 	private static int loadCanSignal(){
-		
-		ArrayList<CanSignalBean> canSignalList=new ArrayList<CanSignalBean>();
-		CanSignalBean csb=new CanSignalBean();
-		csb.setSignalName("CDU_HVACACCfg");
-		csb.setStartBit(12);
-		csb.setBitLength(12);
-		csb.setBitType(0);
-		csb.setResolutionValue(1);
-		csb.setOffsetValue(0);
-		csb.setMinPhyValue(0);
-		csb.setMaxPhyValue(100);
-		csb.setUnit("℃");
-		
-		csb.setNodeNames("HVAC1,HAVC2,HAVC3");
-		canSignalList.add(csb);
-
-		csb=new CanSignalBean();
-		csb.setSignalName("CDU_HVACAirCirCfg");
-		csb.setStartBit(16);
-		csb.setBitLength(12);
-		csb.setBitType(0);
-		csb.setResolutionValue(1);
-		csb.setOffsetValue(0);
-		csb.setMinPhyValue(0);
-		csb.setMaxPhyValue(100);
-		csb.setUnit("℃");
-		csb.setNodeNames("HVAC4,HAVC5,HAVC6");
-		canSignalList.add(csb);
-
+		Connection conn=CurrentConn.getInstance().getConn();
 		tempCanSignalMap.clear();
-		tempCanSignalMap.put(318767095,canSignalList);
-		tempCanSignalMap.put(65,null);
-		
+		try {
+			String sql="select id from can_message";
+			Statement st=conn.createStatement();
+			ResultSet rs=st.executeQuery(sql);
+			while(rs.next()){
+				int id=rs.getInt(1);
+				ArrayList<CanSignalBean> canSignalList=new ArrayList<CanSignalBean>();
+				try {
+					sql="select * from can_signal where messageId="+id;
+					st=conn.createStatement();
+					ResultSet rs2=st.executeQuery(sql);
+					while(rs2.next()) {
+						CanSignalBean csb=new CanSignalBean();
+						csb.setSignalName(rs2.getString(3));
+						csb.setStartBit(rs2.getInt(4));
+						csb.setBitLength(rs2.getInt(5));
+						csb.setBitType(rs2.getInt(6));
+						csb.setResolutionValue(rs2.getDouble(7));
+						csb.setOffsetValue(rs2.getDouble(8));
+						csb.setMinPhyValue(rs2.getDouble(9));
+						csb.setMaxPhyValue(rs2.getDouble(10));
+						csb.setUnit(rs2.getString(11));
+						csb.setNodeNames(rs2.getString(12));
+						canSignalList.add(csb);	
+					}
+				}catch(Exception e){
+					e.printStackTrace();
+				}
+				tempCanSignalMap.put(id, canSignalList);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+
 		/**
 		 * 方法的实现上为了防止多线程访问冲突,设置临时map数组
 		 */

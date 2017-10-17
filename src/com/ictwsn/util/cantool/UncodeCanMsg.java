@@ -170,7 +170,7 @@ public class UncodeCanMsg {
 	 * @param cd
 	 * @return 解析出物理属性的can信息实体数组
 	 */
-	private ArrayList<CanPhyDataBean> parseCanData(CanMsgDataBean cd){
+	public ArrayList<CanPhyDataBean> parseCanData(CanMsgDataBean cd){
 
 		DataFormats dataFormat=DataFormats.getInstance();
 		int id=Integer.parseInt(cd.getId(),16);

@@ -40,19 +40,20 @@ public class HistoryDataDaoImpl extends MySQLBaseDao implements HistoryDataDao {
 
 	@Override
 	public Map<String, ArrayList<String>> getHistoryData() {
-		CanMsgDataBean canMsg=new CanMsgDataBean();
-		//UncodeCanMsg uncode=UncodeCanMsg.getInstance().p
 		Map<String,ArrayList<String>> DataMap=new HashMap<String,ArrayList<String>>();
 		conn=CurrentConn.getInstance().getConn();
 		String sql=null;
-		ArrayList<String> signalName=new ArrayList<String>();
+		//key和value
+		String message=null;                               
+		ArrayList<String> signal=new ArrayList<String>();  
+		ArrayList<CanPhyDataBean> canPhy=new ArrayList<CanPhyDataBean>();
 		//查询message数据
 		try {
 			sql="select * from can_msg_data";
 			pst=conn.prepareStatement(sql);
 			rs=pst.executeQuery();
 			while(rs.next()){
-				int id=rs.getInt(2);
+				int id=Integer.parseInt(rs.getString(2),16); //将十六进制id转换成十进制，用于匹配messageid
 				//根据数据id查询name，表格需要使用
 				String messageName=null;
 				try {
@@ -65,20 +66,21 @@ public class HistoryDataDaoImpl extends MySQLBaseDao implements HistoryDataDao {
 				}catch(Exception e){
 					e.printStackTrace();
 				}
-				//解析message，组装表格所需数据
-				
-				try {
-					sql="select signalName from can_signal where messageId="+id;
-					pst=conn.prepareStatement(sql);
-					ResultSet rs2=pst.executeQuery();
-					while(rs2.next()) {
-						signalName.add(rs2.getString(1));	
-					}
-				}catch(Exception e){
-					e.printStackTrace();
+				message=rs.getDate(5)+rs.getString(2)+messageName+rs.getInt(3)+rs.getString(4); //key由time,id.name,dcl,data组成
+				//组装message字符串，组装表格所需数据
+				String messageStr=null;
+				if(rs.getString(2).length()==3) {
+					messageStr="t"+rs.getString(2)+rs.getInt(3)+rs.getString(4)+"\\r";
+				}else if(rs.getString(2).length()==8) {
+					messageStr="T"+rs.getString(2)+rs.getInt(3)+rs.getString(4)+"\\r";
 				}
-				
-				DataMap.put(rs.getString(6)+"  "+rs.getInt(2)+"   "+rs.getString(3)+"  "+rs.getInt(4)+"   "+"data", signalName);
+				canPhy=UncodeCanMsg.getInstance().parseCanData(UncodeCanMsg.getInstance().splitDataStr(messageStr));
+				for(int i=0;i<canPhy.size();i++) {
+					CanPhyDataBean canphy=canPhy.get(i);
+					String signalStr=canphy.getSignalName()+canphy.getPhyValue()+canphy.getUnit()+canphy.getHexStr()+canphy.getBinaryStr();
+					signal.add(signalStr);
+				}
+				DataMap.put(message, signal);
 			}
 		}catch(Exception e){
 			e.printStackTrace();
