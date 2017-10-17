@@ -3,6 +3,7 @@ package com.ictwsn.dao.historyData;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +21,7 @@ public class HistoryDataDaoImpl extends MySQLBaseDao implements HistoryDataDao {
 	private Connection conn = null;
 	private PreparedStatement pst = null;
 	private ResultSet rs=null;
+	ResultSet rs2=null;
 	
 	@Override
 	public ArrayList<CanPhyDataBean> searchHistoryData(String ecuName, int page, String startTime,
@@ -37,36 +39,39 @@ public class HistoryDataDaoImpl extends MySQLBaseDao implements HistoryDataDao {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	/**
+	 * 实时数据显示dao层 的实现
+	 * 将can信息和解析出的物理值通过一定的显示规则封装至map数组
+	 * @throws SQLException 
+	 */
 	@Override
 	public Map<String, ArrayList<String>> getHistoryData() {
 		Map<String,ArrayList<String>> DataMap=new HashMap<String,ArrayList<String>>();
-		conn=CurrentConn.getInstance().getConn();
-		String sql=null;
-		//key和value
-		String message=null;                               
-		ArrayList<String> signal=new ArrayList<String>();  
 		ArrayList<CanPhyDataBean> canPhy=new ArrayList<CanPhyDataBean>();
-		//查询message数据
+		String sql=null;
+		String message=null; //key和value                              
+		ArrayList<String> signal=new ArrayList<String>();  
 		try {
 			sql="select * from can_msg_data";
+			conn=CurrentConn.getInstance().getConn();
 			pst=conn.prepareStatement(sql);
 			rs=pst.executeQuery();
 			while(rs.next()){
 				int id=Integer.parseInt(rs.getString(2),16); //将十六进制id转换成十进制，用于匹配messageid
-				//根据数据id查询name，表格需要使用
-				String messageName=null;
+				
+				String messageName=null;//获取messageName
 				try {
-					sql="select messageName from can_message where id="+id;
+					sql="select messageName from can_message where id=?";
 					pst=conn.prepareStatement(sql);
-					ResultSet rs2=pst.executeQuery();
+					pst.setInt(1, id);
+					rs2=pst.executeQuery();
 					while(rs2.next()) {
 							messageName=rs2.getString(1);
 					}
 				}catch(Exception e){
 					e.printStackTrace();
 				}
-				//组装message字符串，组装表格所需数据
+
 				String messageStr=null;
 				if(rs.getString(2).length()==3) {
 					messageStr="t"+rs.getString(2)+rs.getInt(3)+rs.getString(4)+"\\r";
@@ -85,6 +90,11 @@ public class HistoryDataDaoImpl extends MySQLBaseDao implements HistoryDataDao {
 			}
 		}catch(Exception e){
 			e.printStackTrace();
+		}finally {
+			CurrentConn.getInstance().closeResultSet(rs);
+			CurrentConn.getInstance().closeResultSet(rs2);
+			CurrentConn.getInstance().closePreparedStatement(pst);
+			CurrentConn.getInstance().closeConnection(conn);
 		}
 		return DataMap;
 	}
