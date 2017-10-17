@@ -66,7 +66,6 @@ public class HistoryDataDaoImpl extends MySQLBaseDao implements HistoryDataDao {
 				}catch(Exception e){
 					e.printStackTrace();
 				}
-				message=rs.getDate(5)+"&nbsp;&nbsp;&nbsp;"+rs.getString(2)+"&nbsp;&nbsp;&nbsp;"+messageName+"&nbsp;&nbsp;&nbsp;"+rs.getInt(3)+"&nbsp;&nbsp;&nbsp;"+rs.getString(4); //key由time,id.name,dcl,data组成
 				//组装message字符串，组装表格所需数据
 				String messageStr=null;
 				if(rs.getString(2).length()==3) {
@@ -74,10 +73,12 @@ public class HistoryDataDaoImpl extends MySQLBaseDao implements HistoryDataDao {
 				}else if(rs.getString(2).length()==8) {
 					messageStr="T"+rs.getString(2)+rs.getInt(3)+rs.getString(4)+"\\r";
 				}
+				CanMsgDataBean canMsg=UncodeCanMsg.getInstance().splitDataStr(messageStr);
+				message=rs.getDate(5)+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+id+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+messageName+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+rs.getInt(3)+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+canMsg.getData().toString(); //key由time,id.name,dcl,data组成
 				canPhy=UncodeCanMsg.getInstance().parseCanData(UncodeCanMsg.getInstance().splitDataStr(messageStr));
 				for(int i=0;i<canPhy.size();i++) {
 					CanPhyDataBean canphy=canPhy.get(i);
-					String signalStr=canphy.getSignalName()+"&nbsp;&nbsp;&nbsp;"+canphy.getPhyValue()+canphy.getUnit()+"&nbsp;&nbsp;&nbsp;"+canphy.getHexStr()+"&nbsp;&nbsp;&nbsp;"+canphy.getBinaryStr();
+					String signalStr=canphy.getSignalName()+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+canphy.getPhyValue()+canphy.getUnit()+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+canphy.getHexStr()+"&nbsp;&nbsp;&nbsp;"+canphy.getBinaryStr();
 					signal.add(signalStr);
 				}
 				DataMap.put(message, signal);
