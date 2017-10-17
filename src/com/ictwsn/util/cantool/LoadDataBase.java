@@ -1,9 +1,9 @@
 package com.ictwsn.util.cantool;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,10 +16,10 @@ import com.ictwsn.util.CurrentConn;
  * @date 2017-10-13
  */
 public class LoadDataBase {
-	
+
 	private static Map<Integer,ArrayList<CanSignalBean>> canSignalMap=new HashMap<Integer,ArrayList<CanSignalBean>>();
 	private static Map<Integer,ArrayList<CanSignalBean>> tempCanSignalMap=new HashMap<Integer,ArrayList<CanSignalBean>>();
-	
+
 	private LoadDataBase(){}//禁止实例化
 
 	static{   
@@ -31,42 +31,49 @@ public class LoadDataBase {
 	 * @throws SQLException 
 	 */
 	private static int loadCanSignal(){
-		Connection conn=CurrentConn.getInstance().getConn();
+		Connection conn = null;
+		PreparedStatement pst = null;
+		ResultSet rs=null;
+		ResultSet rs2=null;
 		tempCanSignalMap.clear();
 		try {
 			String sql="select id from can_message";
-			Statement st=conn.createStatement();
-			ResultSet rs=st.executeQuery(sql);
+			conn=CurrentConn.getInstance().getConn();
+			pst=conn.prepareStatement(sql);
+			rs=pst.executeQuery();
+			int id=0;
 			while(rs.next()){
-				int id=rs.getInt(1);
+				id=rs.getInt(1);
 				ArrayList<CanSignalBean> canSignalList=new ArrayList<CanSignalBean>();
-				try {
-					sql="select * from can_signal where messageId="+id;
-					st=conn.createStatement();
-					ResultSet rs2=st.executeQuery(sql);
-					while(rs2.next()) {
-						CanSignalBean csb=new CanSignalBean();
-						csb.setSignalName(rs2.getString(3));
-						csb.setStartBit(rs2.getInt(4));
-						csb.setBitLength(rs2.getInt(5));
-						csb.setBitType(rs2.getInt(6));
-						csb.setResolutionValue(rs2.getDouble(7));
-						csb.setOffsetValue(rs2.getDouble(8));
-						csb.setMinPhyValue(rs2.getDouble(9));
-						csb.setMaxPhyValue(rs2.getDouble(10));
-						csb.setUnit(rs2.getString(11));
-						csb.setNodeNames(rs2.getString(12));
-						canSignalList.add(csb);	
-					}
-				}catch(Exception e){
-					e.printStackTrace();
+
+				sql="select * from can_signal where messageId=?";
+				pst=conn.prepareStatement(sql);
+				pst.setInt(1,id);
+				rs2=pst.executeQuery();
+				while(rs2.next()) {
+					CanSignalBean csb=new CanSignalBean();
+					csb.setSignalName(rs2.getString(3));
+					csb.setStartBit(rs2.getInt(4));
+					csb.setBitLength(rs2.getInt(5));
+					csb.setBitType(rs2.getInt(6));
+					csb.setResolutionValue(rs2.getDouble(7));
+					csb.setOffsetValue(rs2.getDouble(8));
+					csb.setMinPhyValue(rs2.getDouble(9));
+					csb.setMaxPhyValue(rs2.getDouble(10));
+					csb.setUnit(rs2.getString(11));
+					csb.setNodeNames(rs2.getString(12));
+					canSignalList.add(csb);	
 				}
 				tempCanSignalMap.put(id, canSignalList);
 			}
 		}catch(Exception e){
 			e.printStackTrace();
+		}finally{
+			CurrentConn.getInstance().closeResultSet(rs);
+			CurrentConn.getInstance().closeResultSet(rs2);
+			CurrentConn.getInstance().closePreparedStatement(pst);
+			CurrentConn.getInstance().closeConnection(conn);
 		}
-
 		/**
 		 * 方法的实现上为了防止多线程访问冲突,设置临时map数组
 		 */
@@ -77,7 +84,7 @@ public class LoadDataBase {
 		}else{
 			return 0;
 		}
-		
+
 	}
 	/**
 	 * 重新加载can信息及信号数据库
@@ -94,6 +101,6 @@ public class LoadDataBase {
 	public static Map<Integer,ArrayList<CanSignalBean>> getCanSignalMap(){
 		return canSignalMap;
 	}
-	
+
 
 }
