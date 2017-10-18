@@ -1,5 +1,7 @@
 package com.ictwsn.service.currentData;
 
+import java.util.ArrayList;
+
 import com.ictwsn.bean.CanPhyDataBean;
 import com.ictwsn.bean.CanSignalBean;
 
@@ -11,6 +13,8 @@ import com.ictwsn.bean.CanSignalBean;
  * @date 2017-8-18
  */
 public interface CurrentDataService{
-	public CanPhyDataBean getRealPhyData(String id,String signalName);
-	public CanSignalBean getCanSignal(String id,String signalName);
+	public ArrayList<CanPhyDataBean> getRealDataList(int id,String signalName);
+	public ArrayList<CanPhyDataBean> getRealDataList(int id,String signalName,String startTime);
+	public CanPhyDataBean getRealPhyData(int id,String signalName);
+	public CanSignalBean getCanSignal(int id,String signalName);
 }

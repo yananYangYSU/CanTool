@@ -201,7 +201,6 @@ public class DatabaseDaoImpl extends MySQLBaseDao implements DatabaseDao {
 	public Map<String,ArrayList<String>> getTreeData(){
 		Map<String,ArrayList<String>> nameMap=new HashMap<String,ArrayList<String>>();
 		String sql=null;
-		ResultSet rs2=null;
 		ArrayList<String> signalName=new ArrayList<String>();
 		try {
 			sql="select * from can_message";
@@ -211,8 +210,9 @@ public class DatabaseDaoImpl extends MySQLBaseDao implements DatabaseDao {
 			while(rs.next()){
 				int id=rs.getInt(1);
 				try {
-					sql="select signalName from can_signal where messageId="+id;
+					sql="select signalName from can_signal where messageId=?";
 					pst=conn.prepareStatement(sql);
+					pst.setInt(1, id);
 					rs2=pst.executeQuery();
 					while(rs2.next()) {
 						signalName.add(rs2.getString(1));	

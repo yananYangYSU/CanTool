@@ -14,13 +14,13 @@ import java.util.ArrayList;
  * 0000代表是发送一次，0001-FFFF代表CanTool装置以mmmm为周期，发送该命令到总线
  */
 public class CanMsgDataBean {
-	
+
 	private String id;
 	private int dcl;
 	private ArrayList<String> data;
-    private String interval;
-    private String time;
-    
+	private String interval;
+	private String time;
+
 	public String getId() {
 		return id;
 	}
@@ -49,11 +49,14 @@ public class CanMsgDataBean {
 		return time;
 	}
 	public void setTime(String time) {
-		this.time = time;
+		if(time!=null&&time.length()>=19)
+			this.time = time.substring(0,19);
+		else
+			this.time=time;
 	}
 	public String toString(){
 		return "id:"+this.id+"dcl:"+this.dcl+"interval:"+this.interval+"dataSize:"+this.data.toString();
-		
+
 	}
 	/**
 	 * ArrayList转字符串

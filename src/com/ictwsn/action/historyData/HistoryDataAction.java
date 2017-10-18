@@ -99,3 +99,4 @@ public class HistoryDataAction {
 		return null;
 	}
 }
+}

@@ -45,7 +45,6 @@ public class LoadDataBase {
 			while(rs.next()){
 				id=rs.getInt(1);
 				ArrayList<CanSignalBean> canSignalList=new ArrayList<CanSignalBean>();
-
 				sql="select * from can_signal where messageId=?";
 				pst=conn.prepareStatement(sql);
 				pst.setInt(1,id);

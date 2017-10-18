@@ -1,25 +1,22 @@
 package com.ictwsn.action.currenData;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
+import net.sf.json.JSONArray;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-
 import com.ictwsn.bean.CanPhyDataBean;
 import com.ictwsn.bean.CanSignalBean;
 import com.ictwsn.service.currentData.CurrentDataService;
-import com.ictwsn.service.exportData.ExportDataService;
-import com.ictwsn.service.systemSet.SystemSetService;
-import com.ictwsn.util.GetHttpType;
 import com.ictwsn.util.format.DateFormats;
 /**
  * 运营商控制类
@@ -43,26 +40,30 @@ public class CurrentDataAction {
 	 */
 	@RequestMapping("/currentDataIndex.do")
 	public String currentDataIndex(HttpServletRequest request,HttpServletResponse response,Model model,
-			@RequestParam(value="id",required=true) String id,
+			@RequestParam(value="id",required=true) Integer id,
 			@RequestParam(value="signalName",required=true) String signalName){
 		try{
-			/**
-			 * 图1 solrCloud
-			 */
 			StringBuffer strName=new StringBuffer();
 			StringBuffer strData=new StringBuffer();
 			StringBuffer HSeries=new StringBuffer();
 			strName.append("{name:'dataSeries',");//type: 'area',
 			strData.append("data:[");
-			CanPhyDataBean cpdb=cService.getRealPhyData(id,signalName);
+			//CanPhyDataBean cpdb=cService.getRealPhyData(id,signalName);
+			ArrayList<CanPhyDataBean> cpdbList=cService.getRealDataList(id,signalName);
 			CanSignalBean csb=cService.getCanSignal(id,signalName);
-			long time=DateFormats.getInstance().dateStringToTime(cpdb.getTime());
-			for(int i=0;i<59;i++){
-				strData.append("[").append(time).append(",").append(cpdb.getPhyValue()).append("],");
+			long time;
+			int size=cpdbList.size()-1;
+			for(int i=0;i<size;i++){
+				time=DateFormats.getInstance().dateStringToTime(cpdbList.get(i).getTime());
+				strData.append("[").append(time).append(",").append(cpdbList.get(i).getPhyValue()).append("],");
 			}
-			strData.append("[").append(time).append(",").append(cpdb.getPhyValue()).append("]]");
+			time=DateFormats.getInstance().dateStringToTime(cpdbList.get(size).getTime());
+			strData.append("[").append(time).append(",").append(cpdbList.get(size).getPhyValue()).append("]]");
 			HSeries.append(strName).append(strData).append(",marker: {enabled: true}}");
-
+			
+			model.addAttribute("id",id);
+			model.addAttribute("lastTime",cpdbList.get(size).getTime());
+			model.addAttribute("signalName",csb.getSignalName());
 			model.addAttribute("dataSeries",HSeries.toString());
 			model.addAttribute("maxPhyValue",csb.getMaxPhyValue());
 			model.addAttribute("minPhyValue",csb.getMinPhyValue());
@@ -83,10 +84,12 @@ public class CurrentDataAction {
 	 */
 	@RequestMapping("/currentDataRequest.do")
 	public void currentDataRequest(HttpServletRequest request,HttpServletResponse response,
-			@RequestParam(value="id",required=true) String id,
-			@RequestParam(value="ecuName",required=true) String ecuName){
+			@RequestParam(value="id",required=true) Integer id,
+			@RequestParam(value="signalName",required=true) String signalName,
+			@RequestParam(value="startTime",required=true) String startTime){
 		try{
-			response.getWriter().print(cService.getRealPhyData(id, ecuName));
+			ArrayList<CanPhyDataBean> cpdbList=cService.getRealDataList(id,signalName,startTime);
+			response.getWriter().print(JSONArray.fromObject(cpdbList));
 			
 		}catch(Exception e){
 			logger.error("login error"+e);

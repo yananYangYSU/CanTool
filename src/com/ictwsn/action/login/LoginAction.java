@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import javax.servlet.http.HttpSession;
 
@@ -14,9 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
- 
+
 import com.ictwsn.service.login.LoginService;
 import com.ictwsn.util.GetHttpType;
+import com.ictwsn.util.rxtx.SerialPortListener;
 
 
 /**
@@ -31,41 +33,74 @@ public class LoginAction{
 	static Logger logger = Logger.getLogger(LoginAction.class.getName());
 
 	@Resource LoginService lService;	
+	
 	/**
-	 * 登录请求
+	 * 跳转到端口接入页面
 	 * @param request
-	 * @param session
-	 * @param model
-	 * @param userName 用户名
-	 * @param password 密码
-	 * @param roleName
+	 * @param response
 	 * @return
-	 * @throws UnsupportedEncodingException 
 	 */
-	@RequestMapping(value="/login.do", method = RequestMethod.POST)
-	public String login(HttpServletRequest request,HttpSession session,Model model,
-			@RequestParam(value="userName",required=true) String userName,
-			@RequestParam(value="password",required=true) String password,
-			@RequestParam(value="roleName",required=true) String roleName) throws UnsupportedEncodingException{
+	@RequestMapping("/listPort.do")
+	public String listPort(HttpServletRequest request,HttpServletResponse response){
+		return "listPort";
+	}
+	/**
+	 * 跳转到管理主页面
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/index.do")
+	public String index(HttpServletRequest request,HttpServletResponse response){
+		return "index";
+	}
+	/**
+	 * 接入cantool装置请求
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @param portName 端口名称
+	 * @param baudRate 波特率
+	 * @param startBit 开始位
+	 * @param stopBit 停止位
+	 * @throws UnsupportedEncodingException
+	 */
+	@RequestMapping("/login.do")
+	public String login(HttpServletRequest request,HttpServletResponse response,Model model,
+			@RequestParam(value="portName",required=true) String portName,
+			@RequestParam(value="baudRate",required=true) Integer baudRate,
+			@RequestParam(value="dataBit",required=true) Integer startBit,
+			@RequestParam(value="stopBit",required=true) Integer stopBit) throws UnsupportedEncodingException{
 		try{
-			
-				model.addAttribute("userName",userName);
-				model.addAttribute("password",password);
-				return "login";
-			
+			int result=lService.login(portName,baudRate,startBit,stopBit);			
+			if(result==1){
+				model.addAttribute("portName",portName);
+				model.addAttribute("baudRate",baudRate);
+				model.addAttribute("startBit",startBit);
+				model.addAttribute("stopBit",stopBit);
+				return "index";
+			}else{
+				model.addAttribute("message","0");
+				return "redirect:/listPort.do";
+			}
+
 		}catch(Exception e){
 			logger.error("login error"+e);
 			e.printStackTrace();
 			return "pages/error/404";
 		}
-
-
 	}
+	/**
+	 * 断开连接
+	 * @param request
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping("/logoff.do")
 	public String logoff(HttpServletRequest request,HttpSession session){
 		try{
-			session.removeAttribute("RoleBean");
-			return "redirect:/login.jsp";
+			lService.logoff();
+			return "redirect:/listPort.do";
 		}catch(Exception e){
 			logger.error("logoff error"+e);
 			e.printStackTrace();

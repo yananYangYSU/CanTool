@@ -17,6 +17,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;  
 import java.io.OutputStreamWriter;  
 import java.util.Enumeration;  
+import java.util.Random;
 import java.util.TooManyListenersException;  
   
   
@@ -251,21 +252,50 @@ public class SerialPortCOM1 implements Runnable, SerialPortEventListener {
         }  
     }  
     
-    public static void main(String[] args) {  
-        
+    public static void main(String[] args) {     
         SerialPortCOM1 sp = new SerialPortCOM1();  
-          
         sp.listPort();  
-          
         sp.selectPort("COM1"); 
         sp.startRead(20000);
-        try {
-			Thread.sleep(15000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        sp.write("1000");
-         
+        String[] ids={"03d","321","31d"};
+        int i=0;
+        while(i<10000){
+        	try {
+        		i++;
+    			Thread.sleep(5000);
+    			sp.write("t"+ids[new Random().nextInt(3)]+"8"+sp.randomHexString(16)+"\r");
+    		} catch (InterruptedException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    			
+    		}
+        }
+        
+        sp.close();
+      
+        
+      
     }
+    /** 
+     * 获取16进制随机数 
+     * @param len 
+     * @return 
+     * @throws CoderException 
+     */  
+    private String randomHexString(int len)  {  
+        try {  
+            StringBuffer result = new StringBuffer();  
+            for(int i=0;i<len;i++) {  
+                result.append(Integer.toHexString(new Random().nextInt(16)));  
+            }  
+            return result.toString().toUpperCase();  
+              
+        } catch (Exception e) {  
+            // TODO: handle exception  
+            e.printStackTrace();  
+            return null;  
+        }  
+     
+          
+    }  
 }

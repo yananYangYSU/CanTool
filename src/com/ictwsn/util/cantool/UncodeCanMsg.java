@@ -22,8 +22,8 @@ public class UncodeCanMsg {
 		47,46,45,44,43,42,41,40,
 		55,54,53,52,51,50,49,48,
 		63,62,61,60,59,58,57,56
-		};
-	
+	};
+
 	private static UncodeCanMsg uncodeCanMsg = null;  //CurrentConn类单例对象
 
 	private UncodeCanMsg(){}
@@ -42,26 +42,28 @@ public class UncodeCanMsg {
 	 * @param canMsgStr can信息字符串
 	 * @return CanPhyDataBean实体 例如该条信息为:CDU_HVACACCfg 2185.0 ℃ high
 	 */
-    public CanPhyDataBean getCanPhyData(String signalName,String canMsgStr){
-    	ArrayList<CanPhyDataBean> cpdbList=this.parseCanData(this.splitDataStr(canMsgStr));
-    	for(CanPhyDataBean cpdb:cpdbList){
-    		if(cpdb.getSignalName().equals(signalName)){
-    			return cpdb;
-    		}
-    	}
-    	return null;
-    } 
+	public CanPhyDataBean getCanPhyData(String signalName,String canMsgStr){
+		ArrayList<CanPhyDataBean> cpdbList=this.parseCanData(this.splitDataStr(canMsgStr));
+		for(CanPhyDataBean cpdb:cpdbList){
+			if(cpdb.getSignalName().equals(signalName)){
+				return cpdb;
+			}
+		}
+		return null;
+	} 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		System.out.println();
+		
 		/*DataFormats dataFormat=DataFormats.getInstance();
 		// TODO Auto-generated method stub
-		String dataStr="T12FFFFF7800111213141516FF0000\\r";
+		 * t32186211F553238765AB//
+		 */
+		String dataStr="t32186211F553238765AB\r";
 		UncodeCanMsg t=new UncodeCanMsg();
 		System.out.println("message="+dataStr);
-		System.out.println("解析后id:"+Integer.parseInt("12FFFFF7",16));
+		System.out.println("解析后id:"+Integer.parseInt("321",16));
 		t.parseCanData(t.splitDataStr(dataStr));
 		/*Pattern p=Pattern.compile("[a-]{1,}@[0-9]{1}",Pattern.DOTALL);
 		Matcher m=p.matcher("SG_ CDU_HVACAutoModeButtonSt : 2|00001@0+ (1,0) [0|1] \"\"  HVAC");
@@ -69,49 +71,50 @@ public class UncodeCanMsg {
 			System.out.println(m.group());
 		}*/
 
-		/*ArrayList<String> dataList=t.splitDataStr(dataStr).getData();
+		ArrayList<String> dataList=t.splitDataStr(dataStr).getData();
 		StringBuffer BitStrIntel=new StringBuffer();
 		StringBuffer BitStrMotorola=new StringBuffer();
 
 		int size=dataList.size();
 		//intel
 		for(int i=size-1;i>=0;i--){
-			BitStrIntel.append(dataFormat.hexToBinary(dataList.get(i)));
+			BitStrIntel.append(DataFormats.getInstance().hexToBinary(dataList.get(i)));
 		}
 		System.out.println("----intel matrix-----");
 
 		for(int i=0;i<size;i++){
-			System.out.println(dataFormat.hexToBinary(dataList.get(i)));
-
+			System.out.println(DataFormats.getInstance().hexToBinary(dataList.get(i)));
 		}
 		System.out.println("intel "+BitStrIntel);
-		System.out.println("sub "+BitStrIntel.substring(64-12-12,64-12));
+	
+		System.out.println(t.matrixSubBinStr(BitStrIntel.toString(), 15, 8, 0));
 		System.out.println("----motorola-----");
 		//motorola
-		
+
 		//	for(int i=size-1;i>=0;i--){
 		for(int i=0;i<size;i++){
-			BitStrMotorola.append(dataFormat.hexToBinary(dataList.get(i)));
-			/*if(flag==true){
+			BitStrMotorola.append(DataFormats.getInstance().hexToBinary(dataList.get(i)));	
+		}/*if(flag==true){
 				BitStrMotorola.append(t.hexToBinary(dataList.get(i)));
 				flag=!flag;
 			}else{
 				BitStrMotorola.append(t.reverseStr(t.hexToBinary(dataList.get(i))));
 				flag=!flag;
 			}		*/	
-		/*}
-		System.out.println("----moto matrix-----");
+		//}
+
 		for(int i=0;i<size;i++){
-			System.out.println(dataFormat.hexToBinary(dataList.get(i)));
+			System.out.println(DataFormats.getInstance().hexToBinary(dataList.get(i)));
 
 		}
 
 		System.out.println("motol "+BitStrMotorola);
 
-		System.out.println(t.matrixSubBinStr(BitStrIntel.toString(), 16, 12, 1));
+		System.out.println(t.matrixSubBinStr(BitStrIntel.toString(), 15, 8, 1));
 		//System.out.println("motol ");
 		//System.out.println(t.matrixSubBinStr(BitStrMotorola.toString(), 11, 12,0));
-*/
+		 
+	
 	}
 
 
@@ -125,43 +128,48 @@ public class UncodeCanMsg {
 	public CanMsgDataBean splitDataStr(String dataStr){
 		CanMsgDataBean cd=new CanMsgDataBean();
 		dataStr=dataStr.trim();
-		dataStr=dataStr.replace("\\r","");
-		dataStr=dataStr.replace("\r","");
-		if(dataStr.startsWith("t")){
-			String id=dataStr.substring(1,4);
-			cd.setId(id);
-			int dcl=Integer.parseInt(dataStr.substring(4,5));
-			cd.setDcl(dcl);
-			String data=dataStr.substring(5,(dcl<<1)+5);
-			ArrayList<String> dataList=new ArrayList<String>();
-			for(int i=0;i<dcl<<1;i=i+2){
-				dataList.add(data.substring(i,i+2));
+		//dataStr=dataStr.replace("\\r","");
+		//dataStr=dataStr.replace("\r","");
+		try{
+			if(dataStr.startsWith("t")){
+				String id=dataStr.substring(1,4);
+				cd.setId(id);
+				int dcl=Integer.parseInt(dataStr.substring(4,5));
+				cd.setDcl(dcl);
+				String data=dataStr.substring(5,(dcl<<1)+5);
+				ArrayList<String> dataList=new ArrayList<String>();
+				for(int i=0;i<dcl<<1;i=i+2){
+					dataList.add(data.substring(i,i+2));
+				}
+				cd.setData(dataList);
+				if((dcl<<1)+9==dataStr.length()){
+					String interval=dataStr.substring((dcl<<1)+5,(dcl<<1)+9); 
+					cd.setInterval(interval);
+				}
+			}else if(dataStr.startsWith("T")){
+				String id=dataStr.substring(1,9);
+				cd.setId(id);
+				int dcl=Integer.parseInt(dataStr.substring(9,10));
+				cd.setDcl(dcl);
+				String data=dataStr.substring(10,(dcl<<1)+10);
+				ArrayList<String> dataList=new ArrayList<String>();
+				for(int i=0;i<dcl<<1;i=i+2){
+					dataList.add(data.substring(i,i+2));
+				}
+				cd.setData(dataList);
+				if((dcl<<1)+14==dataStr.length()){
+					String interval=dataStr.substring((dcl<<1)+10,(dcl<<1)+14); 
+					cd.setInterval(interval);
+				}
+			}else{
+				System.err.print("can信息格式不正确");
+				cd.setDcl(-1);
 			}
-			cd.setData(dataList);
-			if((dcl<<1)+9==dataStr.length()){
-				String interval=dataStr.substring((dcl<<1)+5,(dcl<<1)+9); 
-				cd.setInterval(interval);
-			}
-		}else if(dataStr.startsWith("T")){
-			String id=dataStr.substring(1,9);
-			cd.setId(id);
-			int dcl=Integer.parseInt(dataStr.substring(9,10));
-			cd.setDcl(dcl);
-			String data=dataStr.substring(10,(dcl<<1)+10);
-			ArrayList<String> dataList=new ArrayList<String>();
-			for(int i=0;i<dcl<<1;i=i+2){
-				dataList.add(data.substring(i,i+2));
-			}
-			cd.setData(dataList);
-			if((dcl<<1)+14==dataStr.length()){
-				String interval=dataStr.substring((dcl<<1)+10,(dcl<<1)+14); 
-				cd.setInterval(interval);
-			}
-		}else{
-			System.err.print("can信息格式不正确");
+		}catch(Exception e){
+			cd.setDcl(-1);
 		}
 		cd.setTime(DateFormats.getInstance().getNowDate());//打上当前时间戳
-		
+
 		return cd;
 
 	}
@@ -175,6 +183,7 @@ public class UncodeCanMsg {
 		DataFormats dataFormat=DataFormats.getInstance();
 		int id=Integer.parseInt(cd.getId(),16);
 		ArrayList<CanSignalBean> canSignalList=LoadDataBase.getCanSignalMap().get(id);
+		
 		if(canSignalList==null||canSignalList.size()==0){
 			System.err.print("id:"+id+"找不到对应数据库信息");
 			return null;
@@ -273,6 +282,9 @@ public class UncodeCanMsg {
 			message="normal";
 		}
 		return message;
+	}
+	private boolean checkMessage(String messageStr){
+		return false;
 	}
 
 }

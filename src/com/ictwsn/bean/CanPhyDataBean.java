@@ -9,6 +9,7 @@ public class CanPhyDataBean {
     private String binaryStr;
     private String hexStr;
     private String time;
+
    
 	public int getAutoId() {
 		return autoId;
@@ -50,7 +51,10 @@ public class CanPhyDataBean {
 		return time;
 	}
 	public void setTime(String time) {
-		this.time = time;
+		if(time!=null&&time.length()>=19)
+			this.time = time.substring(0,19);
+		else
+			this.time=time;
 	}
 	public String toString(){
 		return signalName+" "+phyValue+" "+unit+" "+binaryStr+" "+hexStr;
