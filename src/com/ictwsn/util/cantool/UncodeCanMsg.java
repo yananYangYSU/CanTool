@@ -205,7 +205,7 @@ public class UncodeCanMsg {
 
 				String matrixSubBinStr="";
 				if(csb.getBitType()==0){//0代表Motorola格式
-					matrixSubBinStr=this.matrixSubBinStr(BitStrMotorola.toString(),csb.getStartBit(),csb.getStartBit(),0);
+					matrixSubBinStr=this.matrixSubBinStr(BitStrMotorola.toString(),csb.getStartBit(),csb.getBitLength(),0);
 				}else{//1代表intel格式
 					matrixSubBinStr=this.matrixSubBinStr(BitStrIntel.toString(),csb.getStartBit(),csb.getBitLength(),1);
 				}
