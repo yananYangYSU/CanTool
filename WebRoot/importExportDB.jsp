@@ -51,6 +51,13 @@
 				<button class="btn btn-default radius" type="reset">&nbsp;&nbsp;重置&nbsp;&nbsp;</button>
 			</div>
 		</div>
+		<div class="row cl" >
+ 			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2" style="margin-left: 35px;margin-top: 15px;">
+ 			<label class="form-label col-xs-4 col-sm-2">数据导出：</label>
+ 				<button onClick="exportDB('xml');" class="btn btn-primary radius" type="button" style="margin-left: 15px;"><i class="Hui-iconfont">&#xe632;</i>XML格式</button>
+ 				<button onClick="exportDB('json');" class="btn btn-primary radius" type="button"><i class="Hui-iconfont">&#xe632;</i>JSON格式</button>
+ 			</div>
+ 		</div>
 	</form>
 </div>
 
@@ -78,12 +85,13 @@
 				}else{
 					Showbo.Msg.alert("数据格式文件有误!");
 				}
-				
-				
 			}
 		});
-		function importDB(){
-			document.importDBForm.submit();
+		function exportDB(type){
+			if(type="xml")
+				window.location="exportDatabase.do?fileType=xml";
+			else 
+				window.location="exportDatabase.do?fileType=json";
 		}
 </script>
 
