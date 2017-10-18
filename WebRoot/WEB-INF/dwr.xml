@@ -6,19 +6,10 @@
 		<convert converter="bean" match="com.ictwsn.bean.*"/>
 	  	<convert converter="string" match="java.lang.String"/>
 	  	
-		<create javascript="aService" creator="spring">
-			<param name="beanName" value="aService"/>
-				<include method="checkOperatorUuid"/>	<!--  -->
-				<include method="checkOperatorMajor"/>	<!--  -->
-				
+		<create javascript="lService" creator="spring">
+			<param name="beanName" value="lService"/>
+				<include method="getAvaPort"/>	<!--搜索可用端口  -->
 		</create>
-		<create javascript="oService" creator="spring">
-			<param name="beanName" value="oService"/>
-				<include method="query_client"/>	<!--  -->
-				<include method="query_uuidMajor"/>	<!--  -->
-				
-		</create>
-	
 	</allow>
 	
 </dwr>

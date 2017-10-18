@@ -51,14 +51,6 @@
 				<button class="btn btn-default radius" type="reset">&nbsp;&nbsp;重置&nbsp;&nbsp;</button>
 			</div>
 		</div>
-		<div class="row cl" >
-		
-			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2" style="margin-left: 35px;margin-top: 15px;">
-			<label class="form-label col-xs-4 col-sm-2">数据导出：</label>
-				<button onClick="importDB();" class="btn btn-primary radius" type="button" style="margin-left: 15px;"><i class="Hui-iconfont">&#xe632;</i>XML格式</button>
-				<button onClick="importDB();" class="btn btn-primary radius" type="button"><i class="Hui-iconfont">&#xe632;</i>JSON格式</button>
-			</div>
-		</div>
 	</form>
 </div>
 

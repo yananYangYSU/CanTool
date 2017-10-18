@@ -27,90 +27,40 @@
 	top:0px;*/
 	position: relative;
 	margin: 0 auto;
-	margin-left: 50% auto width:1100px;
+	margin-left: 0 auto;
 	height: 600px;
 	z-index: 6;
 	top: 0px;
-	width: 1100px;
+	width: 800px;
 }
 
 #container1 {
 	position: absolute;
-	width: 500px;
-	height: 200px;
-	left: -50px;
+	width: 600px;
+	height: 280px;
+	left: -80px;
 	top: 0px;
 }
 
 #container2 {
 	position: absolute;
-	width: 500px;
-	height: 200px;
-	left: 470px;
+	width: 280px;
+	height: 280px;
+	left: 530px;
 	top: 0px;
 }
-
 #container3 {
 	position: absolute;
-	width: 500px;
-	height: 200px;
-	left: -50px;
-	top: 200px;
+	width: 600px;
+	height: 280px;
+	left: 50px;
+	top: 280px;
 }
-
-#container4 {
-	position: absolute;
-	width: 500px;
-	height: 200px;
-	left: 470px;
-	top: 200px;
-}
-
-#container5 {
-	position: absolute;
-	width: 500px;
-	height: 200px;
-	left: -50px;
-	top: 400px;
-}
-
-#container6 {
-	position: absolute;
-	width: 500px;
-	height: 200px;
-	left: 470px;
-	top: 400px;
-}
-
-#container7 {
-	position: absolute;
-	width: 1100px;
-	height: 400px;
-	left: -50px;
-	top: 600px;
-}
-#container8 {
-	position: absolute;
-	width: 1100px;
-	height: 400px;
-	left: 100px;
-	margin-top: 50px;
-}
-
 #containerControl {
 	position: absolute;
 	width: 100px;
-	left: 980px;
-	top: 80px;
-	height: 20px;
-	z-index: 55;
-}
-
-#hadoopControl {
-	position: absolute;
-	width: 200px;
-	left: 980px;
-	top: 300px;
+	left: 800px;
+	top: 5px;
 	height: 20px;
 	z-index: 55;
 }
@@ -135,25 +85,6 @@
 	border-color: #c5e591;
 }
 
-#startHadoopButton1 {
-	color: rgb(255, 255, 255);
-	font-size: 12px;
-	padding-top: 2px;
-	padding-bottom: 2px;
-	padding-left: 6px;
-	padding-right: 6px;
-	border-width: 0px;
-	border-color: rgb(197, 229, 145);
-	border-style: solid;
-	border-radius: 3px;
-	background-color: rgb(120, 195, 0);
-}
-
-#startHadoopButton1:hover {
-	color: #ffffff;
-	background-color: #84cf0b;
-	border-color: #c5e591;
-}
 
 #deleteButton {
 	color: rgb(255, 255, 255);
@@ -202,41 +133,27 @@
 		<div id="container1"></div>
 		<div id="container2"></div>
 		<div id="containerControl">
-			<span style="font-family: 微软雅黑;font-size: 14px;">线程控制:</span><input
-				type="button" id="startButton" value="开始" onclick="start();"
+			<span style="font-family: 微软雅黑;font-size: 14px;">显示控制: </span><input
+				type="button" id="startButton" value="暂停" onclick="start();"
 				style="cursor:pointer">
 		</div>
-		<div id="hadoopControl">
-			<div>
-				<span style="font-family: 微软雅黑;font-size: 14px;">启动hadoop任务</span>
-			</div>
-			<div id="hadoopControl_title">
-				<input type="button" id="viewButton" value="运行"
-					onclick="startHadoop();" style="cursor:pointer"><input
-					type="text" id="maps" style="width:56px; height:20px;"
-					placeholder="map数量"><input type="text" id="reduces"
-					style="width:66px; height:20px;" placeholder="reduce数量">
-			</div>
-			<div>
-				<span style="font-family: 微软雅黑;font-size: 14px;" id="res"></span>
-			</div>
-		</div>
+		
 		<div id="container3">
+		 <a href="currentData.jsp"><input type="button" value="曲线图" style="width:50px;height:30px;background-color:rgb(21,124,176);color: white;" /></a>
+       <a href="dashboard.jsp"> <input type="button" value="仪表盘"  style="width:50px;height:30px;background-color:rgb(21,124,176);color: white;" /></a>
+       <a href="distribution.jsp"> <input type="button" value="分布图"  style="width:50px;height:30px;background-color:rgb(21,124,176);color: white;" /></a>
 		</div>
 		<div id="container4"></div>
 		<div id="container5"></div>
 		<div id="container6"></div>
 		<div id="container7"></div>
-		<div id="container8">
-		<a href="currentData.jsp"><input type="button" value="曲线图" style="width:50px;height:30px;background-color:rgb(21,124,176);color: white;" /></a>
-       <a href="dashboard.jsp"> <input type="button" value="仪表盘"  style="width:50px;height:30px;background-color:rgb(21,124,176);color: white;" /></a>
-       <a href="distribution.jsp"> <input type="button" value="分布图"  style="width:50px;height:30px;background-color:rgb(21,124,176);color: white;" /></a>
-		</div>
+	
+		
 		<script type="text/javascript" src="js/jquery-1.9.1.js"></script>
 		<script type="text/javascript" src="js/highcharts.js"></script>
 		<script type="text/javascript" src="js/highcharts-more.js"></script>
 		<script type="text/javascript">
-			var flag = false;
+			var flag = true;
 
 			function start() {
 				if (flag == true) {
@@ -248,9 +165,30 @@
 				}
 			}
 
-			$(document)
-					.ready(
-							function() {
+//页面初始化之后每隔180秒请求一次数据
+var returnedData="";
+var curTime='${lastTime}';
+var lastTime="";
+setInterval(function() {
+	if(curTime!=lastTime){
+		$.ajax({
+			async:true,
+			type:"post",
+			url:"currentDataRequest.do",
+			data : {
+			id:'${id}',signalName:'${signalName}',startTime:curTime
+			},
+			dataType:"json",
+			success:function(returned){
+				if(returned!=""&&returned!="null"&&returned!=null){
+					returnedData = returned;
+					lastTime=curTime;
+				}
+			}	
+		});
+	}
+},10000);
+			$(document).ready(function() {
 								Highcharts.setOptions({
 									global : {
 										useUTC : false
@@ -259,10 +197,7 @@
 								/**
 								 * solrCloud
 								 */
-								Highcharts
-										.chart(
-												'container1',
-												{
+								Highcharts.chart('container1',{
 													chart : {
 														type : 'spline',
 														animation : Highcharts.svg, // don't animate in old IE
@@ -271,50 +206,38 @@
 															load : function() {
 																// set up the updating of the chart each second
 																var series = this.series[0];
-																var a = null;
-																setInterval(
-																		function() {
+																var tempData="";
+																setInterval(function() {
 																			if (flag == true) {
-																				$
-																						.ajax({
-																							async : true,
-																							type : "post",
-																							url : "currentDataRequest.do",
-																							data : {},
-																							dataType : "text",
-																							success : function(
-																									returned) {
-																								a = returned;
-																							}
-																						});
-
-																				if (a != null) {
-																					x = (new Date())
-																							.getTime(); // current time
-																					y = parseFloat(a);
-																					series
-																							.addPoint(
-																									[
-																											x,
-																											y ],
-																									true,
-																									true);
+																				if(returnedData!=""&&returnedData!=tempData){
+																						for(var i=0;i<returnedData.length;i++){
+																							    var x = (new Date(returnedData[i].time)).getTime();
+																						        var y = returnedData[i].phyValue;
+																						        series.addPoint([x,y],true,true);
+																						}
+																						if(returnedData.length!=0){
+																							curTime=returnedData[returnedData.length-1].time;
+																						}
+																						tempData=returnedData;
 																				}
-																			}
-																		}, 1000);
-															}
-														}
+																		     }
+																		}, 2000);
+															},
+														},
 													},
 													title : {
-														text : 'solrCloud query benchmark'
+														text : '${signalName}'
 													},
 													xAxis : {
 														type : 'datetime',
-														tickPixelInterval : 150
+														tickPixelInterval : 150,
+														title : {
+															text : '时间'
+														}
 													},
 													yAxis : {
 														title : {
-															text : 'queryTime'
+															text : '物理值'
 														},
 														plotLines : [ {
 															value : 0,
@@ -326,18 +249,16 @@
 													tooltip : {
 														formatter : function() {
 															return '<b>'
-																	+ this.series.name
+																	+ 'data'
 																	+ '</b><br/>'
-																	+ Highcharts
-																			.dateFormat(
+																	+ Highcharts.dateFormat(
 																					'%Y-%m-%d %H:%M:%S',
 																					this.x)
 																	+ '<br/>'
-																	+ Highcharts
-																			.numberFormat(
+																	+ Highcharts.numberFormat(
 																					this.y,
 																					0)
-																	+ 'ms';
+																	+ '${unit}';
 														}
 													},
 													legend : {
@@ -346,11 +267,123 @@
 													exporting : {
 														enabled : false
 													},
-													series : [ ${dataSeries} ]
+													series:[${dataSeries}]
 												});
-
-							});
-		</script>
+												
+		$('#container2').highcharts({
+        chart: {
+            type: 'gauge',
+            plotBackgroundColor: null,
+            plotBackgroundImage: null,
+            plotBorderWidth: 0,
+            plotShadow: false
+        },
+        title: {
+            text: '速度仪'
+        },
+        pane: {
+            startAngle: -150,
+            endAngle: 150,
+            background: [{
+                backgroundColor: {
+                    linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+                    stops: [
+                        [0, '#FFF'],
+                        [1, '#333']
+                    ]
+                },
+                borderWidth: 0,
+                outerRadius: '109%'
+            }, {
+                backgroundColor: {
+                    linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+                    stops: [
+                        [0, '#333'],
+                        [1, '#FFF']
+                    ]
+                },
+                borderWidth: 1,
+                outerRadius: '107%'
+            }, {
+                // default background
+            }, {
+                backgroundColor: '#DDD',
+                borderWidth: 0,
+                outerRadius: '105%',
+                innerRadius: '103%'
+            }]
+        },
+        // the value axis
+        yAxis: {
+            min: 0,
+            max: 200,
+            minorTickInterval: 'auto',
+            minorTickWidth: 1,
+            minorTickLength: 10,
+            minorTickPosition: 'inside',
+            minorTickColor: '#666',
+            tickPixelInterval: 30,
+            tickWidth: 2,
+            tickPosition: 'inside',
+            tickLength: 10,
+            tickColor: '#666',
+            labels: {
+                step: 2,
+                rotation: 'auto'
+            },
+            title: {
+                text: 'km/h'
+            },
+            plotBands: [{
+                from: 0,
+                to: 120,
+                color: '#55BF3B' // green
+            }, {
+                from: 120,
+                to: 160,
+                color: '#DDDF0D' // yellow
+            }, {
+                from: 160,
+                to: 200,
+                color: '#DF5353' // red
+            }]
+        },
+        series: [{
+            name: 'Speed',
+            data: [80],
+            tooltip: {
+                valueSuffix: 'km/h'
+            }
+        }]
+    },
+                               // Add some life
+   function (chart) {
+        if (!chart.renderer.forExport) {
+        var tempData="";
+            setInterval(function () {
+            if (flag == true) {
+            	var point = chart.series[0].points[0];
+					if(returnedData!=""&&returnedData!=tempData){
+						for(var i=0;i<returnedData.length;i++){
+							// var x = (new Date(returnedData[i].time)).getTime();
+							 var y = returnedData[i].phyValue;
+							 if (y < 0 || y > 200) {
+                     
+                			 }else{
+                			 	point.update(y);
+                			 }
+						}
+						if(returnedData.length!=0){
+							curTime=returnedData[returnedData.length-1].time;
+						}
+					    tempData=returnedData;
+						}
+			}
+            }, 2000);
+        }
+    });
+});
+</script>
 	</div>
 </body>
 </html>

@@ -73,8 +73,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <h1><img src="images/y1.jpg" class="radius-circle rotate-hover" height="50" alt="" />CANTool后台管理中心</h1>
   
   </div>
-  <div class="head-l"><a class="button button-little bg-green" href="" target="_blank"><span class="icon-home"></span> 前台首页</a> &nbsp;&nbsp; &nbsp;&nbsp;
-  					  <a class="button button-little bg-red" href="login.html"><span class="icon-power-off"></span>断开连接</a>
+  <div class="head-l"><a class="button button-little bg-green" href="index.do" target="_blank"><span class="icon-home"></span> 前台首页</a> &nbsp;&nbsp; &nbsp;&nbsp;
+  					  <a class="button button-little bg-red" href="logoff.do"><span class="icon-power-off"></span>断开连接</a>
   <div class="head-r">
   <div id="div1" class="open1">
         <div id="div2" class="open2">
@@ -92,15 +92,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </ul>  -->
   <h2><span class="icon-pencil-square-o"></span>CAN信息管理</h2>
   <ul>
-  <li><a href="getHistoryData.do" target="right"><span class="icon-caret-right"></span>显示CAN信息</a></li>
+  <li><a href="" target="right"><span class="icon-caret-right"></span>显示CAN信息</a></li>
    <li><a href="setCan.jsp" target="right"><span class="icon-caret-right"></span>设置CAN参数</a></li>
    <!--<li><a href="operatorList.html" target="right"><span class="icon-caret-right"></span>CAN状态</a></li>CAN状态只有开和关，合并了-->
       
   </ul>  
   <h2><span class="icon-database"></span>数据库管理</h2>
   <ul>
-    <li><a href="importExportBefore.do" target="right"><span class="icon-caret-right"></span>数据库导入</a></li>
     <li><a href="dataBaseTree.do" target="right"><span class="icon-caret-right"></span>树状显示数据库</a></li> 
+     <li><a href="importExportBefore.do" target="right"><span class="icon-caret-right"></span>数据库导入/导出</a></li>
+  </ul>
+    <h2><span class="icon-database"></span>实时数据管理</h2>
+  <ul>
+    <li><a href="showDataFabric.do?page=1" target="right"><span class="icon-caret-right"></span>显示信息组成</a></li>
+    <li><a href="searchHistoryData.do" target="right"><span class="icon-caret-right"></span>历史数据查询</a></li> 
   </ul>
 </div>
 <script type="text/javascript">

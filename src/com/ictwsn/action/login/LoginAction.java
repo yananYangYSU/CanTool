@@ -78,7 +78,7 @@ public class LoginAction{
 				model.addAttribute("baudRate",baudRate);
 				model.addAttribute("startBit",startBit);
 				model.addAttribute("stopBit",stopBit);
-				return "index";
+				return "redirect:/index.do";
 			}else{
 				model.addAttribute("message","0");
 				return "redirect:/listPort.do";

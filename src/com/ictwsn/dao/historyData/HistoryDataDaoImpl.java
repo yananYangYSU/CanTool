@@ -74,12 +74,12 @@ public class HistoryDataDaoImpl extends MySQLBaseDao implements HistoryDataDao {
 
 				String messageStr=null;
 				if(rs.getString(2).length()==3) {
-					messageStr="t"+rs.getString(2)+rs.getInt(3)+rs.getString(4)+"\\r";
+					messageStr="t"+rs.getString(2)+rs.getInt(3)+rs.getString(4).replaceAll(" ","")+"\\r";
 				}else if(rs.getString(2).length()==8) {
-					messageStr="T"+rs.getString(2)+rs.getInt(3)+rs.getString(4)+"\\r";
+					messageStr="T"+rs.getString(2)+rs.getInt(3)+rs.getString(4).replaceAll(" ","")+"\\r";
 				}
 				CanMsgDataBean canMsg=UncodeCanMsg.getInstance().splitDataStr(messageStr);
-				message=rs.getDate(5)+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+id+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+messageName+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+rs.getInt(3)+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+canMsg.getData().toString(); //key由time,id.name,dcl,data组成
+				message=rs.getDate(5)+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+id+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+messageName+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+rs.getInt(3)+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+rs.getString(4); //key由time,id.name,dcl,data组成
 				canPhy=UncodeCanMsg.getInstance().parseCanData(UncodeCanMsg.getInstance().splitDataStr(messageStr));
 				for(int i=0;i<canPhy.size();i++) {
 					CanPhyDataBean canphy=canPhy.get(i);

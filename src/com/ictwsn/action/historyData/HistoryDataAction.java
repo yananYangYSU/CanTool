@@ -33,22 +33,6 @@ public class HistoryDataAction {
 	
 	@Resource HistoryDataService hService;
     
-	@RequestMapping("/goToHistoryData.do")
-	public String goToHistoryData(HttpServletRequest request,HttpServletResponse response,Model model){
-		try{
-			
-            /**
-             * 获取tree的字符串
-             */
-			model.addAttribute("dataSeries",null);
-			
-			return "historyData";
-		}catch(Exception e){
-			logger.error("login error"+e);
-			e.printStackTrace();
-		}
-		return null;
-	}
 	@RequestMapping("/searchHistoryData.do")
 	public String searchHistoryData(HttpServletRequest request,HttpServletResponse response,Model model,
 			@RequestParam(value="ecuName",required=true) String ecuName,
@@ -82,8 +66,8 @@ public class HistoryDataAction {
 		}
 		return null;
 	}
-	@RequestMapping("/getHistoryData.do")
-	public String getHistoryData(HttpServletRequest request,HttpServletResponse response,Model model) {
+	@RequestMapping("/showDataFabric.do")
+	public String showDataFabric(HttpServletRequest request,HttpServletResponse response,Model model) {
 		try{
 			
             /**
@@ -98,5 +82,4 @@ public class HistoryDataAction {
 		}
 		return null;
 	}
-}
 }

@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<root>
+	<canMessage value='11111BO_ 856 CDU_1: 8 CDU'>
+		<canSignal value='SG_ CDU_ControlSt : 55|1@0+ (1,0) [0|1] ""  HVAC' />
+		
+	</canMessage>
+	
+</root>
