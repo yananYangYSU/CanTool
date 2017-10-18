@@ -30,24 +30,21 @@ import com.ictwsn.util.format.DateFormats;
 @Controller
 public class HistoryDataAction {
 	private static Logger logger = Logger.getLogger(HistoryDataAction.class.getName());
-	
 	@Resource HistoryDataService hService;
-    
-	@RequestMapping("/searchHistoryData.do")
-	public String searchHistoryData(HttpServletRequest request,HttpServletResponse response,Model model,
-			@RequestParam(value="ecuName",required=true) String ecuName,
-			@RequestParam(value="page",required=true) int page,
-			@RequestParam(value="startTime",required=true) String startTime,
-			@RequestParam(value="endTime",required=true) String endTime){
+
+	@RequestMapping("/showDataFabric.do")
+	public String showDataFabric(HttpServletRequest request,HttpServletResponse response,Model model,
+			@RequestParam(value="page",required=true) int page) {
 		try{
-			int totalCount=hService.getHistoryDataCount(ecuName, page, startTime, endTime);  //查询该用户拥有的设备总数
+			int totalCount=hService.getHistoryDataCount();  //查询数据总条数
 			int size=10;						  			   				   //每页显示大小
 			int maxPage=(totalCount%size==0)?totalCount/size:totalCount/size+1;//最大页数
 			page=(page==0)?1:page;			   					               //当前第几页
-			int number=(page-1)*size;	
-
-			List<CanPhyDataBean> oblist=hService.searchHistoryData(ecuName, maxPage, startTime, endTime); //查询该用户对应数量的设备信息
-			model.addAttribute("oblist",oblist); 
+			int number=(page-1)*size;
+            /**
+             * 获取实时数据表格信息
+             */
+			String historyData=hService.getHistoryData(number,size);
 			model.addAttribute("maxPage",maxPage);
 			page=maxPage==0?0:page;
 			model.addAttribute("page",page);
@@ -58,23 +55,7 @@ public class HistoryDataAction {
 			if(page<maxPage){
 				model.addAttribute("nextPageHref","searchOperator.do?userId="+"&page="+(page+1)+"&roleName=");
 			}
-			
-			return "historyData";
-		}catch(Exception e){
-			logger.error("login error"+e);
-			e.printStackTrace();
-		}
-		return null;
-	}
-	@RequestMapping("/showDataFabric.do")
-	public String showDataFabric(HttpServletRequest request,HttpServletResponse response,Model model) {
-		try{
-			
-            /**
-             * 获取实时数据表格信息
-             */
-			model.addAttribute("historyData",hService.getHistoryData());
-			
+			model.addAttribute("historyData",historyData);
 			return "showCan";
 		}catch(Exception e){
 			logger.error("login error"+e);

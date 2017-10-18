@@ -17,21 +17,8 @@ public class HistoryDataServiceImpl implements HistoryDataService {
 	@Resource HistoryDataDao dao;
 
 	@Override
-	public ArrayList<CanPhyDataBean> searchHistoryData(String ecuName, int page, String startTime,String endTime) {
-		// TODO Auto-generated method stub
-		return dao.searchHistoryData(ecuName, page, startTime, endTime);
-	}
-
-	@Override
-	public int getHistoryDataCount(String ecuName, int page, String startTime,
-			String endTime) {
-		// TODO Auto-generated method stub
-		return dao.getHistoryDataCount(ecuName, page, startTime, endTime);
-	}
-
-	@Override
-	public String getHistoryData() {
-		Map<String,ArrayList<String>> map=dao.getHistoryData();
+	public String getHistoryData(int number,int size) {
+		Map<String,ArrayList<String>> map=dao.getHistoryData(number,size);
 		Set<String> set=map.keySet();
 		Iterator it=set.iterator();
 		StringBuffer historyData=new StringBuffer();
@@ -45,5 +32,10 @@ public class HistoryDataServiceImpl implements HistoryDataService {
 			historyData.append("</ul></li>\n");
 		}
 		return historyData.toString();
+	}
+
+	@Override
+	public int getHistoryDataCount() {
+		return dao.getHistoryDataCount();
 	}
 }

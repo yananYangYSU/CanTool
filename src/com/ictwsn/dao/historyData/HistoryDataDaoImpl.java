@@ -23,42 +23,26 @@ public class HistoryDataDaoImpl extends MySQLBaseDao implements HistoryDataDao {
 	private ResultSet rs=null;
 	ResultSet rs2=null;
 	
-	@Override
-	public ArrayList<CanPhyDataBean> searchHistoryData(String ecuName, int page, String startTime,
-			String endTime) {
-		/**
-		 * 补充代码
-		 */
-		
-		return null;
-	}
-
-	@Override
-	public int getHistoryDataCount(String ecuName, int page, String startTime,
-			String endTime) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 	/**
 	 * 实时数据显示dao层 的实现
 	 * 将can信息和解析出的物理值通过一定的显示规则封装至map数组
 	 * @throws SQLException 
 	 */
 	@Override
-	public Map<String, ArrayList<String>> getHistoryData() {
+	public Map<String, ArrayList<String>> getHistoryData(int number,int size) {
 		Map<String,ArrayList<String>> DataMap=new HashMap<String,ArrayList<String>>();
-		ArrayList<CanPhyDataBean> canPhy=new ArrayList<CanPhyDataBean>();
 		String sql=null;
-		String message=null; //key和value                              
-		ArrayList<String> signal=new ArrayList<String>();  
+		String message=null; 
 		try {
-			sql="select * from can_msg_data";
+			sql="select * from can_msg_data order by autoId desc limit ?,?";
 			conn=CurrentConn.getInstance().getConn();
 			pst=conn.prepareStatement(sql);
+			pst.setInt(1, number);
+			pst.setInt(2, size);
 			rs=pst.executeQuery();
 			while(rs.next()){
+				ArrayList<String> signal=new ArrayList<String>();
 				int id=Integer.parseInt(rs.getString(2),16); //将十六进制id转换成十进制，用于匹配messageid
-				
 				String messageName=null;//获取messageName
 				try {
 					sql="select messageName from can_message where id=?";
@@ -78,6 +62,7 @@ public class HistoryDataDaoImpl extends MySQLBaseDao implements HistoryDataDao {
 				}else if(rs.getString(2).length()==8) {
 					messageStr="T"+rs.getString(2)+rs.getInt(3)+rs.getString(4).replaceAll(" ","")+"\\r";
 				}
+				ArrayList<CanPhyDataBean> canPhy=new ArrayList<CanPhyDataBean>();
 				CanMsgDataBean canMsg=UncodeCanMsg.getInstance().splitDataStr(messageStr);
 				message=rs.getDate(5)+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+id+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+messageName+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+rs.getInt(3)+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+rs.getString(4); //key由time,id.name,dcl,data组成
 				canPhy=UncodeCanMsg.getInstance().parseCanData(UncodeCanMsg.getInstance().splitDataStr(messageStr));
@@ -99,6 +84,24 @@ public class HistoryDataDaoImpl extends MySQLBaseDao implements HistoryDataDao {
 		return DataMap;
 	}
 
-
-
+	@Override
+	public int getHistoryDataCount() {
+		int count=0;
+		try { 
+			String sql="select * from can_msg_data";
+			conn=CurrentConn.getInstance().getConn();
+			pst=conn.prepareStatement(sql);
+			rs=pst.executeQuery();
+			while(rs.next()) {
+				count++;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			CurrentConn.getInstance().closeConnection(conn);
+			CurrentConn.getInstance().closePreparedStatement(pst);
+			CurrentConn.getInstance().closeResultSet(rs);
+		}
+		return count;
+	}
 }
