@@ -9,7 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>树状显示</title>
+    <title>ShowCan</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -40,10 +40,10 @@ font-weight: bold;
     <div id="main" style="margin-left: 50px; font-family:"Microsoft YaHei","simsun","Helvetica Neue", Arial, Helvetica, sans-serif;">
 <table style="width: 800px; border:#CCC solid 1px;">
 <tr>
-<th style="border-right: #CCC solid 1px;">Time</th>
-<th style="border-right: #CCC solid 1px;">ID</th>
-<th style="border-right: #CCC solid 1px;">Name</th>
-<th style="border-right: #CCC solid 1px;">DLC</th>
+<th style="border-right: #CCC solid 1px; width: 150px;">Time</th>
+<th style="border-right: #CCC solid 1px; width: 110px;">ID</th>
+<th style="border-right: #CCC solid 1px; width: 140px;">Name</th>
+<th style="border-right: #CCC solid 1px; width: 100px;">DLC</th>
 <th>Data</th>
 </tr>
 </table>
