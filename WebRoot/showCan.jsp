@@ -38,7 +38,7 @@ font-weight: bold;
   
   <body>
     <div id="main" style="margin-left: 50px; font-family:"Microsoft YaHei","simsun","Helvetica Neue", Arial, Helvetica, sans-serif;">
-<table style="width: 500px; border:#CCC solid 1px;">
+<table style="width: 800px; border:#CCC solid 1px;">
 <tr>
 <th style="border-right: #CCC solid 1px;">Time</th>
 <th style="border-right: #CCC solid 1px;">ID</th>
