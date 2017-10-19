@@ -12,6 +12,7 @@ import com.ictwsn.bean.CanPhyDataBean;
  * @date 2017-10-18
  */
 public interface HistoryDataDao {
-	public Map<String,ArrayList<String>> getHistoryData(int number,int size);
+	public Map<String,ArrayList<String>> showDataFabric(int number,int size);
+	public String showMatrixTable(String messageStr);
 	public int getHistoryDataCount();
 }

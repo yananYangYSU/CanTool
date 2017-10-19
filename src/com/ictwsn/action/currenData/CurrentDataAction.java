@@ -57,12 +57,18 @@ public class CurrentDataAction {
 				time=DateFormats.getInstance().dateStringToTime(cpdbList.get(i).getTime());
 				strData.append("[").append(time).append(",").append(cpdbList.get(i).getPhyValue()).append("],");
 			}
-			time=DateFormats.getInstance().dateStringToTime(cpdbList.get(size).getTime());
-			strData.append("[").append(time).append(",").append(cpdbList.get(size).getPhyValue()).append("]]");
+			if(size==-1){
+				model.addAttribute("lastTime",DateFormats.getInstance().getNowDate());
+			}else{
+				time=DateFormats.getInstance().dateStringToTime(cpdbList.get(size).getTime());
+				strData.append("[").append(time).append(",").append(cpdbList.get(size).getPhyValue()).append("]]");
+				model.addAttribute("lastTime",cpdbList.get(size).getTime());
+			}
+			
 			HSeries.append(strName).append(strData).append(",marker: {enabled: true}}");
 			
 			model.addAttribute("id",id);
-			model.addAttribute("lastTime",cpdbList.get(size).getTime());
+			
 			model.addAttribute("signalName",csb.getSignalName());
 			model.addAttribute("dataSeries",HSeries.toString());
 			model.addAttribute("maxPhyValue",csb.getMaxPhyValue());

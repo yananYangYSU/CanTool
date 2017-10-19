@@ -17,8 +17,8 @@ public class HistoryDataServiceImpl implements HistoryDataService {
 	@Resource HistoryDataDao dao;
 
 	@Override
-	public String getHistoryData(int number,int size) {
-		Map<String,ArrayList<String>> map=dao.getHistoryData(number,size);
+	public String showDataFabric(int number,int size) {
+		Map<String,ArrayList<String>> map=dao.showDataFabric(number,size);
 		Set<String> set=map.keySet();
 		Iterator it=set.iterator();
 		StringBuffer historyData=new StringBuffer();
@@ -37,5 +37,11 @@ public class HistoryDataServiceImpl implements HistoryDataService {
 	@Override
 	public int getHistoryDataCount() {
 		return dao.getHistoryDataCount();
+	}
+
+	@Override
+	public String showMatrixTable(String messageStr) {
+		// TODO Auto-generated method stub
+		return dao.showMatrixTable(messageStr);
 	}
 }

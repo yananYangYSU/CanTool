@@ -29,7 +29,7 @@ public class HistoryDataDaoImpl extends MySQLBaseDao implements HistoryDataDao {
 	 * @throws SQLException 
 	 */
 	@Override
-	public Map<String, ArrayList<String>> getHistoryData(int number,int size) {
+	public Map<String, ArrayList<String>> showDataFabric(int number,int size) {
 		Map<String,ArrayList<String>> DataMap=new HashMap<String,ArrayList<String>>();
 		String sql=null;
 		String message=null; 
@@ -103,5 +103,11 @@ public class HistoryDataDaoImpl extends MySQLBaseDao implements HistoryDataDao {
 			CurrentConn.getInstance().closeResultSet(rs);
 		}
 		return count;
+	}
+
+	@Override
+	public String showMatrixTable(String messageStr) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

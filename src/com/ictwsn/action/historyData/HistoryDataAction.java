@@ -32,6 +32,14 @@ public class HistoryDataAction {
 	private static Logger logger = Logger.getLogger(HistoryDataAction.class.getName());
 	@Resource HistoryDataService hService;
 
+	/**
+	 * 显示信息字符串的物理数据组成
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @param page
+	 * @return
+	 */
 	@RequestMapping("/showDataFabric.do")
 	public String showDataFabric(HttpServletRequest request,HttpServletResponse response,Model model,
 			@RequestParam(value="page",required=true) int page) {
@@ -44,7 +52,7 @@ public class HistoryDataAction {
             /**
              * 获取实时数据表格信息
              */
-			String historyData=hService.getHistoryData(number,size);
+			String historyData=hService.showDataFabric(number,size);
 			model.addAttribute("maxPage",maxPage);
 			page=maxPage==0?0:page;
 			model.addAttribute("page",page);
@@ -56,6 +64,21 @@ public class HistoryDataAction {
 				model.addAttribute("nextPageHref","searchOperator.do?userId="+"&page="+(page+1)+"&roleName=");
 			}
 			model.addAttribute("historyData",historyData);
+			return "showCan";
+		}catch(Exception e){
+			logger.error("login error"+e);
+			e.printStackTrace();
+			return "404";
+		}
+		
+	}
+	@RequestMapping("/showMatrixTable.do")
+	public String showMatrixTable(HttpServletRequest request,HttpServletResponse response,Model model,
+			@RequestParam(value="MessageStr",required=true) int MessageStr) {
+		try{
+			
+			model.addAttribute("totalCount","");
+		
 			return "showCan";
 		}catch(Exception e){
 			logger.error("login error"+e);
