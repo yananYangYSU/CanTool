@@ -24,7 +24,7 @@ public class UncodeCanMsg {
 		63,62,61,60,59,58,57,56
 	};
 
-	private static UncodeCanMsg uncodeCanMsg = null;  //CurrentConn类单例对象
+	private static UncodeCanMsg uncodeCanMsg=null;  //CurrentConn类单例对象
 
 	private UncodeCanMsg(){}
 
@@ -40,7 +40,7 @@ public class UncodeCanMsg {
 	 * 根据can信息字符串和信号名称解析得到对应的物理信息实体
 	 * @param signalName 信号名称
 	 * @param canMsgStr can信息字符串
-	 * @return CanPhyDataBean实体 例如该条信息为:CDU_HVACACCfg 2185.0 ℃ high
+	 * @return CanPhyDataBean实体 例如该条信息为:CDU_HVACACCfg 25.0  ℃ 
 	 */
 	public CanPhyDataBean getCanPhyData(String signalName,String canMsgStr){
 		ArrayList<CanPhyDataBean> cpdbList=this.parseCanData(this.splitDataStr(canMsgStr));
@@ -60,60 +60,49 @@ public class UncodeCanMsg {
 		// TODO Auto-generated method stub
 		 * t32186211F553238765AB//
 		 */
-		String dataStr="t32186211F553238765AB\r";
+		
+		//String dataStr="1111111122222222111101010101001100100011100001110110010110101011";
 		UncodeCanMsg t=new UncodeCanMsg();
-		System.out.println("message="+dataStr);
-		System.out.println("解析后id:"+Integer.parseInt("321",16));
-		t.parseCanData(t.splitDataStr(dataStr));
+		System.out.println(t.subStrMotorola("7654321076543210765432107654321076543210765432107654321076543210", 11, 12));
+		//System.out.println("解析后id:"+Integer.parseInt("321",16));
+		//t.parseCanData(t.splitDataStr(dataStr));
 		/*Pattern p=Pattern.compile("[a-]{1,}@[0-9]{1}",Pattern.DOTALL);
 		Matcher m=p.matcher("SG_ CDU_HVACAutoModeButtonSt : 2|00001@0+ (1,0) [0|1] \"\"  HVAC");
 		while(m.find()){
 			System.out.println(m.group());
 		}*/
 
-		ArrayList<String> dataList=t.splitDataStr(dataStr).getData();
-		StringBuffer BitStrIntel=new StringBuffer();
-		StringBuffer BitStrMotorola=new StringBuffer();
-
-		int size=dataList.size();
-		//intel
-		for(int i=size-1;i>=0;i--){
-			BitStrIntel.append(DataFormats.getInstance().hexToBinary(dataList.get(i)));
-		}
-		System.out.println("----intel matrix-----");
-
-		for(int i=0;i<size;i++){
-			System.out.println(DataFormats.getInstance().hexToBinary(dataList.get(i)));
-		}
-		System.out.println("intel "+BitStrIntel);
-	
-		System.out.println(t.matrixSubBinStr(BitStrIntel.toString(), 15, 8, 0));
-		System.out.println("----motorola-----");
-		//motorola
-
-		//	for(int i=size-1;i>=0;i--){
-		for(int i=0;i<size;i++){
-			BitStrMotorola.append(DataFormats.getInstance().hexToBinary(dataList.get(i)));	
-		}/*if(flag==true){
-				BitStrMotorola.append(t.hexToBinary(dataList.get(i)));
-				flag=!flag;
-			}else{
-				BitStrMotorola.append(t.reverseStr(t.hexToBinary(dataList.get(i))));
-				flag=!flag;
-			}		*/	
-		//}
-
-		for(int i=0;i<size;i++){
-			System.out.println(DataFormats.getInstance().hexToBinary(dataList.get(i)));
-
-		}
-
-		System.out.println("motol "+BitStrMotorola);
-
-		System.out.println(t.matrixSubBinStr(BitStrIntel.toString(), 15, 8, 1));
-		//System.out.println("motol ");
-		//System.out.println(t.matrixSubBinStr(BitStrMotorola.toString(), 11, 12,0));
-		 
+//		ArrayList<String> dataList=t.splitDataStr(dataStr).getData();
+//		StringBuffer BitStrIntel=new StringBuffer();
+//		StringBuffer BitStrMotorola=new StringBuffer();
+//
+//		int size=dataList.size();
+//		//intel
+//		for(int i=size-1;i>=0;i--){
+//			BitStrIntel.append(DataFormats.getInstance().hexToBinary(dataList.get(i)));
+//		}
+//		System.out.println("----intel matrix-----");
+//
+//		for(int i=0;i<size;i++){
+//			System.out.println(DataFormats.getInstance().hexToBinary(dataList.get(i)));
+//		}
+//		System.out.println("intel "+BitStrIntel);
+//	
+//		System.out.println(t.matrixSubBinStr(BitStrIntel.toString(), 15, 8, 0));
+//		System.out.println("----motorola-----");
+//		//motorola
+//		for(int i=0;i<size;i++){
+//			BitStrMotorola.append(DataFormats.getInstance().hexToBinary(dataList.get(i)));	
+//		}
+//
+//		for(int i=0;i<size;i++){
+//			System.out.println(DataFormats.getInstance().hexToBinary(dataList.get(i)));
+//
+//		}
+//
+//		System.out.println("motol "+BitStrMotorola);
+//		System.out.println(t.matrixSubBinStr(BitStrIntel.toString(), 15, 8, 1));
+		
 	
 	}
 
@@ -122,7 +111,7 @@ public class UncodeCanMsg {
 	/**
 	 * can信息字符串的切割提取
 	 * @param dataStr "T127FFFFF800111213141516170000\r"或者"t127800111213141516170000\r"
-	 * \r为换行符,尽量不要用\\r
+	 * \r为换行符,不要用\\r
 	 * @return CanData对象
 	 */
 	public CanMsgDataBean splitDataStr(String dataStr){
@@ -209,9 +198,8 @@ public class UncodeCanMsg {
 			ArrayList<CanPhyDataBean> cpdbList=new ArrayList<CanPhyDataBean>();
 			for(CanSignalBean csb:canSignalList){
 				CanPhyDataBean cpdb=new CanPhyDataBean();
-
 				cpdb.setSignalName(csb.getSignalName());
-
+				
 				String matrixSubBinStr="";
 				if(csb.getBitType()==0){//0代表Motorola格式
 					matrixSubBinStr=this.matrixSubBinStr(BitStrMotorola.toString(),csb.getStartBit(),csb.getBitLength(),0);
@@ -245,13 +233,11 @@ public class UncodeCanMsg {
 		String bitSubStr="";
 		int strLength=bitStr.length();
 		if(type==0){
-			int tempIndex=this.getIndexOf(start);
-			bitSubStr=bitStr.substring(tempIndex,tempIndex+length);
+			bitSubStr=this.subStrMotorola(bitStr,start,length);//调用专门的Motorola字符串截取函数
 		}else{
-			bitSubStr=bitStr.substring(strLength-start-length,strLength-start);
+			bitSubStr=bitStr.substring(strLength-start-length,strLength-start);//intel使用subString即可
 		}
 		return bitSubStr;
-
 	}
 	/**
 	 * 从全局静态数组byteIndexArray中查找元素
@@ -283,8 +269,37 @@ public class UncodeCanMsg {
 		}
 		return message;
 	}
-	private boolean checkMessage(String messageStr){
-		return false;
-	}
 
+	/**
+	 * 进行Motorola格式字符串的截取
+	 * @param motorolaStr 二进制数据字符串(0-64)
+	 * @param start 起始位
+	 * @param length 长度
+	 * @return 截取后的字符串
+	 */
+	private String subStrMotorola(String motorolaStr,int start,int length){
+	
+		StringBuffer result=new StringBuffer(); //结果字符串
+		ArrayList<String> strList=new ArrayList<String>();//
+		int size=motorolaStr.length()>>3; //can信息字符串的数据长度 (0-64)
+		for(int i=0;i<size;i++){
+			strList.add(motorolaStr.substring(i<<3,(i<<3)+8));
+		}
+		int startRowIndex=start>>3;//起止位所在的行 (0-7)
+		int curRowRightLen=start%8+1;//这个字符及它右侧总共的字符数+1代表算上自身 (1-8)
+		if(curRowRightLen>=length){
+			result.append(strList.get(startRowIndex).substring(8-curRowRightLen,8-curRowRightLen+length));
+		}else{
+			result.append(strList.get(startRowIndex).substring(8-curRowRightLen,8));
+			int anotherRows=(length-curRowRightLen)>>3; //计算还需要几整行的数据
+			int remainder=(length-curRowRightLen)%8; //整除8后的余数
+			for(int i=0;i<anotherRows;i++){
+				result.append(strList.get(++startRowIndex));
+			}
+			if(remainder!=0){
+				result.append(strList.get(++startRowIndex).substring(8-remainder,8));
+			}
+		}
+		return result.toString();
+	}
 }
