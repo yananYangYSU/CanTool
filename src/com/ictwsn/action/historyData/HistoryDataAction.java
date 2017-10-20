@@ -1,24 +1,16 @@
 package com.ictwsn.action.historyData;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import com.ictwsn.bean.CanPhyDataBean;
-import com.ictwsn.service.exportData.ExportDataService;
 import com.ictwsn.service.historyData.HistoryDataService;
-import com.ictwsn.service.systemSet.SystemSetService;
-import com.ictwsn.util.GetHttpType;
-import com.ictwsn.util.format.DateFormats;
+
 
 /**
  * 运营商控制类
@@ -76,10 +68,9 @@ public class HistoryDataAction {
 	public String showMatrixTable(HttpServletRequest request,HttpServletResponse response,Model model,
 			@RequestParam(value="messageStr",required=true) String messageStr) {
 		try{
-			
 			model.addAttribute("dataSeries",hService.showMatrixTable(messageStr));
 		
-			return "showCan";
+			return "distribution";
 		}catch(Exception e){
 			logger.error("login error"+e);
 			e.printStackTrace();

@@ -105,18 +105,8 @@ public class DatabaseDaoImpl extends MySQLBaseDao implements DatabaseDao {
 	 * @return
 	 */
 	private boolean deleteDataBase(){
-		conn=CurrentConn.getInstance().getConn(); //获取连接
-		int res=0;
-		try {
-			String sql="delete from can_message";
-			pst=conn.prepareStatement(sql);  
-			res=pst.executeUpdate();
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}finally{
-			CurrentConn.getInstance().closePreparedStatement(pst);
-			CurrentConn.getInstance().closeConnection(conn);
-		}
+		String sql="delete from can_message";
+		int res=this.jt.update(sql); 
 		return res!=0?true:false;
 	}
 	/**
@@ -127,25 +117,24 @@ public class DatabaseDaoImpl extends MySQLBaseDao implements DatabaseDao {
 	public boolean updateDataBase(Map<String,ArrayList<String>> canDatabaseMap){
 		if(canDatabaseMap.size()==0)
 			return false;
-		
-		Connection conn=CurrentConn.getInstance().getConn(); //获取连接
-		PreparedStatement pst=null;
-		/**
-		 * 清空message和signal表
-		 */
-		this.deleteDataBase();
-		/**
-		 * 更新数据库message表
-		 */
-		Iterator<String> iter = canDatabaseMap.keySet().iterator();
-		String key="";
-		int id=0;
-		while (iter.hasNext()){
-			key = iter.next();
-			Pattern pattern1 = Pattern.compile("(BO).\\s(\\d*)\\s(.*)\\:\\s(\\d)\\s(.*)");
-			Matcher matcher1 = pattern1.matcher(key); 
-			if (matcher1.find()) {
-				try {
+		try {
+			Connection conn=CurrentConn.getInstance().getConn(); //获取连接
+			PreparedStatement pst=null;
+			/**
+			 * 清空message和signal表
+			 */
+			this.deleteDataBase();
+			/**
+			 * 更新数据库message表
+			 */
+			Iterator<String> iter = canDatabaseMap.keySet().iterator();
+			String key="";
+			int id=0;
+			while (iter.hasNext()){
+				key = iter.next();
+				Pattern pattern1 = Pattern.compile("(BO).\\s(\\d*)\\s(.*)\\:\\s(\\d)\\s(.*)");
+				Matcher matcher1 = pattern1.matcher(key); 
+				if (matcher1.find()) {
 					id=Integer.parseInt(matcher1.group(2));
 					String sql="insert into can_message(id,messageName,dcl,nodeName)values(?,?,?,?)";
 					pst=conn.prepareStatement(sql);  
@@ -154,19 +143,14 @@ public class DatabaseDaoImpl extends MySQLBaseDao implements DatabaseDao {
 					pst.setString(3, matcher1.group(4));
 					pst.setString(4, matcher1.group(5));
 					pst.executeUpdate();
-				}catch(SQLException e) {
-					e.printStackTrace();
-					return false;
 				}
-			}
-			/**
-			 * 更新signal
-			 */
-			for(String value:canDatabaseMap.get(key)){
-				Pattern pattern2 = Pattern.compile("\\s(\\w*)\\s.\\s(\\d*).(\\d*).(.*).\\s.(.*)\\,(.*)\\)\\s\\[(.*)\\|(.*)\\]\\s\"(.*)\"\\s\\s(.*)");
-				Matcher matcher2=pattern2.matcher(value);
-				if(matcher2.find()) {
-					try {
+				/**
+				 * 更新signal
+				 */
+				for(String value:canDatabaseMap.get(key)){
+					Pattern pattern2 = Pattern.compile("\\s(\\w*)\\s.\\s(\\d*).(\\d*).(.*).\\s.(.*)\\,(.*)\\)\\s\\[(.*)\\|(.*)\\]\\s\"(.*)\"\\s\\s(.*)");
+					Matcher matcher2=pattern2.matcher(value);
+					if(matcher2.find()) {
 						String sql="insert into can_signal(messageId,signalName,startBit,bitLength,bitType,resolutionValue,offsetValue,minPhyValue,maxPhyValue,unit,nodeNames)values(?,?,?,?,?,?,?,?,?,?,?)";
 						pst=conn.prepareStatement(sql);
 						pst.setInt(1,id);
@@ -181,17 +165,15 @@ public class DatabaseDaoImpl extends MySQLBaseDao implements DatabaseDao {
 						pst.setString(10, matcher2.group(9));
 						pst.setString(11, matcher2.group(10));	
 						pst.executeUpdate();
-					}catch(SQLException e) {
-						e.printStackTrace();
-						return false;
 					}
 				}
 			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally{
+			CurrentConn.getInstance().closePreparedStatement(pst);
+			CurrentConn.getInstance().closeConnection(conn);
 		}
-
-		CurrentConn.getInstance().closePreparedStatement(pst);
-		CurrentConn.getInstance().closeConnection(conn);
-
 		return true;
 	}
 	/**

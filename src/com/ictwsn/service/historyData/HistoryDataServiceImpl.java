@@ -23,7 +23,7 @@ public class HistoryDataServiceImpl implements HistoryDataService {
 		StringBuffer historyData=new StringBuffer();
 		while(it.hasNext()) {
 			String key=(String) it.next();
-			historyData.append("<li><a href=\"distribution.jsp\"><span class=\"folder\">").append(key).append("</span></a>\n").append("<ul>\n");
+			historyData.append("<li><a href=\"showMatrixTable.do?messageStr=t31d86211F553238765AB\"><span class=\"folder\">").append(key).append("</span></a>\n").append("<ul>\n");
 			ArrayList<String> signalList=map.get(key);		
 			for(String signal:signalList) {
 				historyData.append("<li><span class=\"file\">").append(signal).append("</span></li>\n");

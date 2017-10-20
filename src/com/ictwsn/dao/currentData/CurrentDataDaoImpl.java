@@ -5,10 +5,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Repository;
 import com.ictwsn.bean.CanMsgDataBean;
 import com.ictwsn.bean.CanPhyDataBean;
 import com.ictwsn.bean.CanSignalBean;
+
 import com.ictwsn.dao.MySQLBaseDao;
 import com.ictwsn.util.CurrentConn;
 import com.ictwsn.util.cantool.CanMessageStore;
@@ -42,66 +47,51 @@ public class CurrentDataDaoImpl extends MySQLBaseDao implements CurrentDataDao {
 	}
 	
 	@Override
-	public ArrayList<CanMsgDataBean> getMessageList(String signalName) {
-		ArrayList<CanMsgDataBean> cmdbList=new ArrayList<CanMsgDataBean>();
+	public List<CanMsgDataBean> getMessageList(String signalName) {
 		String sql="SELECT id,dcl,byteStr,time from can_msg_data,can_signal where conv(can_msg_data.id,16,10)=can_signal.messageId and signalName=? ORDER BY can_msg_data.autoId desc LIMIT 0,10 ;";
-		try{
-			conn=CurrentConn.getInstance().getConn();
-			pst=conn.prepareStatement(sql);
-			pst.setString(1,signalName);
-			rs=pst.executeQuery();
-			while(rs.next()){
-				CanMsgDataBean bean=new CanMsgDataBean();
-				bean.setId(rs.getString(1));
-				bean.setDcl(rs.getInt(2));
-				String[] dataList=rs.getString(3).trim().split(" ");
-				ArrayList<String> datas=new ArrayList<String>();
-				for(int i=0;i<dataList.length;i++){
-					datas.add(dataList[i]);
+		List<CanMsgDataBean> cmdbList=jt.query(sql,new Object[]{signalName},new ResultSetExtractor<List<CanMsgDataBean>>() {
+			public List<CanMsgDataBean> extractData(ResultSet rs) throws SQLException, DataAccessException {
+				List<CanMsgDataBean> list = new ArrayList<CanMsgDataBean>();
+				while (rs.next()) {
+					CanMsgDataBean bean=new CanMsgDataBean();
+					bean.setId(rs.getString(1));
+					bean.setDcl(rs.getInt(2));
+					String[] dataList=rs.getString(3).trim().split(" ");
+					ArrayList<String> datas=new ArrayList<String>();
+					for(int i=0;i<dataList.length;i++){
+						datas.add(dataList[i]);
+					}
+					bean.setData(datas);
+					bean.setTime(rs.getString(4));
+					list.add(bean);
 				}
-				bean.setData(datas);
-				bean.setTime(rs.getString(4));
-				cmdbList.add(bean);
+				return list;
 			}
-		}catch(SQLException e){
-			e.printStackTrace();
-		}finally{
-			CurrentConn.getInstance().closeResultSet(rs);
-			CurrentConn.getInstance().closePreparedStatement(pst);
-			CurrentConn.getInstance().closeConnection(conn);
-		}
+		});
 		return cmdbList;
 	}
 	@Override
-	public ArrayList<CanMsgDataBean> getMessageList(String signalName,String startTime) {
-		ArrayList<CanMsgDataBean> cmdbList=new ArrayList<CanMsgDataBean>();
+	public List<CanMsgDataBean> getMessageList(String signalName,String startTime) {
 		String sql="SELECT id,dcl,byteStr,time from can_msg_data,can_signal where conv(can_msg_data.id,16,10)=can_signal.messageId and signalName=? and time>?";
-		try{
-			conn=CurrentConn.getInstance().getConn();
-			pst=conn.prepareStatement(sql);
-			pst.setString(1,signalName);
-			pst.setString(2,startTime);
-			rs=pst.executeQuery();
-			while(rs.next()){
-				CanMsgDataBean bean=new CanMsgDataBean();
-				bean.setId(rs.getString(1));
-				bean.setDcl(rs.getInt(2));
-				String[] dataList=rs.getString(3).trim().split(" ");
-				ArrayList<String> datas=new ArrayList<String>();
-				for(int i=0;i<dataList.length;i++){
-					datas.add(dataList[i]);
+		List<CanMsgDataBean> cmdbList=jt.query(sql,new Object[]{signalName,startTime},new ResultSetExtractor<List<CanMsgDataBean>>() {
+			public List<CanMsgDataBean> extractData(ResultSet rs) throws SQLException, DataAccessException {
+				List<CanMsgDataBean> list = new ArrayList<CanMsgDataBean>();
+				while (rs.next()) {
+					CanMsgDataBean bean=new CanMsgDataBean();
+					bean.setId(rs.getString(1));
+					bean.setDcl(rs.getInt(2));
+					String[] dataList=rs.getString(3).trim().split(" ");
+					ArrayList<String> datas=new ArrayList<String>();
+					for(int i=0;i<dataList.length;i++){
+						datas.add(dataList[i]);
+					}
+					bean.setData(datas);
+					bean.setTime(rs.getString(4));
+					list.add(bean);
 				}
-				bean.setData(datas);
-				bean.setTime(rs.getString(4));
-				cmdbList.add(bean);
+				return list;
 			}
-		}catch(SQLException e){
-			e.printStackTrace();
-		}finally{
-			CurrentConn.getInstance().closeResultSet(rs);
-			CurrentConn.getInstance().closePreparedStatement(pst);
-			CurrentConn.getInstance().closeConnection(conn);
-		}
+		});
 		return cmdbList;
 	}
 }

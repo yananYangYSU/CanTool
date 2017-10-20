@@ -5,13 +5,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.w3c.dom.Element;
-
 import com.ictwsn.bean.CanMsgDataBean;
-import com.ictwsn.bean.CanPhyDataBean;
 import com.ictwsn.bean.CanSignalBean;
-import com.ictwsn.util.format.DataFormats;
-import com.ictwsn.util.format.DateFormats;
+
 /**
  * can信息解码类
  * @author YangYanan
@@ -56,7 +52,7 @@ public class UncodeCanMsgForMatrix {
 		UncodeCanMsgForMatrix t=new UncodeCanMsgForMatrix();
 		//System.out.println(t.subStrIntel(12, 12));
 		//System.out.println("解析后id:"+Integer.parseInt("321",16));
-	System.out.println(	t.indexStrProcess(t.parseCanData(UncodeCanMsg.getInstance().splitDataStr("t32186211F553238765AB\r"))));
+	System.out.println(	t.indexStrProcess(t.parseCanData(UncodeCanMsg.getInstance().splitDataStr("t32186211F553238765AB"))));
 		/*Pattern p=Pattern.compile("[a-]{1,}@[0-9]{1}",Pattern.DOTALL);
 		Matcher m=p.matcher("SG_ CDU_HVACAutoModeButtonSt : 2|00001@0+ (1,0) [0|1] \"\"  HVAC");
 		while(m.find()){
@@ -131,7 +127,7 @@ public class UncodeCanMsgForMatrix {
 					matrixIndexStr=this.subStrIntelIndex(csb.getStartBit(),csb.getBitLength());//intel使用subString即可
 				}
 				resultIndexList.add(matrixIndexStr);
-				System.out.println(matrixIndexStr);
+				//System.out.println(matrixIndexStr);
 			}
 			return resultIndexList;
 		}
@@ -211,6 +207,7 @@ public class UncodeCanMsgForMatrix {
 		int colorLevel=0;
 		for(String indexStr:resultIndexList){
 			String[] row=indexStr.split(",");
+			
 			colorLevel++;
 			for(int i=0;i<row.length;i++){
 				int num=Integer.parseInt(row[i]);
@@ -218,7 +215,7 @@ public class UncodeCanMsgForMatrix {
 				int y=7-num/8;
 				indexColorMap.remove(num);
 				resultStr.setLength(0);
-				indexColorMap.put(num,resultStr.append(",[").append(x).append(",").append(y).append(",").append(colorLevel*10).append("]").toString());
+				indexColorMap.put(num,resultStr.append(",[").append(x).append(",").append(y).append(",").append(colorLevel).append("]").toString());
 			}
 		}
 		Iterator<Integer> iter = indexColorMap.keySet().iterator();

@@ -1,6 +1,7 @@
 package com.ictwsn.service.currentData;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -37,10 +38,10 @@ public class CurrentDataServiceImpl implements CurrentDataService {
 
 
 	@Override
-	public ArrayList<CanPhyDataBean> getRealDataList(int id, String signalName) {
+	public List<CanPhyDataBean> getRealDataList(int id, String signalName) {
 		// TODO Auto-generated method stub
-		ArrayList<CanPhyDataBean> resultList=new ArrayList<CanPhyDataBean>();
-		ArrayList<CanMsgDataBean> cmdbList=dao.getMessageList(signalName);
+		List<CanPhyDataBean> resultList=new ArrayList<CanPhyDataBean>();
+		List<CanMsgDataBean> cmdbList=dao.getMessageList(signalName);
 		for(CanMsgDataBean cmdb:cmdbList){
 			ArrayList<CanPhyDataBean> cpdbList=UncodeCanMsg.getInstance().parseCanData(cmdb);
 			for(CanPhyDataBean cpdb:cpdbList){
@@ -55,9 +56,9 @@ public class CurrentDataServiceImpl implements CurrentDataService {
 
 
 	@Override
-	public ArrayList<CanPhyDataBean> getRealDataList(int id, String signalName,String startTime) {
-		ArrayList<CanPhyDataBean> resultList=new ArrayList<CanPhyDataBean>();
-		ArrayList<CanMsgDataBean> cmdbList=dao.getMessageList(signalName,startTime);
+	public List<CanPhyDataBean> getRealDataList(int id, String signalName,String startTime) {
+		List<CanPhyDataBean> resultList=new ArrayList<CanPhyDataBean>();
+		List<CanMsgDataBean> cmdbList=dao.getMessageList(signalName,startTime);
 		for(CanMsgDataBean cmdb:cmdbList){
 			ArrayList<CanPhyDataBean> cpdbList=UncodeCanMsg.getInstance().parseCanData(cmdb);
 			for(CanPhyDataBean cpdb:cpdbList){

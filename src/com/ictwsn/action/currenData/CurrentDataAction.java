@@ -1,6 +1,7 @@
 package com.ictwsn.action.currenData;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import javax.annotation.Resource;
@@ -49,7 +50,7 @@ public class CurrentDataAction {
 			strName.append("{name:'dataSeries',");//type: 'area',
 			strData.append("data:[");
 			//CanPhyDataBean cpdb=cService.getRealPhyData(id,signalName);
-			ArrayList<CanPhyDataBean> cpdbList=cService.getRealDataList(id,signalName);
+			List<CanPhyDataBean> cpdbList=cService.getRealDataList(id,signalName);
 			CanSignalBean csb=cService.getCanSignal(id,signalName);
 			long time;
 			int size=cpdbList.size()-1;
@@ -94,7 +95,7 @@ public class CurrentDataAction {
 			@RequestParam(value="signalName",required=true) String signalName,
 			@RequestParam(value="startTime",required=true) String startTime){
 		try{
-			ArrayList<CanPhyDataBean> cpdbList=cService.getRealDataList(id,signalName,startTime);
+			List<CanPhyDataBean> cpdbList=cService.getRealDataList(id,signalName,startTime);
 			response.getWriter().print(JSONArray.fromObject(cpdbList));
 			
 		}catch(Exception e){
