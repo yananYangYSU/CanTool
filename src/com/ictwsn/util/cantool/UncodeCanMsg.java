@@ -13,17 +13,7 @@ import com.ictwsn.util.format.DateFormats;
  * @date 2017-10-05
  */
 public class UncodeCanMsg {
-	private final static int[] byteIndexArray={
-		7,6,5,4,3,2,1,0,
-		15,14,13,12,11,10,9,8,
-		23,22,21,20,19,18,17,16,
-		31,30,29,28,27,26,25,24,
-		39,28,37,36,35,34,33,32,
-		47,46,45,44,43,42,41,40,
-		55,54,53,52,51,50,49,48,
-		63,62,61,60,59,58,57,56
-	};
-
+	
 	private static UncodeCanMsg uncodeCanMsg=null;  //CurrentConn类单例对象
 
 	private UncodeCanMsg(){}
@@ -151,10 +141,11 @@ public class UncodeCanMsg {
 					cd.setInterval(interval);
 				}
 			}else{
-				System.err.print("can信息格式不正确");
+				System.err.print("can信息格式不以t/T开头");
 				cd.setDcl(-1);
 			}
 		}catch(Exception e){
+			System.err.print("can信息格式不正确,无法解析");
 			cd.setDcl(-1);
 		}
 		cd.setTime(DateFormats.getInstance().getNowDate());//打上当前时间戳
@@ -168,7 +159,10 @@ public class UncodeCanMsg {
 	 * @return 解析出物理属性的can信息实体数组
 	 */
 	public ArrayList<CanPhyDataBean> parseCanData(CanMsgDataBean cd){
-
+		ArrayList<CanPhyDataBean> cpdbList=new ArrayList<CanPhyDataBean>();
+		if(cd.getDcl()==-1){ //can信息格式不正确,无法解析
+			return cpdbList;
+		}
 		DataFormats dataFormat=DataFormats.getInstance();
 		int id=Integer.parseInt(cd.getId(),16);
 		ArrayList<CanSignalBean> canSignalList=LoadDataBase.getCanSignalMap().get(id);
@@ -195,7 +189,6 @@ public class UncodeCanMsg {
 			/**
 			 * 遍历相同id下的信号数据库信息,把can信息从can矩阵中提取解析出来
 			 */
-			ArrayList<CanPhyDataBean> cpdbList=new ArrayList<CanPhyDataBean>();
 			for(CanSignalBean csb:canSignalList){
 				CanPhyDataBean cpdb=new CanPhyDataBean();
 				cpdb.setSignalName(csb.getSignalName());
@@ -244,13 +237,13 @@ public class UncodeCanMsg {
 	 * @param num 要查找的元素
 	 * @return 找到返回索引下标,没有找到该元素返回-1
 	 */
-	private int getIndexOf(int num){
+	/*private int getIndexOf(int num){
 		for(int i=0;i<64;i++){
-			if(byteIndexArray[i]==num)
+			if(byteIndexMatrix[i]==num)
 				return i;
 		}
 		return -1;
-	}
+	}*/
 	/**
 	 * 判断物理值数据是否符合范围
 	 * @param data 要判断的数据
@@ -302,4 +295,5 @@ public class UncodeCanMsg {
 		}
 		return result.toString();
 	}
+	
 }

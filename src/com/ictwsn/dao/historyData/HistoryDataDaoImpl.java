@@ -15,6 +15,7 @@ import com.ictwsn.bean.CanPhyDataBean;
 import com.ictwsn.dao.MySQLBaseDao;
 import com.ictwsn.util.CurrentConn;
 import com.ictwsn.util.cantool.UncodeCanMsg;
+import com.ictwsn.util.cantool.UncodeCanMsgForMatrix;
 
 @Repository
 public class HistoryDataDaoImpl extends MySQLBaseDao implements HistoryDataDao {
@@ -86,28 +87,12 @@ public class HistoryDataDaoImpl extends MySQLBaseDao implements HistoryDataDao {
 
 	@Override
 	public int getHistoryDataCount() {
-		int count=0;
-		try { 
-			String sql="select * from can_msg_data";
-			conn=CurrentConn.getInstance().getConn();
-			pst=conn.prepareStatement(sql);
-			rs=pst.executeQuery();
-			while(rs.next()) {
-				count++;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally {
-			CurrentConn.getInstance().closeConnection(conn);
-			CurrentConn.getInstance().closePreparedStatement(pst);
-			CurrentConn.getInstance().closeResultSet(rs);
-		}
-		return count;
+		return this.jt.queryForInt("select count(0) from can_msg_data");
 	}
 
 	@Override
 	public String showMatrixTable(String messageStr) {
 		// TODO Auto-generated method stub
-		return null;
+		return UncodeCanMsgForMatrix.getInstance().showMatrixTable(messageStr);
 	}
 }

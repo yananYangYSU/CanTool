@@ -9,7 +9,6 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.ictwsn.bean.CanPhyDataBean;
 import com.ictwsn.dao.historyData.HistoryDataDao;
 @Service
 public class HistoryDataServiceImpl implements HistoryDataService {
@@ -20,7 +19,7 @@ public class HistoryDataServiceImpl implements HistoryDataService {
 	public String showDataFabric(int number,int size) {
 		Map<String,ArrayList<String>> map=dao.showDataFabric(number,size);
 		Set<String> set=map.keySet();
-		Iterator it=set.iterator();
+		Iterator<String> it=set.iterator();
 		StringBuffer historyData=new StringBuffer();
 		while(it.hasNext()) {
 			String key=(String) it.next();

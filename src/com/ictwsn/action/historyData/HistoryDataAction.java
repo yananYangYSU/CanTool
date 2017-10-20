@@ -74,16 +74,17 @@ public class HistoryDataAction {
 	}
 	@RequestMapping("/showMatrixTable.do")
 	public String showMatrixTable(HttpServletRequest request,HttpServletResponse response,Model model,
-			@RequestParam(value="MessageStr",required=true) int MessageStr) {
+			@RequestParam(value="messageStr",required=true) String messageStr) {
 		try{
 			
-			model.addAttribute("totalCount","");
+			model.addAttribute("dataSeries",hService.showMatrixTable(messageStr));
 		
 			return "showCan";
 		}catch(Exception e){
 			logger.error("login error"+e);
 			e.printStackTrace();
+			return "error";
 		}
-		return null;
+		
 	}
 }
