@@ -19,10 +19,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
         </style>
 
+<<<<<<< HEAD
+        <script src="js/jquery-1.4.3.min.js"></script>
+
+        <script src="js/shighcharts.js"></script>
+
+        <script src="js/exporting.js"></script>
+
+        <script src="js/heatmap.js"></script>
+
+        <script src="js/highcharts-zh_CN.js"></script>
+=======
         <script type="text/javascript" src="js/jquery-1.9.1.js"></script>
 		<script type="text/javascript" src="js/highcharts.js"></script>
         <script type="text/javascript" src="js/exporting.js"></script>
         <script type="text/javascript" src="js/heatmap.js"></script>
+>>>>>>> 869b65ed551a9acee4c68c297de99cf969afcc57
 
     </head>
 
@@ -72,19 +84,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         },
         tooltip: {
             formatter: function () {
-                return '<b>' + 
-                
-                this.series.xAxis.categories[this.point.x]
-                
-                 + '</b> sold <br><b>' +
-                 
-                this.point.value
-                
-                 + '</b> items on <br><b>' + 
-                 
-                 this.series.yAxis.categories[this.point.y] 
-                  
-                    + '</b>';
+             y=this.series.yAxis.categories[this.point.y].charAt(5);
+             x=this.series.xAxis.categories[this.point.x].charAt(4);
+             c=y*8+x;
+                return  y*8 + x*1;
             }
         },
         series: [{
