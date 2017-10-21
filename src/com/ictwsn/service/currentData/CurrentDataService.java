@@ -15,6 +15,5 @@ import com.ictwsn.bean.CanSignalBean;
 public interface CurrentDataService{
 	public List<CanPhyDataBean> getRealDataList(int id,String signalName);
 	public List<CanPhyDataBean> getRealDataList(int id,String signalName,String startTime);
-	public CanPhyDataBean getRealPhyData(int id,String signalName);
 	public CanSignalBean getCanSignal(int id,String signalName);
 }

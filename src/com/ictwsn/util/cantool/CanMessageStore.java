@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import com.ictwsn.bean.CanMsgDataBean;
 import com.ictwsn.util.CurrentConn;
-import com.ictwsn.util.format.DataFormats;
 
 /**
  * canMessage信息的一个内存仓库
@@ -13,10 +12,9 @@ import com.ictwsn.util.format.DataFormats;
  *
  */
 public class CanMessageStore {
-	private static String canAcceptMsgStr="T12FFFFF7800111213141516FF\r";
-	//private static String canSendMsgStr="";
-	private static String lastCanAcceptMsgStr="";
-	private static String tempStr="";
+	private static String canAcceptMsgStr="";
+	private static int canState=1;//默认开启
+	private static int canSpeed=0;//默认0ms
 	
 	private CanMessageStore(){}//禁止实例化
 	private static CanMessageStore store = null;  //CurrentConn类单例对象
@@ -27,50 +25,15 @@ public class CanMessageStore {
 		}  
 		return store;
 	}
-	/**
-	 * 从CanMessage仓库中获取指定id的信息
-	 * @param id can信息id
-	 * @return id符号返回字符串,否则返回-1
-	 */
-	public String getAcceptMsgStr(int id){
-		boolean findFlag=false;
-	
-		while(!findFlag){
-			tempStr=canAcceptMsgStr;
-			if(tempStr.equals(lastCanAcceptMsgStr)){
-				
-			}else{
-				if(tempStr.startsWith("t")){
-					if(Integer.parseInt(tempStr.substring(1,4),16)==id){
-						break;
-					}
-				}else{
-					if(Integer.parseInt(tempStr.substring(1,9),16)==id){
-						break;
-					}
-				}
-			}
-			
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {}
-		}
-		
-		lastCanAcceptMsgStr=tempStr;
-		
-		return tempStr;
-
-
-	}
 	public void setMessage(String messageStr){
 		CanMsgDataBean cmdb=UncodeCanMsg.getInstance().splitDataStr(messageStr);
 		if(cmdb.getDcl()!=-1){//数据合法
-			canAcceptMsgStr=messageStr;
+			CanMessageStore.canAcceptMsgStr=messageStr;
 			insertCanMessage(cmdb);
 		}
 
 	}
-	public int insertCanMessage(CanMsgDataBean cmdb) {
+	private int insertCanMessage(CanMsgDataBean cmdb) {
 		Connection conn = null;
 		PreparedStatement pst = null;
 		int result=0;
@@ -91,7 +54,18 @@ public class CanMessageStore {
 		}
 		return result;
 	}
-
+	public void setCanState(int canState){
+		CanMessageStore.canState=canState; 
+	}
+	public int getCanState(){
+		return canState; 
+	}
+	public void setCanSpeed(int canSpeed){
+		CanMessageStore.canSpeed=canSpeed; 
+	}
+	public int getCanSpeed(){
+		return canSpeed; 
+	}
 	public static void main(String[] a){
 		//CanMessageStore.setMessage("t03d80011223344556677\r");//存储起来
 	}
