@@ -78,7 +78,7 @@
 </style>
 </head>
 <body>
-<div class="page-container" style="margin-top: 40px;">
+<div class="page-container" >
  <div id='allmap' style='width: 50%; height: 70%; left:450px; top:60px;z-index:5; position: absolute; display: none'></div>
 	<div class="row cl" style="margin-top: -20px;margin-left: -220px;">
 			<%-- <label class="bread"><a href="searchOperator.do?userId=<%=rb.getUserId()%>&page=1&roleName=<%=rb.getRoleName()%>" style="text-decoration: none;"><<返回</a></label> --%>

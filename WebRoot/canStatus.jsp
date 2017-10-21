@@ -78,7 +78,7 @@
 </style>
 </head>
 <body>
-<div class="page-container" style="margin-top: 40px;">
+<div class="page-container" >
  <div id='allmap' style='width: 50%; height: 70%; left:450px; top:60px;z-index:5; position: absolute; display: none'></div>
 	<form action="" method="post" class="form form-horizontal" id="form-article-add">
 		<div class="row cl">
@@ -120,14 +120,7 @@
   </div>
   </div>
   </div>
- 
-		<input type="hidden" value="2" id="roleId" name="roleId">
-		<div class="row cl">
-			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-				<button onclick="addOperator();" class="btn btn-primary radius" type="button"><i class="Hui-iconfont">&#xe632;</i>确认提交</button>
-				<button class="btn btn-default radius" type="reset">&nbsp;&nbsp;重置&nbsp;&nbsp;</button>
-			</div>
-		</div>
+  
 	</form>
 </div>
 

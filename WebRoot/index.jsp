@@ -132,7 +132,7 @@ window.onload=function(){
     */
     </script>
 <ul class="bread">
-  <li><a href="index.do" target="right" class="icon-home"> 首页</a></li>
+  <li><a href="" class="icon-home"> 首页</a></li>
   <li><a href="" id="a_leader_txt">管理中心</a></li>
   <li><b>当前用户：</b><span style="color:red;">19组</span>
 </ul>

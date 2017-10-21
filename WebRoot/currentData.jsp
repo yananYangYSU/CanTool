@@ -188,7 +188,7 @@ setInterval(function() {
 			}	
 		});
 	}
-},10000);
+},5000);
 			$(document).ready(function() {
 								Highcharts.setOptions({
 									global : {
@@ -222,7 +222,7 @@ setInterval(function() {
 																						tempData=returnedData;
 																				}
 																		     }
-																		}, 2000);
+																		}, 1000);
 															},
 														},
 													},
@@ -377,7 +377,7 @@ setInterval(function() {
 					    tempData=returnedData;
 						}
 			}
-            }, 2000);
+            }, 1000);
         }
     });
 });
