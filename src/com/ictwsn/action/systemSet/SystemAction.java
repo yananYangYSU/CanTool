@@ -57,4 +57,20 @@ public class SystemAction {
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * 查看cantool装置的信息
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("/canStatus.do")
+	public String canStatus(HttpServletRequest request,HttpServletResponse response){
+		try{
+			 return "canStatus";
+		}catch(Exception e){
+			logger.error("getStatus error"+e);
+			e.printStackTrace();
+			return "error"; 
+		}
+		
+	}
 }

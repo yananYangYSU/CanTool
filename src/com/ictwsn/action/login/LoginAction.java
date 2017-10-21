@@ -33,7 +33,7 @@ public class LoginAction{
 	static Logger logger = Logger.getLogger(LoginAction.class.getName());
 
 	@Resource LoginService lService;	
-	
+
 	/**
 	 * 跳转到端口接入页面
 	 * @param request
@@ -66,7 +66,7 @@ public class LoginAction{
 	 * @throws UnsupportedEncodingException
 	 */
 	@RequestMapping("/login.do")
-	public String login(HttpServletRequest request,HttpServletResponse response,Model model,
+	public String login(HttpServletRequest request,HttpServletResponse response,HttpSession session,Model model,
 			@RequestParam(value="portName",required=true) String portName,
 			@RequestParam(value="baudRate",required=true) Integer baudRate,
 			@RequestParam(value="dataBit",required=true) Integer startBit,
@@ -74,10 +74,10 @@ public class LoginAction{
 		try{
 			int result=lService.login(portName,baudRate,startBit,stopBit);			
 			if(result==1){
-				model.addAttribute("portName",portName);
-				model.addAttribute("baudRate",baudRate);
-				model.addAttribute("startBit",startBit);
-				model.addAttribute("stopBit",stopBit);
+				session.setAttribute("portName",portName);
+				session.setAttribute("baudRate",baudRate);
+				session.setAttribute("startBit",startBit);
+				session.setAttribute("stopBit",stopBit);
 				return "redirect:/index.do";
 			}else{
 				model.addAttribute("message","0");
@@ -100,13 +100,17 @@ public class LoginAction{
 	public String logoff(HttpServletRequest request,HttpSession session){
 		try{
 			lService.logoff();
+			session.removeAttribute("portName");
+			session.removeAttribute("baudRate");
+			session.removeAttribute("startBit");
+			session.removeAttribute("stopBit");
+
 			return "redirect:/listPort.do";
 		}catch(Exception e){
 			logger.error("logoff error"+e);
 			e.printStackTrace();
 			return "pages/error/404";
 		}
-
 
 	}
 

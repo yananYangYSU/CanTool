@@ -38,7 +38,7 @@
 	position: absolute;
 	width: 600px;
 	height: 280px;
-	left: -80px;
+	left: -190px;
 	top: 0px;
 }
 
@@ -152,6 +152,7 @@
 		<script type="text/javascript" src="js/jquery-1.9.1.js"></script>
 		<script type="text/javascript" src="js/highcharts.js"></script>
 		<script type="text/javascript" src="js/highcharts-more.js"></script>
+		<script type="text/javascript" src="js/exporting.js"></script>
 		<script type="text/javascript">
 			var flag = true;
 
@@ -262,9 +263,6 @@ setInterval(function() {
 														}
 													},
 													legend : {
-														enabled : false
-													},
-													exporting : {
 														enabled : false
 													},
 													series:[${dataSeries}]
