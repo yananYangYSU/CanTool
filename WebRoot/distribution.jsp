@@ -19,15 +19,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
         </style>
 
-        <script src="https://img.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
+        <script src="js/jquery-1.4.3.min.js"></script>
 
-        <script src="https://img.hcharts.cn/highcharts/highcharts.js"></script>
+        <script src="js/shighcharts.js"></script>
 
-        <script src="https://img.hcharts.cn/highcharts/modules/exporting.js"></script>
+        <script src="js/exporting.js"></script>
 
-        <script src="https://img.hcharts.cn/highcharts/modules/heatmap.js"></script>
+        <script src="js/heatmap.js"></script>
 
-        <script src="https://img.hcharts.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
+        <script src="js/highcharts-zh_CN.js"></script>
 
     </head>
 
@@ -73,19 +73,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         },
         tooltip: {
             formatter: function () {
-                return '<b>' + 
-                
-                this.series.xAxis.categories[this.point.x]
-                
-                 + '</b> sold <br><b>' +
-                 
-                this.point.value
-                
-                 + '</b> items on <br><b>' + 
-                 
-                 this.series.yAxis.categories[this.point.y] 
-                  
-                    + '</b>';
+             y=this.series.yAxis.categories[this.point.y].charAt(5);
+             x=this.series.xAxis.categories[this.point.x].charAt(4);
+             c=y*8+x;
+                return  y*8 + x*1;
             }
         },
         series: [{
