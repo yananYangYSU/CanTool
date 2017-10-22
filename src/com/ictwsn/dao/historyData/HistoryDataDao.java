@@ -15,4 +15,5 @@ public interface HistoryDataDao {
 	public Map<String,ArrayList<String>> showDataFabric(int number,int size);
 	public String showMatrixTable(String messageStr);
 	public int getHistoryDataCount();
+	public Map<Integer,ArrayList<String>> QueryByTime(String startTime,String endTime);
 }

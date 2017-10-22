@@ -50,10 +50,10 @@ public class HistoryDataAction {
 			model.addAttribute("page",page);
 			model.addAttribute("totalCount",totalCount);
 			if(page>1){
-				model.addAttribute("prePageHref","searchOperator.do?userId="+"&page="+(page-1)+"&roleName=");
+				model.addAttribute("prePageHref","showDataFabric.do?page="+(page-1));
 			}
 			if(page<maxPage){
-				model.addAttribute("nextPageHref","searchOperator.do?userId="+"&page="+(page+1)+"&roleName=");
+				model.addAttribute("nextPageHref","showDataFabric.do?page="+(page+1));
 			}
 			model.addAttribute("historyData",historyData);
 			return "showCan";
@@ -77,5 +77,19 @@ public class HistoryDataAction {
 			return "error";
 		}
 		
+	}
+	
+	@RequestMapping("/QueryByTime.do")
+	public String QueryByTime(HttpServletRequest request,HttpServletResponse response,Model model,
+			@RequestParam(value="startTime",required=true) String startTime,
+			@RequestParam(value="endTime",required=true) String endTime) {
+		try{
+			model.addAttribute("dataSeries",null);
+			return "";
+		}catch(Exception e){
+			logger.error("login error"+e);
+			e.printStackTrace();
+			return "error";
+		}
 	}
 }
