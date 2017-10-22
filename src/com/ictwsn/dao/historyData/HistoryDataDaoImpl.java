@@ -11,6 +11,7 @@ import java.util.Map;
 import org.springframework.stereotype.Repository;
 
 import com.ictwsn.bean.CanMsgDataBean;
+import com.ictwsn.bean.CanMsgFabricBean;
 import com.ictwsn.bean.CanPhyDataBean;
 import com.ictwsn.dao.MySQLBaseDao;
 import com.ictwsn.util.CurrentConn;
@@ -91,7 +92,7 @@ public class HistoryDataDaoImpl extends MySQLBaseDao implements HistoryDataDao {
 	}
 
 	@Override
-	public String showMatrixTable(String messageStr) {
+	public CanMsgFabricBean showMatrixTable(String messageStr) {
 		// TODO Auto-generated method stub
 		return UncodeCanMsgForMatrix.getInstance().showMatrixTable(messageStr);
 	}

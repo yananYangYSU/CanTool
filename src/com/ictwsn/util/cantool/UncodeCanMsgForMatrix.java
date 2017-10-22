@@ -3,9 +3,11 @@ package com.ictwsn.util.cantool;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import com.ictwsn.bean.CanMsgDataBean;
+import com.ictwsn.bean.CanMsgFabricBean;
 import com.ictwsn.bean.CanSignalBean;
 
 /**
@@ -97,8 +99,15 @@ public class UncodeCanMsgForMatrix {
 	 * @param messageStr "t32186211F553238765AB\r"
 	 * @return [[7,7,50],[3,5,0],[0,5,0],[1,5,0]...]
 	 */
-	public String showMatrixTable(String messageStr){
-		return indexStrProcess(parseCanData(UncodeCanMsg.getInstance().splitDataStr(messageStr)));
+	public CanMsgFabricBean showMatrixTable(String messageStr){
+		CanMsgFabricBean cmfb=new CanMsgFabricBean();
+		ArrayList<String> indexList=parseCanData(UncodeCanMsg.getInstance().splitDataStr(messageStr));
+		cmfb.setCanMessage(messageStr);
+		cmfb.setIndexList(indexList);
+		cmfb.setFabricNum(indexList.size());
+		cmfb.setDataSeries(indexStrProcess(indexList));
+		
+		return cmfb;
 	}
 
 
@@ -202,12 +211,13 @@ public class UncodeCanMsgForMatrix {
 			index.setLength(0);
 			indexColorMap.put(i,index.append(",[").append(7-i%8).append(",").append(7-i/8).append(",").append("0]").toString());
 		}
-		
+		/**
+		 * 开始替换色块,计算坐标和颜色等级
+		 */
 		StringBuffer resultStr=new StringBuffer();
 		int colorLevel=0;
 		for(String indexStr:resultIndexList){
 			String[] row=indexStr.split(",");
-			
 			colorLevel++;
 			for(int i=0;i<row.length;i++){
 				int num=Integer.parseInt(row[i]);
@@ -216,8 +226,11 @@ public class UncodeCanMsgForMatrix {
 				indexColorMap.remove(num);
 				resultStr.setLength(0);
 				indexColorMap.put(num,resultStr.append(",[").append(x).append(",").append(y).append(",").append(colorLevel).append("]").toString());
-			}
+				}
 		}
+		/**
+		 * 生成heatMap的dataSeries字符串
+		 */
 		Iterator<Integer> iter = indexColorMap.keySet().iterator();
 		int key=0;
 		resultStr.setLength(0);

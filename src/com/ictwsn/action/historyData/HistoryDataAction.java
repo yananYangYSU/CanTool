@@ -68,7 +68,7 @@ public class HistoryDataAction {
 	public String showMatrixTable(HttpServletRequest request,HttpServletResponse response,Model model,
 			@RequestParam(value="messageStr",required=true) String messageStr) {
 		try{
-			model.addAttribute("dataSeries",hService.showMatrixTable(messageStr));
+			model.addAttribute("cfmbean",hService.showMatrixTable(messageStr));
 		
 			return "distribution";
 		}catch(Exception e){
