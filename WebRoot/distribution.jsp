@@ -1,3 +1,5 @@
+
+
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 String path = request.getContextPath();
@@ -19,22 +21,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
         </style>
 
-<<<<<<< HEAD
         <script src="js/jquery-1.4.3.min.js"></script>
 
         <script src="js/shighcharts.js"></script>
 
-        <script src="js/exporting.js"></script>
+        <script src="js/sexporting.js"></script>
 
         <script src="js/heatmap.js"></script>
 
         <script src="js/highcharts-zh_CN.js"></script>
-=======
-        <script type="text/javascript" src="js/jquery-1.9.1.js"></script>
-		<script type="text/javascript" src="js/highcharts.js"></script>
-        <script type="text/javascript" src="js/exporting.js"></script>
-        <script type="text/javascript" src="js/heatmap.js"></script>
->>>>>>> 869b65ed551a9acee4c68c297de99cf969afcc57
 
     </head>
 
@@ -50,9 +45,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
           $(function () {
     $('#container').highcharts({
-	    credits: {
-	       	    enabled: false
-	    },
         chart: {
             type: 'heatmap',
             marginTop: 40,
@@ -68,7 +60,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             categories: ['Byte 7', 'Byte 6','Byte 5', 'Byte 4', 'Byte 3', 'Byte 2','Byte 1', 'Byte 0'],
             title: null
         },
-        colors: ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572','#FF9655', '#FFF263', '#6AF9C4'],
         colorAxis: {
             min: 0,
             minColor: '#FFFFFF',
@@ -83,19 +74,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             symbolHeight: 280
         },
         tooltip: {
-            formatter: function () {
+           formatter: function () {
              y=this.series.yAxis.categories[this.point.y].charAt(5);
              x=this.series.xAxis.categories[this.point.x].charAt(4);
              c=y*8+x;
                 return  y*8 + x*1;
+
             }
         },
         series: [{
             name: 'can信号分布',
             borderWidth: 1,
-            data: ${dataSeries},
+            data: [[0, 0, 7], [0, 1, 19], [0, 2, 8], [0, 3, 24], [0, 4, 67], [0, 5, 67],[0, 6, 67],[0, 7, 67],
+            [1, 0, 92], [1, 1, 58], [1, 2, 78], [1, 3, 117], [1, 4, 48], [1, 5, 48],[1, 6, 48],[1, 7, 48],
+            [2, 0, 35], [2, 1, 15], [2, 2, 123], [2, 3, 64], [2, 4, 52],[2, 5, 52],[2, 6, 52],[2, 7, 52],
+            [3, 0, 72], [3, 1, 132], [3, 2, 114], [3, 3, 19], [3, 4, 16],[3, 5, 16],[3, 6, 16],[3, 7, 16], 
+            [4, 0, 38], [4, 1, 5], [4, 2, 8], [4, 3, 117], [4, 4, 115],[4, 5, 16],[4, 6, 16],[4, 7, 16],
+            [5, 0, 88], [5, 1, 32], [5, 2, 12], [5, 3, 6], [5, 4, 120],[5, 5, 16],[5, 6, 16],[5, 7, 16], 
+            [6, 0, 13], [6, 1, 44], [6, 2, 88], [6, 3, 98], [6, 4, 96],[6, 5, 16],[6, 6, 16],[6, 7, 16],
+            [7, 0, 31], [7, 1, 1], [7, 2, 82], [7, 3, 32], [7, 4, 30], [7, 5, 16],[7, 6, 16],[7, 7, 16]],
             dataLabels: {
-                enabled: true,
+                enabled: false,
                 color: '#000000'
             }
         }]
