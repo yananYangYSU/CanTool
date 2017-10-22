@@ -53,8 +53,8 @@ public class UncodeCanMsg {
 		
 		//String dataStr="1111111122222222111101010101001100100011100001110110010110101011";
 		UncodeCanMsg t=new UncodeCanMsg();
-		System.out.println(t.subStrIntel("7654321076543210765432107654321076543210765432107654321076543210", 12, 12));
-		System.out.println(t.subStrMotorola("7654321076543210765432107654321076543210765432107654321076543210", 11, 12));
+		System.out.println(t.subStrIntelBin("7654321076543210765432107654321076543210765432107654321076543210", 12, 12));
+		System.out.println(t.subStrMotorolaBin("7654321076543210765432107654321076543210765432107654321076543210", 11, 12));
 		
 		//System.out.println("解析后id:"+Integer.parseInt("321",16));
 		//t.parseCanData(t.splitDataStr(dataStr));
@@ -223,9 +223,9 @@ public class UncodeCanMsg {
 		String bitSubStr="";
 		//int strLength=bitStr.length();
 		if(type==0){
-			bitSubStr=this.subStrMotorola(bitStr,start,length);//调用专门的Motorola字符串截取函数
+			bitSubStr=this.subStrMotorolaBin(bitStr,start,length);//调用专门的Motorola字符串截取函数
 		}else{
-			bitSubStr=this.subStrIntel(bitStr,start,length);//intel使用subString即可
+			bitSubStr=this.subStrIntelBin(bitStr,start,length);//intel使用subString即可
 		}
 		return bitSubStr;
 	}
@@ -261,13 +261,13 @@ public class UncodeCanMsg {
 	}
 
 	/**
-	 * 进行Motorola格式字符串的截取
+	 * 进行Motorola格式二进制字符串的截取
 	 * @param motorolaStr 二进制数据字符串(0-64)
 	 * @param start 起始位
 	 * @param length 长度
-	 * @return 截取后的字符串
+	 * @return 截取后的字符串 1001010
 	 */
-	private String subStrMotorola(String motorolaStr,int start,int length){
+	private String subStrMotorolaBin(String motorolaStr,int start,int length){
 		StringBuffer result=new StringBuffer(); //结果字符串
 		ArrayList<String> strList=new ArrayList<String>();//
 		int size=motorolaStr.length()>>3; //can信息字符串的数据长度 (0-64)
@@ -292,13 +292,13 @@ public class UncodeCanMsg {
 		return result.toString();
 	}
 	/**
-	 * 进行Motorola格式字符串的截取
+	 * 进行Motorola格式二进制字符串的截取
 	 * @param motorolaStr 二进制数据字符串(0-64)
 	 * @param start 起始位
 	 * @param length 长度
-	 * @return 截取后的字符串
+	 * @return 截取后的字符串 01010010
 	 */
-	private String subStrIntel(String IntelStr,int start,int length){
+	private String subStrIntelBin(String IntelStr,int start,int length){
 	    StringBuffer result=new StringBuffer();
 		ArrayList<String> resultList=new ArrayList<String>(); //结果字符串数组
 		ArrayList<String> strList=new ArrayList<String>();//
@@ -321,7 +321,7 @@ public class UncodeCanMsg {
 				resultList.add(strList.get(++startRowIndex).substring(0,remainder));
 			}
 		}
-		for(int i=resultList.size()-1;i>=0;i--)
+		for(int i=resultList.size()-1;i>=0;i--) //intel倒序规则拼接字符串
 			result.append(resultList.get(i));
 		return result.toString();
 	}

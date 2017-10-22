@@ -12,4 +12,5 @@ public interface HistoryDataService {
 	public String showDataFabric(int number,int size);
 	public CanMsgFabricBean showMatrixTable(String messageStr);
 	public int getHistoryDataCount();
+	public String QueryByTime(String startTime,String endTime);
 }

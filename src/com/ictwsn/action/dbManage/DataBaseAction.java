@@ -75,9 +75,9 @@ public class DataBaseAction {
 			String fileNameSuffix="";
 			FileOutputStream out;
 			String fileNamePrefix=webRootPath+"/userFiles/import/";
+			
 			if(!dbFile.isEmpty()){
 				fileNameSuffix=dbFile.getOriginalFilename().substring(dbFile.getOriginalFilename().indexOf("."));
-				
 				/**
 				 * 格式类型判断
 				 */

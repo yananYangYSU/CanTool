@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 public class CanMsgFabricBean {
 	private String canMessage;
-	private String dataSeries;
-	private int fabricNum;
-	private ArrayList<String> indexList;
+	private String dataSeries; //heatmap字符串
+	private int fabricNum;     //包含信息数
+	private ArrayList<CanMegParseBean> cmpbList;
 	
 	public String getCanMessage() {
 		return canMessage;
@@ -26,11 +26,12 @@ public class CanMsgFabricBean {
 	public void setFabricNum(int fabricNum) {
 		this.fabricNum = fabricNum;
 	}
-	public ArrayList<String> getIndexList() {
-		return indexList;
+	public ArrayList<CanMegParseBean> getCmpbList() {
+		return cmpbList;
 	}
-	public void setIndexList(ArrayList<String> indexList) {
-		this.indexList = indexList;
+	public void setCmpbList(ArrayList<CanMegParseBean> cmpbList) {
+		this.cmpbList = cmpbList;
 	}
 
 }
+

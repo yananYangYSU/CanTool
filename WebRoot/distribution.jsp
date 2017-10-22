@@ -1,3 +1,5 @@
+
+
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 String path = request.getContextPath();
@@ -14,45 +16,119 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <style>
+#mainDiv {
+	/*position:absolute;
+	left:0px;
+	top:0px;*/
+	position: relative;
+	margin: 0 auto;
+	margin-left: 0 auto;
+	height: 600px;
+	z-index: 6;
+	top: 0px;
+	width: 800px;
+}
+#container {
+	position: absolute;
+	width: 700px;
+	height: 400px;
+	left: -80px;
+	top: 0px;
+}
+#container2 {
+    position: absolute;
+    width: 254px;
+    height: 280px;
+    left: 624px;
+    top: 37px;
+    background-color: #84cf0b;
+	 
+}
 
-            /* css 代码  */
+#containerControl {
+	position: absolute;
+	width: 100px;
+	left: 800px;
+	top: 5px;
+	height: 20px;
+	z-index: 55;
+}
 
-        </style>
+#startButton {
+	color: rgb(255, 255, 255);
+	font-size: 12px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	padding-left: 6px;
+	padding-right: 6px;
+	border-width: 0px;
+	border-color: rgb(197, 229, 145);
+	border-style: solid;
+	border-radius: 3px;
+	background-color: rgb(120, 195, 0);
+}
 
-<<<<<<< HEAD
-        <script src="js/jquery-1.4.3.min.js"></script>
+#startButton:hover {
+	color: #ffffff;
+	background-color: #84cf0b;
+	border-color: #c5e591;
+}
 
-        <script src="js/shighcharts.js"></script>
 
-        <script src="js/exporting.js"></script>
+#deleteButton {
+	color: rgb(255, 255, 255);
+	font-size: 12px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	padding-left: 6px;
+	padding-right: 6px;
+	border-width: 0px;
+	border-color: rgb(197, 229, 145);
+	border-style: solid;
+	border-radius: 3px;
+	background-color: rgb(255, 81, 0);
+}
 
-        <script src="js/heatmap.js"></script>
+#deleteButton:hover {
+	color: #ffffff;
+	background-color: #ff6f00;
+	border-color: #84cf0b;
+}
 
-        <script src="js/highcharts-zh_CN.js"></script>
-=======
-        <script type="text/javascript" src="js/jquery-1.9.1.js"></script>
-		<script type="text/javascript" src="js/highcharts.js"></script>
-        <script type="text/javascript" src="js/exporting.js"></script>
-        <script type="text/javascript" src="js/heatmap.js"></script>
->>>>>>> 869b65ed551a9acee4c68c297de99cf969afcc57
+#viewButton {
+	color: rgb(255, 255, 255);
+	font-size: 12px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	padding-left: 6px;
+	padding-right: 6px;
+	border-width: 0px;
+	border-color: rgb(197, 229, 145);
+	border-style: solid;
+	border-radius: 3px;
+	background-color: rgb(11, 82, 224);
+}
 
-    </head>
-
+#viewButton:hover {
+	color: #ffffff;
+	background-color: #2256f2;
+	border-color: #c5e591;
+}
+</style>
+</head>
     <body>
-
-        <div id="container" style="height: 400px; min-width: 310px; max-width: 800px; margin: 0 auto"></div>
-	<div id="qie" style="margin-top: 0px;margin-left: 500px;">
-		<a href="currentData.jsp"><input type="button" value="曲线图"  style="width:50px;height:30px;background-color:rgb(21,124,176);color: white;" /></a>
-        <a href="dashboard.jsp"><input type="button" value="仪表盘"  style="width:50px;height:30px;background-color:rgb(21,124,176);color: white;" /></a>
-        <a href="distribution.jsp"><input type="button" value="分布图"  style="width:50px;height:30px;background-color:rgb(21,124,176);color: white;" /></a>
-	</div>
+<div id="mainDiv">
+        <div id="container"></div>
+        <div id="container2" ></div>
+	
+	    <script src="js/jquery-1.4.3.min.js"></script>
+        <script src="js/shighcharts.js"></script>
+        <script src="js/sexporting.js"></script>
+        <script src="js/heatmap.js"></script>
+        <script src="js/highcharts-zh_CN.js"></script>
         <script>
-
           $(function () {
     $('#container').highcharts({
-	    credits: {
-	       	    enabled: false
-	    },
         chart: {
             type: 'heatmap',
             marginTop: 40,
@@ -83,29 +159,28 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             symbolHeight: 280
         },
         tooltip: {
-            formatter: function () {
+           formatter: function () {
              y=this.series.yAxis.categories[this.point.y].charAt(5);
              x=this.series.xAxis.categories[this.point.x].charAt(4);
              c=y*8+x;
                 return  y*8 + x*1;
+
             }
         },
         series: [{
             name: 'can信号分布',
             borderWidth: 1,
-            data: ${dataSeries},
+            data: ${cfmbean.dataSeries},
             dataLabels: {
-                enabled: true,
+                enabled: false,
                 color: '#000000'
             }
         }]
     });
 });
-          
-
-        </script>
-
-    </body>
+</script>
+</div>
+</body>
 
 </html>
 
