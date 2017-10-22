@@ -97,7 +97,6 @@ public class CurrentDataAction {
 		try{
 			List<CanPhyDataBean> cpdbList=cService.getRealDataList(id,signalName,startTime);
 			response.getWriter().print(JSONArray.fromObject(cpdbList));
-			
 		}catch(Exception e){
 			logger.error("login error"+e);
 			e.printStackTrace();

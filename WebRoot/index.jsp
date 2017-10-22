@@ -75,12 +75,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </div>
   <div class="head-l"><a class="button button-little bg-green" href="index.do" target="_blank"><span class="icon-home"></span> 前台首页</a> &nbsp;&nbsp; &nbsp;&nbsp;
   					  <a class="button button-little bg-red" href="logoff.do"><span class="icon-power-off"></span>断开连接</a>
-  <div class="head-r">
-  <div id="div1" class="open1">
-        <div id="div2" class="open2">
-        </div>
-    </div>
-  </div>
+ 
   </div>
   
 </div>
@@ -93,7 +88,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <h2><span class="icon-pencil-square-o"></span>CAN信息管理</h2>
   <ul>
   <li><a href="canStatus.do" target="right"><span class="icon-caret-right"></span>显示CAN信息</a></li>
-   <li><a href="setCan.jsp" target="right"><span class="icon-caret-right"></span>设置CAN参数</a></li>    
+   <li><a href="setCan.do" target="right"><span class="icon-caret-right"></span>设置CAN参数</a></li>    
   </ul>  
   <h2><span class="icon-database"></span>数据库管理</h2>
   <ul>
@@ -132,7 +127,7 @@ window.onload=function(){
     */
     </script>
 <ul class="bread">
-  <li><a href="index.do" target="right" class="icon-home"> 首页</a></li>
+  <li><a href="" class="icon-home"> 首页</a></li>
   <li><a href="" id="a_leader_txt">管理中心</a></li>
   <li><b>当前用户：</b><span style="color:red;">19组</span>
 </ul>

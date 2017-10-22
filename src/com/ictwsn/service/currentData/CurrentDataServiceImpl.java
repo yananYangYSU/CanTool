@@ -19,16 +19,6 @@ public class CurrentDataServiceImpl implements CurrentDataService {
 
 	@Resource CurrentDataDao dao;
 
-
-
-	@Override
-	public CanPhyDataBean getRealPhyData(int id,String signalName) {
-		// TODO Auto-generated method stub
-		return dao.getRealPhyData(id,signalName);
-	}
-
-
-
 	@Override
 	public CanSignalBean getCanSignal(int id, String signalName) {
 		// TODO Auto-generated method stub

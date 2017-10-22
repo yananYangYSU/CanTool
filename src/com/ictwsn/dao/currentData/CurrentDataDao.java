@@ -9,7 +9,6 @@ import com.ictwsn.bean.CanSignalBean;
 
 
 public interface CurrentDataDao {
-	public CanPhyDataBean getRealPhyData(int id,String ecuName);
 	public CanSignalBean getCanSignal(int id,String signalName);
 	public List<CanMsgDataBean> getMessageList(String signalName);
 	public List<CanMsgDataBean> getMessageList(String signalName,String startTime);

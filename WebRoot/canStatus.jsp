@@ -31,7 +31,6 @@
 
 <link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
 <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
-<link href="lib/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
 <style type="text/css">
 .head-r {
 	width: 70px;
@@ -78,8 +77,7 @@
 </style>
 </head>
 <body>
-<div class="page-container" style="margin-top: 40px;">
- <div id='allmap' style='width: 50%; height: 70%; left:450px; top:60px;z-index:5; position: absolute; display: none'></div>
+<div class="page-container" >
 	<form action="" method="post" class="form form-horizontal" id="form-article-add">
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>当前串口：</label>
@@ -110,37 +108,36 @@
 			</div>
 		</div>
 		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>总线周期：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input w50" readonly="readonly" value="${canSpeed}ms" name="canCycle">
+				<span id="password_notice" class="c-red"></span>
+			</div>
+		</div>
+		<div class="row cl">
 		<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>Can状态：</label>
 		<div class="formControls col-xs-8 col-sm-9">
 		 <div class="head-r">
-  <div id="div1" class="open1">
+  		<div id="div1" class="open1">
         <div id="div2" class="open2">
+        <span id="password_notice" class="c-red">${canState}</span>
         </div>
     </div>
   </div>
   </div>
   </div>
- 
-		<input type="hidden" value="2" id="roleId" name="roleId">
-		<div class="row cl">
-			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-				<button onclick="addOperator();" class="btn btn-primary radius" type="button"><i class="Hui-iconfont">&#xe632;</i>确认提交</button>
-				<button class="btn btn-default radius" type="reset">&nbsp;&nbsp;重置&nbsp;&nbsp;</button>
-			</div>
-		</div>
+  
 	</form>
 </div>
 
-
-
-<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=nSTdG2Ql53oHYhwNLXYNwqxesbDK9ol3"></script>
 <script type="text/javascript">
 window.onload=function(){
         var div2=document.getElementById("div2");
         var div1=document.getElementById("div1");
-        div2.onclick=function(){
-         div1.className=(div1.className=="close1")?"open1":"close1";
-   		 div2.className=(div2.className=="close2")?"open2":"close2";
+        var canState="${canState}";
+        if(canState=="关闭"){
+	         div1.className=(div1.className=="close1")?"open1":"close1";
+	   		 div2.className=(div2.className=="close2")?"open2":"close2";
         }
     }
   </script>  

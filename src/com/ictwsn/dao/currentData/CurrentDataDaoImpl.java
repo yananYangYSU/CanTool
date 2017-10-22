@@ -27,14 +27,7 @@ public class CurrentDataDaoImpl extends MySQLBaseDao implements CurrentDataDao {
 	private ResultSet rs=null;
 	UncodeCanMsg ucm=UncodeCanMsg.getInstance();
 	CanMessageStore cms=CanMessageStore.getInstance();
-	@Override
-	public CanPhyDataBean getRealPhyData(int id,String signalName) {
-		// TODO Auto-generated method stub
-		String canMessage=cms.getAcceptMsgStr(id);
-		CanPhyDataBean cpdb=ucm.getCanPhyData(signalName,canMessage);
-		cpdb.setSignalName(canMessage);
-		return cpdb;
-	}
+	
 	@Override
 	public CanSignalBean getCanSignal(int id, String signalName) {
 		// TODO Auto-generated method stub

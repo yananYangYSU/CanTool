@@ -261,7 +261,7 @@ public class SerialPortListener implements Runnable, SerialPortEventListener {
 					inputStream.read(readBuffer);  
 					readStr += new String(readBuffer).trim();  
 				}  
-				//log("接收到端口返回数据(长度为"+readStr.length()+")："+readStr); 
+				log("接收到端口返回数据(长度为"+readStr.length()+")："+readStr); 
 				CanMessageStore.getInstance().setMessage(readStr);//存储起来
 			}catch(IOException e){  
 				throw new RuntimeException(e.getMessage());  
@@ -313,7 +313,7 @@ public class SerialPortListener implements Runnable, SerialPortEventListener {
 		sp.write("Sa\r");
 		/* 之后发送信息前后间隔至少40ms,否则会将上条返返回信息合并为一条接收(视硬件情况调节)*/  
 		Thread.sleep(4040);  
-		sp.write("t11180000000000CFFFFF0001\r");  
+		sp.write("t11180000000000CFFFFF03e8\r");  
 		Thread.sleep(10000);  
 		sp.write("C\r");  
 		sp.close();

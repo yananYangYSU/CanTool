@@ -3,7 +3,7 @@ package com.ictwsn.dao.historyData;
 import java.util.ArrayList;
 import java.util.Map;
 
-import com.ictwsn.bean.CanPhyDataBean;
+import com.ictwsn.bean.CanMsgFabricBean; 
 
 /**
  * 历史数据dao层接口类
@@ -13,7 +13,7 @@ import com.ictwsn.bean.CanPhyDataBean;
  */
 public interface HistoryDataDao {
 	public Map<String,ArrayList<String>> showDataFabric(int number,int size);
-	public String showMatrixTable(String messageStr);
+	public CanMsgFabricBean showMatrixTable(String messageStr);
 	public int getHistoryDataCount();
 	public Map<Integer,ArrayList<String>> QueryByTime(String startTime,String endTime);
 }

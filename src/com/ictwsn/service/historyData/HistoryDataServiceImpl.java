@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.ictwsn.bean.CanMsgFabricBean;
 import com.ictwsn.dao.historyData.HistoryDataDao;
 @Service
 public class HistoryDataServiceImpl implements HistoryDataService {
@@ -40,7 +41,7 @@ public class HistoryDataServiceImpl implements HistoryDataService {
 	}
 
 	@Override
-	public String showMatrixTable(String messageStr) {
+	public CanMsgFabricBean showMatrixTable(String messageStr) {
 		// TODO Auto-generated method stub
 		return dao.showMatrixTable(messageStr);
 	}

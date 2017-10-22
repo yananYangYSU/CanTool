@@ -263,7 +263,9 @@ public class SerialPortCOM1 implements Runnable, SerialPortEventListener {
         	try {
         		i++;
     			Thread.sleep(5000);
-    			sp.write("t"+ids[new Random().nextInt(3)]+"8"+sp.randomHexString(16)+"\r");
+    			sp.write("t"+ids[1]+"8"+sp.randomHexString(16)+"\r");
+    			
+    			//sp.write("t"+ids[new Random().nextInt(3)]+"8"+sp.randomHexString(16)+"\r");
     		} catch (InterruptedException e) {
     			// TODO Auto-generated catch block
     			e.printStackTrace();
