@@ -124,11 +124,48 @@ public class HistoryDataDaoImpl extends MySQLBaseDao implements HistoryDataDao {
 					e.printStackTrace();
 				}
 				ArrayList<String> list=new ArrayList<String>();
-				list.add(rs.getString(2));
-				list.add(rs.getString(3));
-				list.add(messageName);
-				list.add(rs.getString(4));
 				list.add(rs.getString(5));
+				list.add(rs.getString(2));
+				list.add(messageName);
+				list.add(rs.getString(3));
+				list.add(rs.getString(4));
+				map.put(i, list);
+				i++;
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return map;
+	}
+	
+	public Map<Integer, ArrayList<String>> SearchHistoryData() {
+		Map<Integer, ArrayList<String>> map=new HashMap<Integer, ArrayList<String>>();
+		try {
+			conn=CurrentConn.getInstance().getConn();
+			String sql="select * from can_msg_data order by autoId desc";
+			pst=conn.prepareStatement(sql);
+			rs=pst.executeQuery();
+			int i=1;
+			while(rs.next()) {
+				String messageName=null;
+				int id=Integer.parseInt(rs.getString(2), 16);
+				try {
+					sql="select messageName from can_message where id=?";
+					pst=conn.prepareStatement(sql);
+					pst.setInt(1, id);
+					rs2=pst.executeQuery();
+					while(rs2.next()) {
+							messageName=rs2.getString(1);
+					}
+				}catch(Exception e){
+					e.printStackTrace();
+				}
+				ArrayList<String> list=new ArrayList<String>();
+				list.add(rs.getString(5));
+				list.add(rs.getString(2));
+				list.add(messageName);
+				list.add(rs.getString(3));
+				list.add(rs.getString(4));
 				map.put(i, list);
 				i++;
 			}

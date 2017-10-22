@@ -1,5 +1,8 @@
 package com.ictwsn.service.historyData;
  
+import java.util.ArrayList;
+import java.util.Map;
+
 import com.ictwsn.bean.CanMsgFabricBean; 
 
 /**
@@ -13,4 +16,5 @@ public interface HistoryDataService {
 	public CanMsgFabricBean showMatrixTable(String messageStr);
 	public int getHistoryDataCount();
 	public String QueryByTime(String startTime,String endTime);
+	public String SearchHistoryData();
 }
