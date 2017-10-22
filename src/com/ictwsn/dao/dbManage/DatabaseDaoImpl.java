@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 import org.springframework.stereotype.Repository;
 import com.ictwsn.dao.MySQLBaseDao;
 import com.ictwsn.util.CurrentConn;
+import com.ictwsn.util.cantool.LoadDataBase;
 import com.ictwsn.util.format.DataBaseFactory;
 import com.ictwsn.util.format.JsonFactoryImpl;
 import com.ictwsn.util.format.XmlFactoryImpl;
@@ -46,8 +47,11 @@ public class DatabaseDaoImpl extends MySQLBaseDao implements DatabaseDao {
 		}
 		Map<String,ArrayList<String>> databaseMap=dbFactory.importFile(fileName);
 		boolean result=this.updateDataBase(databaseMap);
-
-		return result;
+		int result2=0;
+		if(result==true){
+			result2=LoadDataBase.reLoadCanSignal();
+		}
+		return result&&(result2==1);
 	}
 	public static void main(String[] args){
 		DatabaseDaoImpl a=new DatabaseDaoImpl();
