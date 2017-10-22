@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -18,6 +19,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="description" content="This is my page">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="css/jh/treeview.css" type="text/css"/><!-- css/jh/treeview.css -->
+    <link rel="stylesheet" type="text/css" href="css/jh/admin.css">
+    <link rel="stylesheet" type="text/css" href="css/jh/pintuer.css">
     <script src="js/jquery-1.4.3.min.js"></script>
     <script src="css/jh/treeview.js" type="text/javascript"></script>
 <style type="text/css">
@@ -37,19 +40,46 @@ font-weight: bold;
   </head>
   
   <body>
-    <div id="main" style="margin-left: 50px; font-family:"Microsoft YaHei","simsun","Helvetica Neue", Arial, Helvetica, sans-serif;">
-<table style="width: 800px; border:#CCC solid 1px;">
+    <div id="main" style="margin-left: 50px; "><!-- font-family:"Microsoft YaHei","simsun","Helvetica Neue", Arial, Helvetica, sans-serif; -->
+<table class="table table-hover" style="border-top: #CCC solid 1px;"><!-- text-center  style="width: 800px; border-top: #CCC solid 1px; border-bottom: #CCC solid 1px;" -->
 <tr>
-<th style="border-right: #CCC solid 1px; width: 150px;">Time</th>
-<th style="border-right: #CCC solid 1px; width: 110px;">ID</th>
-<th style="border-right: #CCC solid 1px; width: 140px;">Name</th>
-<th style="border-right: #CCC solid 1px; width: 100px;">DLC</th>
-<th>Data</th>
+<th style="width: 150px;">Time</th>
+<th style=" width: 80px;">ID</th>
+<th style=" width: 100px;">Name</th>
+<th style=" width: 100px;">DLC</th>
+<th >Data</th>
 </tr>
-</table>
-<ul id="treeview" class="filetree" >${historyData }
+<tr>
+<td colspan="5">
+ <ul id="treeview" class="filetree" >${historyData }
     
 </ul>
+</td> 
+</tr>
+ <tr>
+        <td colspan="5">
+					<div class="pagelist">
+						<c:choose>
+							<c:when test="${page==1}">
+								<a>上一页</a>
+							</c:when>
+							<c:otherwise>
+								<a href="${prePageHref}">上一页</a>
+							</c:otherwise>
+						</c:choose>
+						&nbsp;&nbsp;${page}/${maxPage}&nbsp;&nbsp;
+						<c:choose>
+							<c:when test="${page==maxPage}">
+								<a>下一页</a>
+							</c:when>
+							<c:otherwise>
+								<a href="${nextPageHref}">下一页</a>
+							</c:otherwise>
+						</c:choose>
+					</div>
+				</td>
+      </tr>
+</table>
 </div>
-  </body>
+</body>
 </html>

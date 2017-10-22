@@ -19,6 +19,16 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
+<link rel="stylesheet" type="text/css" href="css/showBo.css"/>
+<link rel="stylesheet" type="text/css" href="css/jh/main/pintuer.css">
+<link rel="stylesheet" type="text/css" href="css/jh/main/admin.css">
+
+<link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
 
 <style>
 #mainDiv {
@@ -137,12 +147,14 @@
 				type="button" id="startButton" value="暂停" onclick="start();"
 				style="cursor:pointer">
 		</div>
-		
 		<div id="container3">
-		 <a href="currentData.jsp"><input type="button" value="曲线图" style="width:50px;height:30px;background-color:rgb(21,124,176);color: white;" /></a>
-       <a href="dashboard.jsp"> <input type="button" value="仪表盘"  style="width:50px;height:30px;background-color:rgb(21,124,176);color: white;" /></a>
-       <a href="distribution.jsp"> <input type="button" value="分布图"  style="width:50px;height:30px;background-color:rgb(21,124,176);color: white;" /></a>
+		 <div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<button onclick="currentData.jsp;" class="btn btn-primary radius" type="button"><i class="Hui-iconfont">&#xe632;</i>曲线图</button>
+				<button onclick="dashboard.jsp;" class="btn btn-primary radius" type="button"><i class="Hui-iconfont">&#xe632;</i>仪表盘</button>
+			</div>
 		</div>
+		 </div>
 		<div id="container4"></div>
 		<div id="container5"></div>
 		<div id="container6"></div>

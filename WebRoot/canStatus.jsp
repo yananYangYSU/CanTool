@@ -37,6 +37,15 @@
 	height: 32px;
 	float:left;
 }
+.aa {
+	width: 35px;
+	height: 32px;
+	padding-top:3px;
+	font-size: 16px;
+	float:right;
+	/* border: teal solid 1px; */
+	
+}
 
 #div1 {
 	width: 65px;
@@ -82,47 +91,49 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>当前串口：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input w50" readonly="readonly" value="<%=session.getAttribute("portName")%>" name="portName">
+				<input type="text" class="input w50" readonly value="<%=session.getAttribute("portName")%>" name="portName">
 				<span id="name_notice" class="c-red"></span>
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>波特率：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input w50" readonly="readonly" value="<%=session.getAttribute("baudRate")%>" name="baudRate">
+				<input type="text" class="input w50" readonly value="<%=session.getAttribute("baudRate")%>" name="baudRate">
 				<span id="password_notice" class="c-red"></span>
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>起始位数：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input w50" readonly="readonly" value="<%=session.getAttribute("startBit")%>" name="startBit">
+				<input type="text" class="input w50" readonly value="<%=session.getAttribute("startBit")%>" name="startBit">
 				<span id="password_notice" class="c-red"></span>
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>停止位数：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input w50" readonly="readonly" value="<%=session.getAttribute("stopBit")%>" name="stopBit">
+				<input type="text" class="input w50" readonly value="<%=session.getAttribute("stopBit")%>" name="stopBit">
 				<span id="password_notice" class="c-red"></span>
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>总线周期：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input w50" readonly="readonly" value="${canSpeed}ms" name="canCycle">
+				<input type="text" class="input w50" readonly value="${canSpeed}ms" name="canCycle">
 				<span id="password_notice" class="c-red"></span>
 			</div>
 		</div>
 		<div class="row cl">
 		<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>Can状态：</label>
-		<div class="formControls col-xs-8 col-sm-9">
+		<div class="formControls col-xs-8 col-sm-9" style="width: 150px;">
 		 <div class="head-r">
   		<div id="div1" class="open1">
         <div id="div2" class="open2">
-        <span id="password_notice" class="c-red">${canState}</span>
         </div>
     </div>
+  </div>
+  <div class="aa">
+  <span id="password_notice" class="c-red">${canState}</span>
   </div>
   </div>
   </div>
