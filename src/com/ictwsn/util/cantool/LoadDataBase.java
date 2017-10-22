@@ -76,9 +76,9 @@ public class LoadDataBase {
 		/**
 		 * 方法的实现上为了防止多线程访问冲突,设置临时map数组
 		 */
-		if(canSignalMap!=null){
+		if(tempCanSignalMap!=null){
 			canSignalMap.clear();
-			canSignalMap=tempCanSignalMap;
+			canSignalMap.putAll(tempCanSignalMap);
 			return 1;
 		}else{
 			return 0;
