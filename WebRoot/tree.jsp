@@ -20,6 +20,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link rel="stylesheet" href="css/jh/treeview.css" type="text/css"/><!-- css/jh/treeview.css -->
     <script src="js/jquery-1.4.3.min.js"></script>
     <script src="css/jh/treeview.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="css/jh/admin.css">
+    <link rel="stylesheet" type="text/css" href="css/jh/pintuer.css">
+    <script src="css/jh/pintuer.js"></script>
 
 <style type="text/css">
 .folder{
@@ -39,9 +42,16 @@ font-weight: bold;
   </head>
   
   <body>
-    <div id="main" style="margin-left: 50px; font-family:"Microsoft YaHei","simsun","Helvetica Neue", Arial, Helvetica, sans-serif;">
+  <form method="post" action="" id="listform">
+  <div class="panel admin-panel"> 
+    <div class="panel-head"><strong class="icon-reorder"> 数据库树状列表</strong> <a href="" style="float:right; display:none;">添加字段</a></div>
+  
+    <div id="main" style="margin-left: 50px;margin-top: 10px;">
+
 <ul id="treeview" class="filetree">${treeStr }
 </ul>
 </div>
+</div>
+</form>
   </body>
 </html>

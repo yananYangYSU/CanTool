@@ -23,6 +23,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link rel="stylesheet" type="text/css" href="css/jh/pintuer.css">
     <script src="js/jquery-1.4.3.min.js"></script>
     <script src="css/jh/treeview.js" type="text/javascript"></script>
+<script src="css/jh/pintuer.js"></script>
 <style type="text/css">
 .folder{
 font-weight: bold;
@@ -40,13 +41,17 @@ font-weight: bold;
   </head>
   
   <body>
-    <div id="main" style="margin-left: 50px; "><!-- font-family:"Microsoft YaHei","simsun","Helvetica Neue", Arial, Helvetica, sans-serif; -->
+  <form method="post" action="" id="listform">
+  <div class="panel admin-panel"> 
+    <div class="panel-head"><strong class="icon-reorder"> Can信息组成列表</strong> <a href="" style="float:right; display:none;">添加字段</a></div>
+  
+   <div id="main" style="margin-left: 50px; "> <!--   font-family:"Microsoft YaHei","simsun","Helvetica Neue", Arial, Helvetica, sans-serif; -->
 <table class="table table-hover" style="border-top: #CCC solid 1px;"><!-- text-center  style="width: 800px; border-top: #CCC solid 1px; border-bottom: #CCC solid 1px;" -->
-<tr>
-<th style="width: 150px;">Time</th>
-<th style=" width: 80px;">ID</th>
-<th style=" width: 100px;">Name</th>
-<th style=" width: 100px;">DLC</th>
+<tr style="text-align: center;">
+<th style="width: 150px;text-align: center;">Time</th>
+<th style=" width: 80px;text-align: center;">ID</th>
+<th style=" width: 100px;text-align: center;">Name</th>
+<th style=" width: 100px;text-align: center;">DLC</th>
 <th >Data</th>
 </tr>
 <tr>
@@ -81,5 +86,7 @@ font-weight: bold;
       </tr>
 </table>
 </div>
+</div>
+</form>
 </body>
 </html>
