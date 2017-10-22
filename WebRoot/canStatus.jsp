@@ -41,7 +41,7 @@
 	width: 35px;
 	height: 32px;
 	padding-top:3px;
-	font-size: 16px;
+	font-size: 14px;
 	float:right;
 	/* border: teal solid 1px; */
 	

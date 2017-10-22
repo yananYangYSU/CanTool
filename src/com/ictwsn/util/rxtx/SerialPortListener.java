@@ -261,7 +261,7 @@ public class SerialPortListener implements Runnable, SerialPortEventListener {
 					inputStream.read(readBuffer);  
 					readStr += new String(readBuffer).trim();  
 				}  
-				log("接收到端口返回数据(长度为"+readStr.length()+")："+readStr); 
+				//log("接收到端口返回数据(长度为"+readStr.length()+")："+readStr); 
 				CanMessageStore.getInstance().setMessage(readStr);//存储起来
 			}catch(IOException e){  
 				throw new RuntimeException(e.getMessage());  

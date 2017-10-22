@@ -4,8 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -62,21 +60,19 @@ public class HistoryDataDaoImpl extends MySQLBaseDao implements HistoryDataDao {
 
 				String messageStr=null;
 				if(rs.getString(2).length()==3) {
-					messageStr="t"+rs.getString(2)+rs.getInt(3)+rs.getString(4).replaceAll(" ","");
+					messageStr="t"+rs.getString(2)+rs.getInt(3)+rs.getString(4).replaceAll(" ","")+"\\r";
 				}else if(rs.getString(2).length()==8) {
-					messageStr="T"+rs.getString(2)+rs.getInt(3)+rs.getString(4).replaceAll(" ","");
+					messageStr="T"+rs.getString(2)+rs.getInt(3)+rs.getString(4).replaceAll(" ","")+"\\r";
 				}
 				ArrayList<CanPhyDataBean> canPhy=new ArrayList<CanPhyDataBean>();
 				CanMsgDataBean canMsg=UncodeCanMsg.getInstance().splitDataStr(messageStr);
-				String ts=rs.getString(5).substring(0,19);
-				message=ts+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+id+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+messageName+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+rs.getInt(3)+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+rs.getString(4); //key由time,id.name,dcl,data组成
+				message=rs.getDate(5)+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+id+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+messageName+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+rs.getInt(3)+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+rs.getString(4); //key由time,id.name,dcl,data组成
 				canPhy=UncodeCanMsg.getInstance().parseCanData(UncodeCanMsg.getInstance().splitDataStr(messageStr));
 				for(int i=0;i<canPhy.size();i++) {
 					CanPhyDataBean canphy=canPhy.get(i);
 					String signalStr=canphy.getSignalName()+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+canphy.getPhyValue()+canphy.getUnit()+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+canphy.getHexStr()+"&nbsp;&nbsp;&nbsp;"+canphy.getBinaryStr();
 					signal.add(signalStr);
 				}
-				signal.add(messageStr);
 				DataMap.put(message, signal);
 			}
 		}catch(Exception e){
@@ -100,9 +96,10 @@ public class HistoryDataDaoImpl extends MySQLBaseDao implements HistoryDataDao {
 		// TODO Auto-generated method stub
 		return UncodeCanMsgForMatrix.getInstance().showMatrixTable(messageStr);
 	}
-
+	
 	@Override
 	public Map<Integer, ArrayList<String>> QueryByTime(String startTime, String endTime) {
+		Map<Integer, ArrayList<String>> map=new HashMap<Integer, ArrayList<String>>();
 		// TODO Auto-generated method stub
 		try {
 			conn=CurrentConn.getInstance().getConn();
@@ -111,14 +108,10 @@ public class HistoryDataDaoImpl extends MySQLBaseDao implements HistoryDataDao {
 			pst.setString(1, startTime);
 			pst.setString(2, endTime);
 			rs=pst.executeQuery();
+			int i=1;
 			while(rs.next()) {
 				String messageName=null;
 				int id=Integer.parseInt(rs.getString(2), 16);
-				ArrayList<String> list=new ArrayList<String>();
-				list.add(rs.getString(2));
-				list.add(rs.getString(3));
-				list.add(rs.getString(4));
-				list.add(rs.getString(5));
 				try {
 					sql="select messageName from can_message where id=?";
 					pst=conn.prepareStatement(sql);
@@ -130,10 +123,18 @@ public class HistoryDataDaoImpl extends MySQLBaseDao implements HistoryDataDao {
 				}catch(Exception e){
 					e.printStackTrace();
 				}
+				ArrayList<String> list=new ArrayList<String>();
+				list.add(rs.getString(2));
+				list.add(rs.getString(3));
+				list.add(messageName);
+				list.add(rs.getString(4));
+				list.add(rs.getString(5));
+				map.put(i, list);
+				i++;
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return map;
 	}
 }

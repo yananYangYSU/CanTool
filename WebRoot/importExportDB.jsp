@@ -18,17 +18,13 @@
 <link rel="Bookmark" href="/favicon.ico" >
 <link rel="Shortcut Icon" href="/favicon.ico" />
 <link rel="stylesheet" type="text/css" href="css/showBo.css"/>
-<link rel="stylesheet" type="text/css" href="css/pintuer.css">
-<link rel="stylesheet" type="text/css" href="css/admin.css">
 
 <link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
 <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
 <link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
 
 <link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
-<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
-
-<link href="lib/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" /> 
 </head>
 <body>
 <div class="page-container">
@@ -67,12 +63,6 @@
 <script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script> 
 <script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
 
-<!--请在下方写此页面业务相关的脚本-->
-<script type="text/javascript" src="lib/My97DatePicker/4.8/WdatePicker.js"></script>
-<script type="text/javascript" src="lib/jquery.validation/1.14.0/jquery.validate.js"></script> 
-<script type="text/javascript" src="lib/jquery.validation/1.14.0/validate-methods.js"></script> 
-<script type="text/javascript" src="lib/jquery.validation/1.14.0/messages_zh.js"></script>
-
 <script type="text/javascript" src="js/showBo.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -88,11 +78,26 @@
 			}
 		});
 		function exportDB(type){
-			if(type="xml")
+			if(type=="xml")
 				window.location="exportDatabase.do?fileType=xml";
 			else 
 				window.location="exportDatabase.do?fileType=json";
 		}
+		function importDB(){
+		    var fileName=document.getElementById("dbFile").value;
+		    if(fileName==""){
+		    	Showbo.Msg.alert("请选择要上传的文件!");
+		    	return 0;
+		    }
+		    var fileSuffixName =/\.[^\.]+/.exec(fileName);
+		    if(!fileSuffixName==".xml"||!fileSuffixName==".json"){
+		    	Showbo.Msg.alert("文件格式应为xml或json!");
+		    	return 0;
+		    }
+		    document.importDBForm.submit();
+			
+		}
+		
 </script>
 
 </body>

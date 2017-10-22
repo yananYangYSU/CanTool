@@ -1,7 +1,13 @@
 package com.ictwsn.action.exportData;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +52,7 @@ public class ExportDataAction {
 	 */
 	@RequestMapping("/exportData.do")
 	public String exportData(HttpServletRequest request,HttpSession session,Model model){
+		
 		try{
 			
 				model.addAttribute("clientList",null);
@@ -63,9 +70,42 @@ public class ExportDataAction {
 	 * 导出can数据到CSV格式
 	 * @return
 	 */
-	
-	private int exportCSV(){
-		return 0;
+	@RequestMapping("/exportCSVData.do")
+	private String exportCSV(HttpServletRequest request,HttpServletResponse response,Model model){
+		try {  
+            // path是指欲下载的文件的路径。  
+            File file = new File("G://form.xls");  
+            // 取得文件名。  
+            String filename = file.getName();  
+            // 以流的形式下载文件。  
+            InputStream fis = new BufferedInputStream(new FileInputStream(""));  
+            byte[] buffer = new byte[fis.available()];  
+            fis.read(buffer);  
+            fis.close();  
+            // 清空response  
+            response.reset();  
+            // 设置response的Header  
+            response.addHeader("Content-Disposition", "attachment;filename="  
+                    + new String(filename.getBytes()));  
+            response.addHeader("Content-Length", "" + file.length());  
+            OutputStream toClient = new BufferedOutputStream(  
+                    response.getOutputStream());  
+            response.setContentType("application/vnd.ms-excel;charset=gb2312");  
+            toClient.write(buffer);  
+            toClient.flush();  
+            toClient.close();  
+        } catch (IOException ex) {  
+            ex.printStackTrace();  
+        }  
+		try {
+			
+			
+			return "exportCSV";
+		} catch (Exception e) {
+			logger.error("add device error"+e);
+			e.printStackTrace();
+			return "pages/error";
+		}
 		
 	}
 	/**

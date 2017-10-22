@@ -1,10 +1,12 @@
 package com.ictwsn.util.format;
 
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,6 +23,9 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -45,45 +50,11 @@ public class JsonFactoryImpl implements DataBaseFactory{
 
 	@Override
 	public boolean exportFile(Map<String, ArrayList<String>> canDatabaseMap){
-		String xmlStr = null;
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder builder;
 		try {
-			builder = factory.newDocumentBuilder();
-
-			Document document = builder.newDocument();
-			document.setXmlVersion("1.0");
-
-			Element root = document.createElement("root");
-			document.appendChild(root);
-
-			Iterator<String> iter = canDatabaseMap.keySet().iterator();
-			String key="";
-			while (iter.hasNext()) {
-				key = iter.next();
-				Element message = document.createElement("canMessage");
-				message.setAttribute("value",key);
-				for(String value:canDatabaseMap.get(key)){
-					Element signal = document.createElement("canSignal");
-					signal.setAttribute("value",value.replaceAll("\"","#"));
-					message.appendChild(signal);
-				}
-				root.appendChild(message);
-			}
-
-			TransformerFactory transFactory = TransformerFactory.newInstance();
-			Transformer transFormer = transFactory.newTransformer();
-			DOMSource domSource = new DOMSource(document);
-
-			//export string
-			ByteArrayOutputStream bos = new ByteArrayOutputStream();
-			transFormer.transform(domSource, new StreamResult(bos));
-			xmlStr = bos.toString();
-			xmlStr=xmlStr.replaceAll("\"","'");
-			xmlStr=xmlStr.replaceAll("#","\"");
-			System.out.println(xmlStr);
+			String jsonStr=JSONArray.fromObject(canDatabaseMap).toString();
+			System.out.println(jsonStr);
 			String path = JsonFactoryImpl.class.getClassLoader().getResource("")
-					+ "userFiles/export/exportDataBase.xml";
+					+ "userFiles/export/exportDataBase.json";
 			path = path.substring(6);
 			path = path.replaceAll("WEB-INF/classes/", "");
 
@@ -93,23 +64,11 @@ public class JsonFactoryImpl implements DataBaseFactory{
 				file.createNewFile();
 			}
 			FileOutputStream out = new FileOutputStream(file);
-			byte[] contentInBytes = xmlStr.getBytes();
+			byte[] contentInBytes = jsonStr.getBytes();
 
 			out.write(contentInBytes);
 			out.flush();
 			out.close();
-		}catch (ParserConfigurationException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-			return false;
-		} catch (TransformerConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		} catch (TransformerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -117,16 +76,43 @@ public class JsonFactoryImpl implements DataBaseFactory{
 		}
 		return true;
 	}
-
+	public static void main(String[] args){
+		new JsonFactoryImpl().importFile("");
+	}
 	@Override
 	public Map<String,ArrayList<String>> importFile(String fileName) {
-		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-		Map<String,ArrayList<String>> canDatabaseMap=new HashMap<String,ArrayList<String>>();
+		try{
+			BufferedReader brname = new BufferedReader(new FileReader("F:\\exportDataBase.json"));// 读取NAMEID对应值  
+			String sname = null;  
+			while ((sname = brname.readLine()) != null) {  
+				JSONArray jsonarray = JSONArray.fromObject(sname);
+				JSONObject jo=JSONObject.fromObject(jsonarray.get(0));
+				@SuppressWarnings("unchecked")
+				Iterator<String> iter = jo.keySet().iterator();
+				String key="";
+				while (iter.hasNext()) {
+					key = iter.next();
+					System.out.println("----"+key+"----");
+					JSONArray jo2=JSONArray.fromObject(jo.get(key));
+					for(int i=0;i<jo2.size();i++)
+						System.out.println(jo2.get(i));
+				}
+			
+				//for(int i=0;i<jo.size();i++)
+					
+			}  
+			brname.close();  
+		} catch (IOException e1) {  
+			// TODO Auto-generated catch block  
+			e1.printStackTrace();  
+		}  
+		
 
+		/*
 		try {
 			DocumentBuilder builder = dbf.newDocumentBuilder();
 			Document doc=builder.parse(new FileInputStream(new File(fileName)));
-			
+
 			Element root=doc.getDocumentElement(); // 
 			NodeList messages=root.getElementsByTagName("CanMassage");
 			System.out.println(messages.getLength());
@@ -151,7 +137,7 @@ public class JsonFactoryImpl implements DataBaseFactory{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		return canDatabaseMap;
+		 */
+		return null;
 	}
 }

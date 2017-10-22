@@ -10,4 +10,5 @@ import java.util.Map;
  * @date 2017-8-18
  */
 public interface ExportDataService {
+	public boolean exportCSVData();
 }

@@ -35,7 +35,7 @@ public class DatabaseServiceImpl implements DatabaseService {
 		while(it.hasNext()) {
 			String message=(String) it.next();
             id=message.split(" ");
-			treeStr.append("<li><span class=\"folder\" >").append(message).append("</span>\n").append("<ul>\n");
+			treeStr.append("<li><span class=\"folder\" >").append(message).append("</span>\n").append("<ul style=\"display:none\">\n");
 			ArrayList<String> signalList=nameMap.get(message);		
 			for(String signal:signalList) {
 				treeStr.append("<li><a href=\"currentDataIndex.do?id=").append(id[1]).append("&signalName=").append(signal).append("\"><span class=\"file\">").append(signal).append("</span></a></li>\n");

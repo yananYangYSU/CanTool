@@ -24,11 +24,10 @@ public class HistoryDataServiceImpl implements HistoryDataService {
 		StringBuffer historyData=new StringBuffer();
 		while(it.hasNext()) {
 			String key=(String) it.next();
-			ArrayList<String> signalList=map.get(key);
-			String messageStr=signalList.get(signalList.size()-1);
-			historyData.append("<li><a href=\"showMatrixTable.do?messageStr=").append(messageStr).append("\"><span class=\"folder\">").append(key).append("</span></a>\n").append("<ul style=\"display:none\">\n");		
-			for(int i=0;i<(signalList.size()-1);i++) {
-				historyData.append("<li><span class=\"file\">").append(signalList.get(i)).append("</span></li>\n");
+			historyData.append("<li><a href=\"showMatrixTable.do?messageStr=t31d86211F553238765AB\"><span class=\"folder\">").append(key).append("</span></a>\n").append("<ul style=\"display:none\">\n");
+			ArrayList<String> signalList=map.get(key);		
+			for(String signal:signalList) {
+				historyData.append("<li><span class=\"file\">").append(signal).append("</span></li>\n");
 			}
 			historyData.append("</ul></li>\n");
 		}
@@ -45,10 +44,24 @@ public class HistoryDataServiceImpl implements HistoryDataService {
 		// TODO Auto-generated method stub
 		return dao.showMatrixTable(messageStr);
 	}
-
 	@Override
 	public String QueryByTime(String startTime, String endTime) {
-		dao.QueryByTime(startTime, endTime);
-		return null;
+		Map<Integer,ArrayList<String>> map=dao.QueryByTime(startTime, endTime);
+		Set<Integer> set=map.keySet();
+		Iterator it=set.iterator();
+		StringBuffer Str=new StringBuffer();
+		while(it.hasNext()) {
+			ArrayList<String> list=new ArrayList<String>();
+			int key=(Integer) it.next();
+			list=map.get(key);
+			Str.append("<tr>");
+			Str.append("<td width=\"140px\">").append(list.get(0)).append("</td>");
+			Str.append("<td width=\"140px\">").append(list.get(1)).append("</td>");
+			Str.append("<td width=\"140px\">").append(list.get(2)).append("</td>");
+			Str.append("<td width=\"140px\">").append(list.get(3)).append("</td>");
+			Str.append("<td width=\"140px\">").append(list.get(4)).append("</td>");
+			Str.append("</tr>");
+		}
+		return Str.toString();
 	}
 }
