@@ -16,4 +16,5 @@ public interface HistoryDataDao {
 	public CanMsgFabricBean showMatrixTable(String messageStr);
 	public int getHistoryDataCount();
 	public Map<Integer,ArrayList<String>> QueryByTime(String startTime,String endTime);
+	public Map<Integer, ArrayList<String>> SearchHistoryData();
 }

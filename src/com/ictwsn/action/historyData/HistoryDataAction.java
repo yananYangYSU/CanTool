@@ -83,9 +83,8 @@ public class HistoryDataAction {
 			@RequestParam(value="startTime",required=true) String startTime,
 			@RequestParam(value="endTime",required=true) String endTime) {
 		try{
-			
 			model.addAttribute("Str",hService.QueryByTime(startTime, endTime));
-			return "";
+			return "historyData";
 		}catch(Exception e){
 			logger.error("login error"+e);
 			e.printStackTrace();
@@ -97,8 +96,8 @@ public class HistoryDataAction {
 	public String SearchHistoryData(HttpServletRequest request,HttpServletResponse response,Model model) {
 		try{
 			
-			model.addAttribute("Str",null);
-			return "";
+			model.addAttribute("Str",hService.SearchHistoryData());
+			return "historyData";
 		}catch(Exception e){
 			logger.error("login error"+e);
 			e.printStackTrace();

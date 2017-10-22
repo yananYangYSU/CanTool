@@ -64,4 +64,25 @@ public class HistoryDataServiceImpl implements HistoryDataService {
 		}
 		return Str.toString();
 	}
+
+	@Override
+	public String SearchHistoryData() {
+		Map<Integer,ArrayList<String>> map=dao.SearchHistoryData();
+		Set<Integer> set=map.keySet();
+		Iterator it=set.iterator();
+		StringBuffer Str=new StringBuffer();
+		while(it.hasNext()) {
+			ArrayList<String> list=new ArrayList<String>();
+			int key=(Integer) it.next();
+			list=map.get(key);
+			Str.append("<tr>");
+			Str.append("<td width=\"140px\">").append(list.get(0)).append("</td>");
+			Str.append("<td width=\"140px\">").append(list.get(1)).append("</td>");
+			Str.append("<td width=\"140px\">").append(list.get(2)).append("</td>");
+			Str.append("<td width=\"140px\">").append(list.get(3)).append("</td>");
+			Str.append("<td width=\"140px\">").append(list.get(4)).append("</td>");
+			Str.append("</tr>");
+		}
+		return Str.toString();
+	}
 }
