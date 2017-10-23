@@ -19,15 +19,17 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
  
 import com.ictwsn.dao.exportData.ExportDataDao;
+import com.ictwsn.dao.historyData.HistoryDataDao;
 
  
 @Service
 public class ExportDataServiceImpl implements ExportDataService {
 	
-	@Resource ExportDataDao dao;
+	@Resource HistoryDataDao dao;
+	
 
 	@Override
-	public boolean exportCSVData() {
+	public boolean exportCSVData(String startTime,String endTime) {
 		//第一步，创建一个webbook，对应一个Excel文件
 		HSSFWorkbook wb=new HSSFWorkbook();
 		//第二步，在webbook中添加一个sheet，对应Excel文件中的sheet
@@ -40,28 +42,37 @@ public class ExportDataServiceImpl implements ExportDataService {
 		HSSFCell cell=row.createCell(0);
 		
 		cell=row.createCell(0);
-		cell.setCellValue("id");
+		cell.setCellValue("time");
 		cell.setCellStyle(style);
 		
 		cell=row.createCell(1);
-		cell.setCellValue("dcl");
+		cell.setCellValue("id");
 		cell.setCellStyle(style);
 		
 		cell=row.createCell(2);
-		cell.setCellValue("data");
+		cell.setCellValue("name");
 		cell.setCellStyle(style);
 		
 		cell=row.createCell(3);
-		cell.setCellValue("time");
+		cell.setCellValue("dlc");
+		cell.setCellStyle(style);
+		
+		cell=row.createCell(4);
+		cell.setCellValue("data");
 		cell.setCellStyle(style);
 		
 		//第五步，写入实体数据，从数据库读取
 		ArrayList<String> List=new ArrayList<String>();
-		Map<Integer,ArrayList<String>> map=dao.getData();
+		Map<Integer,ArrayList<String>> map=new HashMap<Integer,ArrayList<String>>();
+		if(startTime==null&&endTime==null) {
+			map=dao.QueryByTime(startTime, endTime, 0, 0);
+		}else {
+			map=dao.SearchHistoryData(0, 0);
+		}
 		Set<Integer> set=map.keySet();
-		for(int i=0;i<set.size();i++){
+		for(int i=1;i<set.size()+1;i++){
 			List=map.get(i);
-			row=sheet.createRow(i+1);
+			row=sheet.createRow(i);
 			row.createCell(0).setCellValue(List.get(0));
 			row.createCell(1).setCellValue(List.get(1));
 			row.createCell(2).setCellValue(List.get(2));
@@ -75,8 +86,9 @@ public class ExportDataServiceImpl implements ExportDataService {
 			fout.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+			return false;
 		}
-		return false;
+		return true;
 	}
 
 	

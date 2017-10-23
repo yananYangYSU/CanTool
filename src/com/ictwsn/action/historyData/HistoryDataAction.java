@@ -81,9 +81,21 @@ public class HistoryDataAction {
 	@RequestMapping("/QueryByTime.do")
 	public String QueryByTime(HttpServletRequest request,HttpServletResponse response,Model model,
 			@RequestParam(value="startTime",required=true) String startTime,
-			@RequestParam(value="endTime",required=true) String endTime) {
+			@RequestParam(value="endTime",required=true) String endTime,
+			@RequestParam(value="page",required=true)int page) {
 		try{
-			model.addAttribute("Str",hService.QueryByTime(startTime, endTime));
+			int totleCount=hService.totleCount(startTime, endTime);//查询总条数
+			int size=15;          //每页条数
+			int maxPage=(totleCount%size==0)?totleCount/size:totleCount/size+1;//最大页数
+			page=(page==0)?1:page; //当前页
+			int number=(page-1)*size;  
+			
+			model.addAttribute("totleCount", totleCount);
+			model.addAttribute("maxPage", maxPage);
+			page=maxPage==0?0:page;
+			model.addAttribute("page", page);
+			
+			model.addAttribute("Str",hService.QueryByTime(startTime, endTime,number,size));
 			return "historyData";
 		}catch(Exception e){
 			logger.error("login error"+e);
@@ -93,10 +105,26 @@ public class HistoryDataAction {
 	}
 	
 	@RequestMapping("/SearchHistoryData.do")
-	public String SearchHistoryData(HttpServletRequest request,HttpServletResponse response,Model model) {
+	public String SearchHistoryData(HttpServletRequest request,HttpServletResponse response,Model model,
+			@RequestParam(value="page",required=true)int page) {
 		try{
+			int totleCount=hService.totleCount(null, null);  //总历史数据
+			int size=15;                   //每页条数
+			int maxPage=(totleCount%size==0)?totleCount/size:totleCount/size+1;  //最大页数
+			page=(page==0)?1:page;							//当前页
+			int number=(page-1)*size;            			//查询起始的条数
 			
-			model.addAttribute("Str",hService.SearchHistoryData());
+			model.addAttribute("totleCount",totleCount);
+			page=maxPage==0?0:page;     //防止数据库无数据，maxpage=0，此时page也应该是0
+			model.addAttribute("page", page);
+			model.addAttribute("maxPage", maxPage);
+			if(page>1){  //大于第一页才有上一页
+				model.addAttribute("prePageHref","SearchHistoryData.do?page="+(page-1));
+			}
+			if(page<maxPage){ //小于最大页数才能有下一页
+				model.addAttribute("nextPageHref","SearchHistoryData.do?page="+(page+1));
+			}
+			model.addAttribute("Str",hService.SearchHistoryData(number,size));
 			return "historyData";
 		}catch(Exception e){
 			logger.error("login error"+e);
