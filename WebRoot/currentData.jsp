@@ -248,6 +248,7 @@ setInterval(function() {
 															text : '时间'
 														}
 													},
+													credits:{enabled:false},
 													yAxis : {
 														title : {
 															text : '物理值'
