@@ -31,8 +31,8 @@ public class HistoryDataDaoImpl extends MySQLBaseDao implements HistoryDataDao {
 	 * @throws SQLException 
 	 */
 	@Override
-	public Map<String, ArrayList<String>> showDataFabric(int number,int size) {
-		Map<String,ArrayList<String>> DataMap=new HashMap<String,ArrayList<String>>();
+	public Map<Integer, ArrayList<String>> showDataFabric(int number,int size) {
+		Map<Integer,ArrayList<String>> DataMap=new HashMap<Integer,ArrayList<String>>();
 		String sql=null;
 		String message=null; 
 		try {
@@ -42,6 +42,7 @@ public class HistoryDataDaoImpl extends MySQLBaseDao implements HistoryDataDao {
 			pst.setInt(1, number);
 			pst.setInt(2, size);
 			rs=pst.executeQuery();
+			int key=1;
 			while(rs.next()){
 				ArrayList<String> signal=new ArrayList<String>();
 				int id=Integer.parseInt(rs.getString(2),16); //将十六进制id转换成十进制，用于匹配messageid
@@ -69,12 +70,14 @@ public class HistoryDataDaoImpl extends MySQLBaseDao implements HistoryDataDao {
 				signal.add(messageStr);
 				message=rs.getString(5).substring(0, 19)+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+id+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+messageName+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+rs.getInt(3)+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+rs.getString(4); //key由time,id.name,dcl,data组成
 				canPhy=UncodeCanMsg.getInstance().parseCanData(UncodeCanMsg.getInstance().splitDataStr(messageStr));
+				signal.add(message);
 				for(int i=0;i<canPhy.size();i++) {
 					CanPhyDataBean canphy=canPhy.get(i);
 					String signalStr=canphy.getSignalName()+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+canphy.getPhyValue()+canphy.getUnit()+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+canphy.getHexStr()+"&nbsp;&nbsp;&nbsp;"+canphy.getBinaryStr();
 					signal.add(signalStr);
 				}
-				DataMap.put(message, signal);
+				DataMap.put(key, signal);
+				key++;
 			}
 		}catch(Exception e){
 			e.printStackTrace();

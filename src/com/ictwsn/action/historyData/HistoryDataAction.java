@@ -37,7 +37,7 @@ public class HistoryDataAction {
 			@RequestParam(value="page",required=true) int page) {
 		try{
 			int totalCount=hService.getHistoryDataCount();  //查询数据总条数
-			int size=10;						  			   				   //每页显示大小
+			int size=15;						  			   				   //每页显示大小
 			int maxPage=(totalCount%size==0)?totalCount/size:totalCount/size+1;//最大页数
 			page=(page==0)?1:page;			   					               //当前第几页
 			int number=(page-1)*size;

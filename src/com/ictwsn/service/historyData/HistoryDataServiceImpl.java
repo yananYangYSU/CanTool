@@ -18,15 +18,15 @@ public class HistoryDataServiceImpl implements HistoryDataService {
 
 	@Override
 	public String showDataFabric(int number,int size) {
-		Map<String,ArrayList<String>> map=dao.showDataFabric(number,size);
-		Set<String> set=map.keySet();
-		Iterator<String> it=set.iterator();
+		Map<Integer,ArrayList<String>> map=dao.showDataFabric(number,size);
+		Set<Integer> set=map.keySet();
+		Iterator it=set.iterator();
 		StringBuffer historyData=new StringBuffer();
 		while(it.hasNext()) {
-			String key=(String) it.next();
+			int key=(Integer) it.next();
 			ArrayList<String> signalList=map.get(key);
-			historyData.append("<li><a href=\"showMatrixTable.do?messageStr=").append(signalList.get(0)).append("\"><span class=\"folder\">").append(key).append("</span></a>\n").append("<ul style=\"display:none\">\n");		
-			for(int i=1;i<signalList.size();i++) {
+			historyData.append("<li><a href=\"showMatrixTable.do?messageStr=").append(signalList.get(0)).append("\"><span class=\"folder\">").append(signalList.get(1)).append("</span></a>\n").append("<ul style=\"display:none\">\n");		
+			for(int i=2;i<signalList.size();i++) {
 				historyData.append("<li><span class=\"file\">").append(signalList.get(i)).append("</span></li>\n");
 			}
 			historyData.append("</ul></li>\n");
