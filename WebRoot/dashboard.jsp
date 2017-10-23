@@ -55,6 +55,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         title: {
             text: '速度仪'
         },
+         credits:{enabled:false},
         pane: {
             startAngle: -150,
             endAngle: 150,
