@@ -29,23 +29,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 }
 #container {
 	position: absolute;
-	width: 700px;
+	width: 650px;
 	height: 400px;
-	left: -100px;
+	left: -120px;
 	top: 0px;
 }
 #tableDiv {
     width:250px;
     height:510px; 
     top:0px;
-    left:550px; 
+    left:500px; 
     background-color: #FFF;
     position: absolute;
 	 
 }
 #container3 {
     position: absolute;
-    width: 250px;
+    width: 300px;
     height: 20px;
     left:-120px;
     top: -10px;
