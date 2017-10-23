@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.ictwsn.bean.CanMsgFabricBean;
 import com.ictwsn.service.historyData.HistoryDataService;
 
 
@@ -68,8 +70,9 @@ public class HistoryDataAction {
 	public String showMatrixTable(HttpServletRequest request,HttpServletResponse response,Model model,
 			@RequestParam(value="messageStr",required=true) String messageStr) {
 		try{
-			model.addAttribute("cfmbean",hService.showMatrixTable(messageStr));
-		
+			CanMsgFabricBean cmfbean=hService.showMatrixTable(messageStr);
+			model.addAttribute("cfmbean",cmfbean);
+			model.addAttribute("cfmList",cmfbean.getCmpbList());
 			return "distribution";
 		}catch(Exception e){
 			logger.error("login error"+e);
