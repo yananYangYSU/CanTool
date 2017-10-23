@@ -7,5 +7,5 @@ import java.util.Map;
 
 
 public interface ExportDataDao {
-	public Map<Integer,ArrayList<String>> getData();
+	
 }

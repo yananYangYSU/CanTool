@@ -98,15 +98,17 @@ public class HistoryDataDaoImpl extends MySQLBaseDao implements HistoryDataDao {
 	}
 	
 	@Override
-	public Map<Integer, ArrayList<String>> QueryByTime(String startTime, String endTime) {
+	public Map<Integer, ArrayList<String>> QueryByTime(String startTime, String endTime,int number,int size) {
 		Map<Integer, ArrayList<String>> map=new HashMap<Integer, ArrayList<String>>();
 		// TODO Auto-generated method stub
 		try {
 			conn=CurrentConn.getInstance().getConn();
-			String sql="select * from can_mag_data where time between ? and ?";
+			String sql="select * from can_mag_data where time between ? and ? limit ? ,?";
 			pst=conn.prepareStatement(sql);
 			pst.setString(1, startTime);
 			pst.setString(2, endTime);
+			pst.setInt(3, number);
+			pst.setInt(4, size);
 			rs=pst.executeQuery();
 			int i=1;
 			while(rs.next()) {
@@ -124,26 +126,33 @@ public class HistoryDataDaoImpl extends MySQLBaseDao implements HistoryDataDao {
 					e.printStackTrace();
 				}
 				ArrayList<String> list=new ArrayList<String>();
-				list.add(rs.getString(5));
 				list.add(rs.getString(2));
 				list.add(messageName);
 				list.add(rs.getString(3));
 				list.add(rs.getString(4));
+				list.add(rs.getString(5).substring(0,19));
 				map.put(i, list);
 				i++;
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			CurrentConn.getInstance().closeResultSet(rs);
+			CurrentConn.getInstance().closeResultSet(rs2);
+			CurrentConn.getInstance().closePreparedStatement(pst);
+			CurrentConn.getInstance().closeConnection(conn);
 		}
 		return map;
 	}
 	
-	public Map<Integer, ArrayList<String>> SearchHistoryData() {
+	public Map<Integer, ArrayList<String>> SearchHistoryData(int number,int size) {
 		Map<Integer, ArrayList<String>> map=new HashMap<Integer, ArrayList<String>>();
 		try {
 			conn=CurrentConn.getInstance().getConn();
-			String sql="select * from can_msg_data order by autoId desc";
+			String sql="select * from can_msg_data order by autoId desc limit ?,?";
 			pst=conn.prepareStatement(sql);
+			pst.setInt(1, number);
+			pst.setInt(2, size);
 			rs=pst.executeQuery();
 			int i=1;
 			while(rs.next()) {
@@ -161,17 +170,56 @@ public class HistoryDataDaoImpl extends MySQLBaseDao implements HistoryDataDao {
 					e.printStackTrace();
 				}
 				ArrayList<String> list=new ArrayList<String>();
-				list.add(rs.getString(5));
 				list.add(rs.getString(2));
 				list.add(messageName);
 				list.add(rs.getString(3));
 				list.add(rs.getString(4));
+				list.add(rs.getString(5).substring(0,19));
 				map.put(i, list);
 				i++;
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			CurrentConn.getInstance().closeResultSet(rs);
+			CurrentConn.getInstance().closeResultSet(rs2);
+			CurrentConn.getInstance().closePreparedStatement(pst);
+			CurrentConn.getInstance().closeConnection(conn);
 		}
 		return map;
 	}
+	
+	public int totleCount(String startTime,String endTime) {
+		int i=0;
+		if(startTime==null&&endTime==null) {
+			try {
+				conn=CurrentConn.getInstance().getConn();
+				String sql="select * from can_msg_data";
+				pst=conn.prepareStatement(sql);
+				rs=pst.executeQuery();
+				while(rs.next()) {
+					i++;
+				}
+			}catch (Exception e) {
+				// TODO: handle exception
+			}
+		}else {
+			try {
+				conn=CurrentConn.getInstance().getConn();
+				String sql="select * from can_msg_data where time between ? and ?";
+				pst=conn.prepareStatement(sql);
+				pst.setString(1, startTime);
+				pst.setString(2, endTime);
+				rs=pst.executeQuery();
+				while(rs.next()) {
+					i++;
+				}
+			}catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
+		return i;
+		
+	}
+
 }

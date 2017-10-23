@@ -2,6 +2,8 @@ package com.ictwsn.action.exportData;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -12,11 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -71,42 +75,34 @@ public class ExportDataAction {
 	 * @return
 	 */
 	@RequestMapping("/exportCSVData.do")
-	private String exportCSV(HttpServletRequest request,HttpServletResponse response,Model model){
-		try {  
-            // path是指欲下载的文件的路径。  
-            File file = new File("G://form.xls");  
-            // 取得文件名。  
-            String filename = file.getName();  
-            // 以流的形式下载文件。  
-            InputStream fis = new BufferedInputStream(new FileInputStream(""));  
-            byte[] buffer = new byte[fis.available()];  
-            fis.read(buffer);  
-            fis.close();  
-            // 清空response  
-            response.reset();  
-            // 设置response的Header  
-            response.addHeader("Content-Disposition", "attachment;filename="  
-                    + new String(filename.getBytes()));  
-            response.addHeader("Content-Length", "" + file.length());  
-            OutputStream toClient = new BufferedOutputStream(  
-                    response.getOutputStream());  
-            response.setContentType("application/vnd.ms-excel;charset=gb2312");  
-            toClient.write(buffer);  
-            toClient.flush();  
-            toClient.close();  
-        } catch (IOException ex) {  
-            ex.printStackTrace();  
-        }  
-		try {
-			
-			
-			return "exportCSV";
+	private String exportCSV(HttpServletRequest request,HttpServletResponse response,Model model,
+			@RequestParam(value="startTime",required=true)String startTime,
+			@RequestParam(value="endTime",required=true)String endTime){
+		response.setContentType("application/vnd.ms-excel;charset=utf-8");
+		response.setHeader("Content-Disposition", "attachment;filename=historyData.xls");
+		String fullFileName ="g:/historyData.xls";
+		try {   
+			InputStream in = new FileInputStream(fullFileName);  
+	        OutputStream out = response.getOutputStream();
+			Boolean result=eService.exportCSVData(startTime, endTime);  
+			int b;  
+	        while((b=in.read())!= -1)  
+	        {  
+	            out.write(b);  
+	        }  
+	          
+	        in.close();  
+	        out.close(); 
+	        if (result) {
+				return "exportCSV";
+			}else {
+				return "exportfail";
+			}
 		} catch (Exception e) {
 			logger.error("add device error"+e);
 			e.printStackTrace();
 			return "pages/error";
 		}
-		
 	}
 	/**
 	 * 导出can数据到XML格式

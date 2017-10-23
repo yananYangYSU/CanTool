@@ -45,8 +45,8 @@ public class HistoryDataServiceImpl implements HistoryDataService {
 		return dao.showMatrixTable(messageStr);
 	}
 	@Override
-	public String QueryByTime(String startTime, String endTime) {
-		Map<Integer,ArrayList<String>> map=dao.QueryByTime(startTime, endTime);
+	public String QueryByTime(String startTime, String endTime,int number,int size) {
+		Map<Integer,ArrayList<String>> map=dao.QueryByTime(startTime, endTime,number,size);
 		Set<Integer> set=map.keySet();
 		Iterator it=set.iterator();
 		StringBuffer Str=new StringBuffer();
@@ -66,8 +66,8 @@ public class HistoryDataServiceImpl implements HistoryDataService {
 	}
 
 	@Override
-	public String SearchHistoryData() {
-		Map<Integer,ArrayList<String>> map=dao.SearchHistoryData();
+	public String SearchHistoryData(int number,int size) {
+		Map<Integer,ArrayList<String>> map=dao.SearchHistoryData(number,size);
 		Set<Integer> set=map.keySet();
 		Iterator it=set.iterator();
 		StringBuffer Str=new StringBuffer();
@@ -84,5 +84,11 @@ public class HistoryDataServiceImpl implements HistoryDataService {
 			Str.append("</tr>");
 		}
 		return Str.toString();
+	}
+
+	@Override
+	public int totleCount(String startTime,String endTime) {
+		
+		return dao.totleCount(startTime, endTime);
 	}
 }

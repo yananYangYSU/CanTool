@@ -53,7 +53,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <input type="text" placeholder="请输入搜索关键字" name="keywords" class="input" style="width:250px; line-height:17px;display:inline-block" />
           <a href="javascript:void(0)" class="button border-main icon-search" onclick="changesearch()" > 搜索</a>
 		</li>
-		  <li style="padding-right:10px;"><span class="r">共有数据：<strong>54</strong> 条</span></li>
+		  <li style="padding-right:10px;"><span class="r">共有数据：<strong>${totleCount }</strong> 条</span></li>
       </ul>
     </div>
     <table class="table table-hover text-center">
@@ -64,7 +64,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<th width="224px">Data</th>
 		<th width="160px">Time</th>
       </tr>
-     
+     ${Str }
       <tr>
         <td colspan="5">
 					<div class="pagelist">

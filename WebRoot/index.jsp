@@ -98,7 +98,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <h2><span class="icon-database"></span>实时数据管理</h2>
   <ul>
     <li><a href="showDataFabric.do?page=1" target="right"><span class="icon-caret-right"></span>显示信息组成</a></li>
-    <li><a href="SearchHistoryData.do" target="right"><span class="icon-caret-right"></span>历史数据查询</a></li> 
+    <li><a href="SearchHistoryData.do?page=1" target="right"><span class="icon-caret-right"></span>历史数据查询</a></li> 
   </ul>
 </div>
 <script type="text/javascript">
