@@ -36,6 +36,14 @@
 	position: relative;
 }
 
+
+#text-div {
+	width: 65px;
+	height: 100%;
+    left:600px;
+    top:0px;
+	position: absolute;
+}
 #div2 {
 	width: 40px;
 	height: 30px;
@@ -95,6 +103,22 @@
 			</div>
 		</div>
 	</form>
+	<div id="text-div">
+	 <div class="form-group">
+       
+        <div class="field">
+          <textarea class="input" name="sdescription" style="width:280px;height:130px"></textarea>
+          
+          <div class="tips"></div>
+          	<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<button onclick="updateCanSpeed();" class="btn btn-primary radius" type="button"><i class="Hui-iconfont">&#xe632;</i>确认修改</button>
+				<button class="btn btn-default radius" type="reset">&nbsp;&nbsp;重置&nbsp;&nbsp;</button>
+			</div>
+		</div>
+        </div>
+      </div>
+	</div>
 </div>
 <script type="text/javascript" src="js/jquery-1.9.1.js"></script> 
 <script type="text/javascript" src="js/showBo.js"></script> 
