@@ -41,10 +41,42 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     height: 280px;
     left: 624px;
     top: 37px;
-    background-color: #84cf0b;
+    background-color:  	#A4D3EE;
 	 
 }
+#container3 {
+    position: absolute;
+    width: 25px;
+    height: 20px;
+    left: 624px;
+    top: 37px;
+    padding-top:20px;
+    line-height:60px;
+    vertical-align:middle;
+    background-color:#A4D9EE;
+    colour:#000000;
 
+}
+#container4{
+    position: absolute;
+    width: 25px;
+    height: 20px;
+    left: 624px;
+    top: 37px;
+  padding-top:100px;
+    colour:#000000;
+   
+}
+#container5 {
+    position: absolute;
+    width: 25px;
+    height: 20px;
+    left: 624px;
+    top: 37px;
+     padding-top:150px;
+    colour:#000000;
+   
+}
 #containerControl {
 	position: absolute;
 	width: 100px;
@@ -119,8 +151,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <body>
 <div id="mainDiv">
         <div id="container"></div>
-        <div id="container2" ></div>
-	
+         <div id="container2">
+
+       <table  >
+        <tr>
+       包含几条信息
+       </tr>
+       
+       <tr>
+       <td>111</td>
+        <td>222</td>
+         <td>333</td>
+       </tr>
+       
+       
+       
+       </table>
+       
+       
+         </div>
 	    <script src="js/jquery-1.4.3.min.js"></script>
         <script src="js/shighcharts.js"></script>
         <script src="js/sexporting.js"></script>
@@ -137,6 +186,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         title: {
             text: 'CAN信号分布图'
         },
+         credits:{enabled:false},
         xAxis: {
             categories: ['Bit 7', 'Bit 6','Bit 5', 'Bit 4', 'Bit 3', 'Bit 2','Bit 1', 'Bit 0']
         },
