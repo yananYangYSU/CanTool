@@ -291,6 +291,7 @@ setInterval(function() {
         title: {
             text: '速度仪'
         },
+        credits:{enabled:false},
         pane: {
             startAngle: -150,
             endAngle: 150,
