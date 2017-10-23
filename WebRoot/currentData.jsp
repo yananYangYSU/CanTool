@@ -287,6 +287,7 @@ setInterval(function() {
 															text : '时间'
 														}
 													},
+													credits:{enabled:false},
 													yAxis : {
 														title : {
 															text : '物理值'
@@ -330,6 +331,7 @@ setInterval(function() {
         title: {
             text: '速度仪'
         },
+        credits:{enabled:false},
         pane: {
             startAngle: -150,
             endAngle: 150,
