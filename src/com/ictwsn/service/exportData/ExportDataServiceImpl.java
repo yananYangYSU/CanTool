@@ -65,9 +65,9 @@ public class ExportDataServiceImpl implements ExportDataService {
 		ArrayList<String> List=new ArrayList<String>();
 		Map<Integer,ArrayList<String>> map=new HashMap<Integer,ArrayList<String>>();
 		if(startTime==null&&endTime==null) {
-			map=dao.QueryByTime(startTime, endTime);
+			map=dao.QueryByTime(startTime, endTime, 0, 0);
 		}else {
-			map=dao.SearchHistoryData();
+			map=dao.SearchHistoryData(0, 0);
 		}
 		Set<Integer> set=map.keySet();
 		for(int i=1;i<set.size()+1;i++){

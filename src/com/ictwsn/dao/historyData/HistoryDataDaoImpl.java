@@ -60,13 +60,14 @@ public class HistoryDataDaoImpl extends MySQLBaseDao implements HistoryDataDao {
 
 				String messageStr=null;
 				if(rs.getString(2).length()==3) {
-					messageStr="t"+rs.getString(2)+rs.getInt(3)+rs.getString(4).replaceAll(" ","")+"\\r";
+					messageStr="t"+rs.getString(2)+rs.getInt(3)+rs.getString(4).replaceAll(" ","");
 				}else if(rs.getString(2).length()==8) {
-					messageStr="T"+rs.getString(2)+rs.getInt(3)+rs.getString(4).replaceAll(" ","")+"\\r";
+					messageStr="T"+rs.getString(2)+rs.getInt(3)+rs.getString(4).replaceAll(" ","");
 				}
 				ArrayList<CanPhyDataBean> canPhy=new ArrayList<CanPhyDataBean>();
 				CanMsgDataBean canMsg=UncodeCanMsg.getInstance().splitDataStr(messageStr);
-				message=rs.getDate(5)+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+id+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+messageName+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+rs.getInt(3)+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+rs.getString(4); //key由time,id.name,dcl,data组成
+				signal.add(messageStr);
+				message=rs.getString(5).substring(0, 19)+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+id+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+messageName+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+rs.getInt(3)+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+rs.getString(4); //key由time,id.name,dcl,data组成
 				canPhy=UncodeCanMsg.getInstance().parseCanData(UncodeCanMsg.getInstance().splitDataStr(messageStr));
 				for(int i=0;i<canPhy.size();i++) {
 					CanPhyDataBean canphy=canPhy.get(i);
