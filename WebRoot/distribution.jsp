@@ -1,6 +1,5 @@
-
-
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -30,31 +29,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 }
 #container {
 	position: absolute;
-	width: 700px;
+	width: 650px;
 	height: 400px;
-	left: -80px;
+	left: -120px;
 	top: 0px;
 }
-#container2 {
+#tableDiv {
+    width:250px;
+    height:510px; 
+    top:0px;
+    left:500px; 
+    background-color: #FFF;
     position: absolute;
-    width: 254px;
-    height: 280px;
-    left: 624px;
-    top: 37px;
-    background-color:  	#A4D3EE;
 	 
 }
 #container3 {
     position: absolute;
-    width: 25px;
+    width: 300px;
     height: 20px;
-    left: 624px;
-    top: 37px;
-    padding-top:20px;
-    line-height:60px;
-    vertical-align:middle;
-    background-color:#A4D9EE;
-    colour:#000000;
+    left:-120px;
+    top: -10px;
+  	font-family:'微软雅黑';
+  	font-size:14px;
+  
 
 }
 #container4{
@@ -140,7 +137,48 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	border-radius: 3px;
 	background-color: rgb(11, 82, 224);
 }
+.tableContent {
+	font-size: 14px;
+	color: #666;
+	width: 100%;
+	padding: 14px;
+	line-height: 40px;
+	margin: 0;
+	font-family:'微软雅黑';
+	text-align: center;
+}
 
+.tableContent th {
+	border-bottom: solid 3px #00afd1;
+	padding: 10px 10px 10px 10px;
+	line-height: 14px;
+}
+
+.tableContent tr td,th {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+.tableContent th.noborder {
+	border: none;
+	text-align: center;
+}
+
+.tableContent td {
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.tableContent .tableBg td {
+	background-color: #f6f6f9;
+	
+}
+
+.tableContent .greyFont {
+	color: #666;
+	font-size: 12px;
+}
 #viewButton:hover {
 	color: #ffffff;
 	background-color: #2256f2;
@@ -151,22 +189,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <body>
 <div id="mainDiv">
         <div id="container"></div>
-         <div id="container2">
-
-       <table  >
-        <tr>
-       包含几条信息
-       </tr>
+        <div id="container3"> 当前字符串: ${cfmbean.canMessage}
+        </div>
+         <div id="tableDiv">
+ <table border='0' align='center' cellpadding='0' cellspacing='0' class='tableContent' >
+			                    <tr><th>信号名称</th><th>编码格式</th><th>对应id</th>
+			                   </tr>
+			                    <c:forEach begin="0" varStatus="status" var="list" items="${cfmList}">
+			                    <tr align='center' title="高位->低位:${list.indexStr}" onMouseOver="this.style.background='#EAF2FF'"
+				onMouseOut="this.style.background='#FFFFFF'">
+				                <td>${list.signalName}</td>
+				                    <td>${list.bitType}</td>
+				                     <td>${status.count}</td>
+				                    </tr>
+				                    </c:forEach>
+				                    </table>
        
-       <tr>
-       <td>111</td>
-        <td>222</td>
-         <td>333</td>
-       </tr>
-       
-       
-       
-       </table>
        
        
          </div>
@@ -184,6 +222,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             marginBottom: 80
         },
         title: {
+        	style:{
+               fontFamily:'微软雅黑',
+                },
             text: 'CAN信号分布图'
         },
          credits:{enabled:false},
@@ -210,10 +251,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         },
         tooltip: {
            formatter: function () {
-             y=this.series.yAxis.categories[this.point.y].charAt(5);
+          	 y=this.series.yAxis.categories[this.point.y].charAt(5);
              x=this.series.xAxis.categories[this.point.x].charAt(4);
-             c=y*8+x;
-                return  y*8 + x*1;
+                return this.series.xAxis.categories[this.point.x]  +' '+
+                     this.series.yAxis.categories[this.point.y] + '<br>当前索引是:'+ (y*8 + x*1);
 
             }
         },
@@ -222,7 +263,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             borderWidth: 1,
             data: ${cfmbean.dataSeries},
             dataLabels: {
-                enabled: false,
+                enabled: true,
                 color: '#000000'
             }
         }]
