@@ -24,7 +24,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <meta name="renderer" content="webkit">
-<link rel="stylesheet" href="css/jh/pintuer.css">
+
+
+<!-- <link rel="stylesheet" type="text/css"
+	href="css/jh/H-ui.min.css" /> -->
+	
+<link rel="stylesheet" type="text/css"
+	href="lib/Hui-iconfont/1.0.8/iconfont.css" /> 
+	<link rel="stylesheet" href="css/jh/pintuer.css">
 <link rel="stylesheet" href="css/jh/admin.css">
 
 <script src="css/jh/jquery.js"></script>
@@ -113,6 +120,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      <a href="javascript:void(0)" class="button border-main icon-search" onclick="       " > 搜索</a>
 		</li>
 		  <li style="padding-right:10px;"><span class="r">共有数据：<strong>${totleCount }</strong> 条</span></li>
+     <li style="margin-left: 275px;">
+     <button class="btn btn-primary radius" style="height: 40px;background-color: rgb(90,152,222); color: white;"
+						type="button">
+						<i class="Hui-iconfont">&#xe632;</i>导出
+					</button>
+     </li>
       </ul>
     </div>
     <table class="table table-hover text-center">
