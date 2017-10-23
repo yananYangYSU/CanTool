@@ -26,8 +26,69 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <meta name="renderer" content="webkit">
 <link rel="stylesheet" href="css/jh/pintuer.css">
 <link rel="stylesheet" href="css/jh/admin.css">
+
 <script src="css/jh/jquery.js"></script>
 <script src="css/jh/pintuer.js"></script>
+
+<style type="text/css">
+<style>
+	  .ui-progressbar {
+	    position: relative;
+	  }
+	  .progress-label {
+	    position: absolute;
+	    left: 50%;
+	    top: 4px;
+	    font-weight: bold;
+	    text-shadow: 1px 1px 0 #fff;
+	  }
+	  #fromdate,#todate{
+	  	margin:0px;
+	  	width:180px;
+	  }
+	  #dataMenuMiddle{
+	  padding-top:10px;
+	    margin-left:20px
+	  	padding-top:10px;
+	  	width:25px;
+	  }
+	    #cover{ 
+			display:none; 
+			position:fixed; 
+			z-index:200; 
+			top:0; 
+			left:0; 
+			width:100%; 
+			height:100%; 
+			background:#F2F2F2;
+			opacity:0.6;
+			filter: progid:DXImageTransform.Microsoft.Alpha(opacity=70);
+		} 
+		#coverShow{ 
+			display:none; 
+			position:fixed; 
+			z-index:300; 
+			top:50%; 
+			left:30%; 
+			width:700px; 
+			height:100px; 
+			margin-left:-150px; 
+			margin-top:-150px;
+		}
+		#close{
+			width: 32px;
+			height: 32px;
+			float: right;
+			cursor: pointer;
+		}
+		#text{
+			position: absolute;
+		    margin-top: 80px;
+		}
+  </style>
+  <script src="js/jquery-1.9.1.js"></script> 
+<script src="js/My97DatePicker/WdatePicker.js"></script>
+</style>
 
   </head>
   
@@ -41,28 +102,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
        
         
           <li>
-            <select name="cid" class="input" style="width:200px; line-height:17px;" onchange="changesearch()">
-              <option value="">请选择查询项</option>
-              <option value="">设备名称</option>
-              <option value="">设备id</option>
-              <option value="">所属用户</option>
-            </select>
+            <input type="text" class="input" style="width:200px; line-height:17px;" placeholder="起始时间" name="fromdate" id="fromdate" value="起始时间" 
+          onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'todate\')}',maxDate:'%y-%M-%d %H:%m:%s'}) "/>
+        
           </li>
       
         <li>
-          <input type="text" placeholder="请输入搜索关键字" name="keywords" class="input" style="width:250px; line-height:17px;display:inline-block" />
-          <a href="javascript:void(0)" class="button border-main icon-search" onclick="changesearch()" > 搜索</a>
+          <input type="text" class="input" style="width:200px; line-height:17px;display:inline-block" placeholder="截止时间" name="todate" id="todate" value="截止时间" 
+          onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'%y-%M-%d %H:%m:%s'})"/>
+     <a href="javascript:void(0)" class="button border-main icon-search" onclick="       " > 搜索</a>
 		</li>
 		  <li style="padding-right:10px;"><span class="r">共有数据：<strong>${totleCount }</strong> 条</span></li>
       </ul>
     </div>
     <table class="table table-hover text-center">
       <tr>
-        <th width="140px">ID</th>
-		<th width="310px">DD</th>
-		<th width="45px">Name</th>
-		<th width="224px">Data</th>
-		<th width="160px">Time</th>
+        <th width="15%">ID</th>
+		<th width="15%">Name</th>
+		<th width="10%">DLC</th>
+		<th width="30%">Data</th>
+		<th width="30%">Time</th>
       </tr>
      ${Str }
       <tr>
