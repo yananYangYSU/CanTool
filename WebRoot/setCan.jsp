@@ -81,23 +81,43 @@
 }
 .b67jihuo{
 	 display:block;}
+ .aa {
+	width: 50px;
+	height: 32px;
+	padding-top:3px;
+	font-size: 14px;
+	float:right; 
+	/*  border: teal solid 1px; */ 
+	
+}
+#box1{
+width: 550px;
+height: 50px;
+/* border: teal solid 1px; */
+}
 </style>
 </head>
 <body>
 	<div class="page-container">
+	
 		<form action="" method="post" class="form form-horizontal"
 			id="form-article-add">
+			<!-- <div id="box1"> -->
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-2"><span
 					class="c-red">*</span>Can状态：</label>
-				<div class="formControls col-xs-8 col-sm-9">
+				<div class="formControls col-xs-8 col-sm-9" style="width: 160px;">
 					<div class="head-r">
 						<div id="div1" class="open1">
 							<div id="div2" class="open2"></div>
 						</div>
 					</div>
+					 <div class="aa">
+  <span id="password_notice" class="c-red">${canState}</span>
+  </div>
 				</div>
 			</div>
+			
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-2"><span
 					class="c-red">*</span>发送速率：</label>
