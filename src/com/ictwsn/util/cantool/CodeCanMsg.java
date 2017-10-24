@@ -13,7 +13,7 @@ import com.ictwsn.util.format.DataFormats;
  * @desc 对cantool装置发送到cantoolApp的字符串信息解析
  * @date 2017-10-05
  */
-public class codeCanMsg {
+public class CodeCanMsg {
 	private final static int[][] byteIndexMatrix={
 		{7,6,5,4,3,2,1,0},
 		{15,14,13,12,11,10,9,8},
@@ -25,14 +25,14 @@ public class codeCanMsg {
 		{63,62,61,60,59,58,57,56}
 	};
 
-	private static codeCanMsg uncodeCanMsg=null;  //CurrentConn类单例对象
+	private static CodeCanMsg uncodeCanMsg=null;  //CurrentConn类单例对象
 
-	private codeCanMsg(){}
+	private CodeCanMsg(){}
 
 	//静态工厂方法 ,保证只有该类只有一个实例,节省内存
-	public synchronized static codeCanMsg getInstance() {
+	public synchronized static CodeCanMsg getInstance() {
 		if (uncodeCanMsg == null) {  
-			uncodeCanMsg = new codeCanMsg();
+			uncodeCanMsg = new CodeCanMsg();
 		}  
 		return uncodeCanMsg;
 	}
@@ -50,7 +50,7 @@ public class codeCanMsg {
 		sigNamePhyMap.put("HVAC_AAAAAAAAAAAAA",50.0);
 		sigNamePhyMap.put("HVAC_CorrectedCabinTempVD",1.0);
 		//String dataStr="1111111122222222111101010101001100100011100001110110010110101011";
-		codeCanMsg t=new codeCanMsg();
+		CodeCanMsg t=new CodeCanMsg();
 		t.getMessageStr(801,8, sigNamePhyMap);
 		//System.out.println(t.subStrIntel(12, 12));
 		//System.out.println("解析后id:"+Integer.parseInt("321",16));
