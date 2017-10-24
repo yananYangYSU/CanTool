@@ -129,23 +129,20 @@
 					<label class="form-label col-xs-4 col-sm-2"><span
 						class="c-red">*</span>ID：</label>
 					<div class="formControls col-xs-8 col-sm-9">
-						<select name="cid" class="input"
-							style="width:200px; line-height:17px;" onchange="changesearch()">
+						<select name="messageIdSelect" id="messageIdSelect" class="input"
+							style="width:200px; line-height:17px;" onChange="loadSignalStr();">
 							<option value="">请选择ID</option>
-							<option value="">800</option>
-							<option value="">801</option>
-							<option value="">802</option>
-							<option value="">802</option>
-							<option value="">803</option>
-							<option value="">804</option>
+							 <c:forEach var="list" items="${cmbList}">
+			                   <option value="${list.id}">${list.id}</option>
+				             </c:forEach>
 						</select> <span id="speed_notice" class="c-red"></span>
+						<input type="hidden" value="" id="messageId" name="messageId">
 					</div>
 				</div>
-
+			
 				<div class="field" style="margin-top: 10px;">
-					<textarea class="input" name="sdescription"
-						style="width:280px;height:130px"></textarea>
-
+					<textarea class="input" name="sdescription" id="sdescription"
+						style="width:300px;height:150px"></textarea>
 					<div class="row cl">
 						<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
 							<button onclick="xuan1()"
@@ -160,12 +157,11 @@
 					<div id="send" class="row cl" style="display: none;margin-top: 10px;">
 						<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2" style="margin-left: -16px;width: 320px;">
 
-							<input type="text" class="input w50" value="${canSpeed}"
-								maxlength='5' id="canSpeed" name="canSpeed"
-								style="width:200px; line-height:17px;float: left;"> <span
-								id="speed_notice" class="c-red"></span>
+							<input type="text" class="input w50" value=""
+								maxlength='5' id="messageStr" name="messageStr"
+								style="width:200px; line-height:17px;float: left;"> 
 
-							<button onclick="updateCanSpeed();"
+							<button onclick="sendMessage();"
 								class="btn btn-primary radius" type="button"
 								style="margin-left: 17px;">
 								<i class="Hui-iconfont">&#xe632;</i>发送
@@ -180,9 +176,9 @@
 <script type="text/javascript">
 function xuan1(){
 	var box6=document.getElementById("send");
-
 	document.getElementById("send").style.display="block";
 	box6.className="b67jihuo";
+	produce();
 	
 }
 </script>
@@ -190,52 +186,83 @@ function xuan1(){
 	<script type="text/javascript" src="js/jquery-1.9.1.js"></script>
 	<script type="text/javascript" src="js/showBo.js"></script>
 	<script type="text/javascript">
-		window.onload = function() {
-			var div2 = document.getElementById("div2");
-			var div1 = document.getElementById("div1");
-			var canState = "${canState}";
-			if (canState == "关闭") {
-				div1.className = (div1.className == "close1") ? "open1"
-						: "close1";
-				div2.className = (div2.className == "close2") ? "open2"
-						: "close2";
-			}
-			div2.onclick = function() {
-				if (canState == "关闭") {
-					$
-							.post(
-									"openCantool.do",
-									{},
-									function(data) {
-										if (data == 1) {
-											canState = "开启";
-											div1.className = (div1.className == "close1") ? "open1"
-													: "close1";
-											div2.className = (div2.className == "close2") ? "open2"
-													: "close2";
-										} else {
-											Showbo.Msg.alert("端口连接异常!");
-										}
-									});
-				} else {
-					$
-							.post(
-									"closeCantool.do",
-									{},
-									function(data) {
-										if (data == 1) {
-											canState = "关闭";
-											div1.className = (div1.className == "close1") ? "open1"
-													: "close1";
-											div2.className = (div2.className == "close2") ? "open2"
-													: "close2";
-										} else {
-											Showbo.Msg.alert("端口连接异常!");
-										}
-									});
+	window.onload=function(){
+        var div2=document.getElementById("div2");
+        var div1=document.getElementById("div1");
+        var canState="${canState}";
+        if(canState=="关闭"){
+	         div1.className=(div1.className=="close1")?"open1":"close1";
+	   		 div2.className=(div2.className=="close2")?"open2":"close2";
+        }
+        div2.onclick=function(){
+        	if(canState=="关闭"){
+	        	$.post("openCantool.do",{},
+				function(data){
+						if(data==1){
+							canState="开启";
+							div1.className=(div1.className=="close1")?"open1":"close1";
+   		 					div2.className=(div2.className=="close2")?"open2":"close2";
+						}else{
+							Showbo.Msg.alert("端口连接异常!");
+						}
+				});
+        	}else{
+        		$.post("closeCantool.do",{},
+				function(data){
+						if(data==1){
+							canState="关闭";
+							div1.className=(div1.className=="close1")?"open1":"close1";
+   		 					div2.className=(div2.className=="close2")?"open2":"close2";
+						}else{
+							Showbo.Msg.alert("端口连接异常!");
+						}
+				});
+        	}
+         
+        }
+}
+		function getSelectedMsgValue() {
+			var clientIds=document.getElementById("messageIdSelect");
+			for ( var i=0;i<clientIds.length;i++){
+				if (clientIds[i].selected == true){
+					document.getElementById("messageId").value=clientIds[i].value;
+	            	return clientIds[i].value;
 				}
-
 			}
+		}
+		function loadSignalStr(){
+		    var id=getSelectedMsgValue();
+			$.post("getCanSignalListStr.do",{
+							id:id
+						},function(data){
+								document.getElementById("sdescription").value=data;
+						});
+		}
+		function produce(){
+		    var id=document.getElementById("messageId").value;
+			var messageListStr=document.getElementById("sdescription").value;
+			$.post("produceCanMessage.do",{
+							id:id,
+							messageListStr:messageListStr
+						},function(data){
+							if(data=='-1')
+								Showbo.Msg.alert("转换失败,请检查数据是否有误");
+							else{
+								document.getElementById("messageStr").value=data;
+							}
+								
+						});
+		}
+		function sendMessage(){
+			var messageStr=document.getElementById("messageStr").value;
+			$.post("sendMessage.do",{
+							messageStr:messageStr
+						},function(data){
+							if(data==1)
+								Showbo.Msg.alert("发送成功!");
+							else
+								Showbo.Msg.alert("发送失败!");
+						});
 		}
 
 		function updateCanSpeed() {
