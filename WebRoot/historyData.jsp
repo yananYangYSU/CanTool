@@ -170,7 +170,7 @@ function queryByTime(){
 	if(startTime==""){
 		alert("请输入起始日期");
 	}else if(endTime==""){
-		alert("请输入起始日期");
+		alert("请输入截止日期");
 	}else if(startTime<endTime){
 	
 		window.location="QueryByTime.do?startTime="+startTime+"&endTime="+endTime+"&page=1";
