@@ -63,6 +63,7 @@ public class HistoryDataServiceImpl implements HistoryDataService {
 			Str.append("</tr>");
 		}
 		return Str.toString();
+		
 	}
 
 	@Override

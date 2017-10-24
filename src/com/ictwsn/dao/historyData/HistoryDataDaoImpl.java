@@ -107,7 +107,7 @@ public class HistoryDataDaoImpl extends MySQLBaseDao implements HistoryDataDao {
 		// TODO Auto-generated method stub
 		try {
 			conn=CurrentConn.getInstance().getConn();
-			String sql="select * from can_mag_data where time between ? and ? limit ? ,?";
+			String sql="select * from can_msg_data where time between ? and ? limit ? ,?";
 			pst=conn.prepareStatement(sql);
 			pst.setString(1, startTime);
 			pst.setString(2, endTime);

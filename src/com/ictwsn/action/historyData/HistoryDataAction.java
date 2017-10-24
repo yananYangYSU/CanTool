@@ -86,6 +86,8 @@ public class HistoryDataAction {
 			@RequestParam(value="startTime",required=true) String startTime,
 			@RequestParam(value="endTime",required=true) String endTime,
 			@RequestParam(value="page",required=true)int page) {
+		model.addAttribute("startTime", startTime);
+		model.addAttribute("endTime", endTime);
 		try{
 			int totleCount=hService.totleCount(startTime, endTime);//查询总条数
 			int size=15;          //每页条数
@@ -98,6 +100,12 @@ public class HistoryDataAction {
 			page=maxPage==0?0:page;
 			model.addAttribute("page", page);
 			
+			if(page>1){  //大于第一页才有上一页
+				model.addAttribute("prePageHref","QueryByTime.do?startTime="+startTime+"&endTime="+endTime+"&page="+(page-1));
+			}
+			if(page<maxPage){ //小于最大页数才能有下一页
+				model.addAttribute("nextPageHref","QueryByTime.do?startTime="+startTime+"&endTime="+endTime+"&page="+(page+1));
+			}
 			model.addAttribute("Str",hService.QueryByTime(startTime, endTime,number,size));
 			return "historyData";
 		}catch(Exception e){
@@ -105,6 +113,7 @@ public class HistoryDataAction {
 			e.printStackTrace();
 			return "error";
 		}
+
 	}
 	
 	@RequestMapping("/SearchHistoryData.do")
