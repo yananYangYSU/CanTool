@@ -51,7 +51,7 @@ public class CodeCanMsg {
 		sigNamePhyMap.put("HVAC_CorrectedCabinTempVD",1.0);
 		//String dataStr="1111111122222222111101010101001100100011100001110110010110101011";
 		CodeCanMsg t=new CodeCanMsg();
-		t.getMessageStr(801,8, sigNamePhyMap);
+		System.out.print(t.getMessageStr(801,8, sigNamePhyMap));
 		//System.out.println(t.subStrIntel(12, 12));
 		//System.out.println("解析后id:"+Integer.parseInt("321",16));
 		//System.out.println(	t.indexStrProcess(t.parseCanData(UncodeCanMsg.getInstance().splitDataStr("t32186211F553238765AB"))));

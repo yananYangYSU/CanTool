@@ -1,6 +1,7 @@
 package com.ictwsn.action.systemSet;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -14,9 +15,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
  
-import com.ictwsn.bean.CanPhyDataBean;
 import com.ictwsn.service.systemSet.SystemSetService;
 import com.ictwsn.util.cantool.CanMessageStore;
+import com.ictwsn.util.cantool.CodeCanMsg;
 import com.ictwsn.util.rxtx.SerialPortListener;
 /**
  * 超级管理员控制类
@@ -107,12 +108,61 @@ public class SystemAction {
 			 String canState=CanMessageStore.getInstance().getCanState()==0?"关闭":"开启";
 			 model.addAttribute("canState",canState);
 			 model.addAttribute("canSpeed",CanMessageStore.getInstance().getCanSpeed());
+			 model.addAttribute("cmbList",sService.getCanMessageList());
 			 return "setCan";
 		}catch(Exception e){
 			logger.error("getStatus error"+e);
 			e.printStackTrace();
 			return "error"; 
 		}
-		
+	}
+	@RequestMapping("/getCanSignalListStr.do")
+	public void getCanSignalListStr(HttpServletRequest request,HttpServletResponse response,Model model,
+			@RequestParam(value="id",required=true) Integer id){
+		try{
+			response.getWriter().print(sService.getCanSignalListStr(id));
+		}catch(Exception e){
+			logger.error("getStatus error"+e);
+			e.printStackTrace();
+		}
+	}
+	@RequestMapping("/produceCanMessage.do")
+	public void produceCanMessage(HttpServletRequest request,HttpServletResponse response,Model model,
+			@RequestParam(value="id",required=true) Integer id,
+			@RequestParam(value="messageListStr",required=true) String messageListStr){
+		try{
+			Map<String,Double> sigNamePhyMap =new HashMap<String,Double>();
+			String[] msgRows=messageListStr.split("\n");
+			for(int i=0;i<msgRows.length;i++){
+				if(msgRows[i]!=null&&msgRows[i].contains("=")){
+					String[] msg=msgRows[i].split("=");
+					sigNamePhyMap.put(msg[0],Double.valueOf(msg[1]));
+				}
+			}
+			response.getWriter().print(CodeCanMsg.getInstance().getMessageStr(id,sService.getDclById(id),sigNamePhyMap));
+		}catch(Exception e){
+			logger.error("getStatus error"+e);
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * 发送一条can字符串
+	 * @param request
+	 * @param response
+	 * @param messageStr 字符串
+	 * @throws IOException
+	 */
+	@RequestMapping("/sendMessage.do")
+	public void sendMessage(HttpServletRequest request,HttpServletResponse response,
+			@RequestParam(value="messageStr",required=true) String messageStr) throws IOException{
+		try{
+			System.out.println(messageStr);
+			SerialPortListener.getInstance().write(messageStr+"\r");
+			response.getWriter().print(1);
+		}catch(Exception e){
+			logger.error("login error"+e);
+			e.printStackTrace();
+			response.getWriter().print(0);
+		}
 	}
 }

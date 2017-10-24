@@ -1,6 +1,5 @@
 package com.ictwsn.action.currenData;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
