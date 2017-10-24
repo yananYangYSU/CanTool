@@ -123,7 +123,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		  <li style="padding-right:10px;"><span class="r">共有数据：<strong>${totleCount }</strong> 条</span></li>
      <li style="margin-left: 275px;">
      <button class="btn btn-primary radius" style="height: 40px;background-color: rgb(90,152,222); color: white;"
-						type="button">
+						type="button" onclick="exportCSV();">
 						<i class="Hui-iconfont">&#xe632;</i>导出
 					</button>
      </li>
@@ -169,6 +169,16 @@ function queryByTime(){
 	var endTime=document.getElementById("endTime").value;
 	//if(compareCalendar(startTime,endTime)){
 		window.location="QueryByTime.do?startTime="+startTime+"&endTime="+endTime+"&page=1";
+	//}else{
+	//	alert("请重新输入日期");
+	//}
+	
+}
+function exportCSV(){	
+	var startTime=document.getElementById("startTime").value;
+	var endTime=document.getElementById("endTime").value;
+	//if(compareCalendar(startTime,endTime)){
+		window.location="exportCSVData.do?startTime="+startTime+"&endTime="+endTime;
 	//}else{
 	//	alert("请重新输入日期");
 	//}

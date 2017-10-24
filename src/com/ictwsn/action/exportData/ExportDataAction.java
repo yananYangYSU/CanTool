@@ -31,6 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ictwsn.service.currentData.CurrentDataService;
 import com.ictwsn.service.exportData.ExportDataService;
+import com.ictwsn.service.historyData.HistoryDataService;
 import com.ictwsn.service.systemSet.SystemSetService;
 
 import com.ictwsn.util.GetHttpType;
@@ -45,7 +46,8 @@ import com.ictwsn.util.format.DateFormats;
 public class ExportDataAction {
 	static Logger logger = Logger.getLogger(ExportDataAction.class.getName());
 	
-	@Resource ExportDataService eService;	
+	@Resource ExportDataService eService;
+	@Resource HistoryDataService hService;
 
 	/**
 	 * 添加设备之前,获取一些参数
@@ -78,26 +80,14 @@ public class ExportDataAction {
 	private String exportCSV(HttpServletRequest request,HttpServletResponse response,Model model,
 			@RequestParam(value="startTime",required=true)String startTime,
 			@RequestParam(value="endTime",required=true)String endTime){
-		response.setContentType("application/vnd.ms-excel;charset=utf-8");
-		response.setHeader("Content-Disposition", "attachment;filename=historyData.xls");
-		String fullFileName ="g:/historyData.xls";
 		try {   
-			InputStream in = new FileInputStream(fullFileName);  
-	        OutputStream out = response.getOutputStream();
-			Boolean result=eService.exportCSVData(startTime, endTime);  
-			int b;  
-	        while((b=in.read())!= -1)  
-	        {  
-	            out.write(b);  
-	        }  
-	          
-	        in.close();  
-	        out.close(); 
-	        if (result) {
-				return "exportCSV";
-			}else {
-				return "exportfail";
+			if(startTime==""&&endTime=="") {
+				startTime=null;
+				endTime=null;
 			}
+			int totalCount=hService.totleCount(startTime, endTime);
+			eService.exportCSVData(startTime, endTime,totalCount);
+			return "exportCSV";
 		} catch (Exception e) {
 			logger.error("add device error"+e);
 			e.printStackTrace();
