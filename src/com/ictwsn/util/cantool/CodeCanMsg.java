@@ -2,261 +2,311 @@ package com.ictwsn.util.cantool;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
-
-import com.ictwsn.bean.CanMsgDataBean;
 import com.ictwsn.bean.CanSignalBean;
 import com.ictwsn.util.format.DataFormats;
+
 /**
  * can信息编码类
  * @author YangYanan
- * @desc 对cantoolApp发送到cantool装置的物理信息编码成字符串
+ * @desc 对cantool装置发送到cantoolApp的字符串信息解析
  * @date 2017-10-05
  */
-public class CodeCanMsg {
+public class codeCanMsg {
+	private final static int[][] byteIndexMatrix={
+		{7,6,5,4,3,2,1,0},
+		{15,14,13,12,11,10,9,8},
+		{23,22,21,20,19,18,17,16},
+		{31,30,29,28,27,26,25,24},
+		{39,28,37,36,35,34,33,32},
+		{47,46,45,44,43,42,41,40},
+		{55,54,53,52,51,50,49,48},
+		{63,62,61,60,59,58,57,56}
+	};
 
-	private final static int[] byteIndexArray={
-		7,6,5,4,3,2,1,0,
-		15,14,13,12,11,10,9,8,
-		23,22,21,20,19,18,17,16,
-		31,30,29,28,27,26,25,24,
-		39,28,37,36,35,34,33,32,
-		47,46,45,44,43,42,41,40,
-		55,54,53,52,51,50,49,48,
-		63,62,61,60,59,58,57,56};
-	private static Map<Integer,ArrayList<CanSignalBean>> canSignalMap=new HashMap<Integer,ArrayList<CanSignalBean>>();
+	private static codeCanMsg uncodeCanMsg=null;  //CurrentConn类单例对象
 
-	static{   
-		ArrayList<CanSignalBean> canSignalList=new ArrayList<CanSignalBean>();
-		CanSignalBean csb=new CanSignalBean();
-		csb.setSignalName("CDU_HVACACCfg");
-		csb.setStartBit(12);
-		csb.setBitLength(12);
-		csb.setBitType(0);
-		csb.setResolutionValue(1);
-		csb.setOffsetValue(0);
-		csb.setMinPhyValue(0);
-		csb.setMaxPhyValue(100);
-		csb.setUnit("℃");
-		
-		csb.setNodeNames("HVAC1,HAVC2,HAVC3");
-		canSignalList.add(csb);
+	private codeCanMsg(){}
 
-		csb=new CanSignalBean();
-		csb.setSignalName("CDU_HVACAirCirCfg");
-		csb.setStartBit(16);
-		csb.setBitLength(12);
-		csb.setBitType(0);
-		csb.setResolutionValue(1);
-		csb.setOffsetValue(0);
-		csb.setMinPhyValue(0);
-		csb.setMaxPhyValue(100);
-		csb.setUnit("℃");
-		csb.setNodeNames("HVAC4,HAVC5,HAVC6");
-		canSignalList.add(csb);
-
-		canSignalMap.put(318767095,canSignalList);
-		canSignalMap.put(65,null);
+	//静态工厂方法 ,保证只有该类只有一个实例,节省内存
+	public synchronized static codeCanMsg getInstance() {
+		if (uncodeCanMsg == null) {  
+			uncodeCanMsg = new codeCanMsg();
+		}  
+		return uncodeCanMsg;
 	}
+
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
+
+		/*DataFormats dataFormat=DataFormats.getInstance();
 		// TODO Auto-generated method stub
-		String dataStr="T12FFFFF7800111213141516FF0000\\r";
-		CodeCanMsg t=new CodeCanMsg();
-		System.out.println("id:"+Integer.parseInt("12FFFFF7",16));
-		t.parseCanData(t.splitDataStr(dataStr));
-		/*	
-		ArrayList<String> dataList=t.splitDataStr(dataStr).getData();
-		StringBuffer BitStrIntel=new StringBuffer();
-		StringBuffer BitStrMotorola=new StringBuffer();
-
-		int size=dataList.size();
-		//intel
-		for(int i=size-1;i>=0;i--){
-			BitStrIntel.append(t.hexToBinary(dataList.get(i)));
-		}
-		System.out.println("----intel matrix-----");
-
-		for(int i=0;i<size;i++){
-			System.out.println(t.hexToBinary(dataList.get(i)));
-
-		}
-		System.out.println("intel "+BitStrIntel);
-		System.out.println("sub "+BitStrIntel.substring(64-12-12,64-12));
-		System.out.println("----motorola-----");
-		//motorola
-		boolean flag=true;
-		//	for(int i=size-1;i>=0;i--){
-		for(int i=0;i<size;i++){
-			BitStrMotorola.append(t.hexToBinary(dataList.get(i)));
-			/*if(flag==true){
-				BitStrMotorola.append(t.hexToBinary(dataList.get(i)));
-				flag=!flag;
-			}else{
-				BitStrMotorola.append(t.reverseStr(t.hexToBinary(dataList.get(i))));
-				flag=!flag;
-			}		*/	
-		//}
-		/*	System.out.println("----moto matrix-----");
-		for(int i=0;i<size;i++){
-			System.out.println(t.hexToBinary(dataList.get(i)));
-
-		}
-
-		System.out.println("motol "+BitStrMotorola);
-
-		System.out.println(t.matrixSubBinStr(BitStrIntel.toString(), 16, 12, 1));
-		System.out.println("motol ");
-		System.out.println(t.matrixSubBinStr(BitStrMotorola.toString(), 11, 12,0));
+		 * t32186211F553238765AB//
 		 */
+		Map<String,Double> sigNamePhyMap =new HashMap<String,Double>();
+		sigNamePhyMap.put("HVAC_AAAAAAAAAAAAA",50.0);
+		sigNamePhyMap.put("HVAC_CorrectedCabinTempVD",1.0);
+		//String dataStr="1111111122222222111101010101001100100011100001110110010110101011";
+		codeCanMsg t=new codeCanMsg();
+		t.getMessageStr(801,8, sigNamePhyMap);
+		//System.out.println(t.subStrIntel(12, 12));
+		//System.out.println("解析后id:"+Integer.parseInt("321",16));
+		//System.out.println(	t.indexStrProcess(t.parseCanData(UncodeCanMsg.getInstance().splitDataStr("t32186211F553238765AB"))));
+		/*Pattern p=Pattern.compile("[a-]{1,}@[0-9]{1}",Pattern.DOTALL);
+		Matcher m=p.matcher("SG_ CDU_HVACAutoModeButtonSt : 2|00001@0+ (1,0) [0|1] \"\"  HVAC");
+		while(m.find()){
+			System.out.println(m.group());
+		}*/
+
+		//		ArrayList<String> dataList=t.splitDataStr(dataStr).getData();
+		//		StringBuffer BitStrIntel=new StringBuffer();
+		//		StringBuffer BitStrMotorola=new StringBuffer();
+		//
+		//		int size=dataList.size();
+		//		//intel
+		//		for(int i=size-1;i>=0;i--){
+		//			BitStrIntel.append(DataFormats.getInstance().hexToBinary(dataList.get(i)));
+		//		}
+		//		System.out.println("----intel matrix-----");
+		//
+		//		for(int i=0;i<size;i++){
+		//			System.out.println(DataFormats.getInstance().hexToBinary(dataList.get(i)));
+		//		}
+		//		System.out.println("intel "+BitStrIntel);
+		//	
+		//		System.out.println(t.matrixSubBinStr(BitStrIntel.toString(), 15, 8, 0));
+		//		System.out.println("----motorola-----");
+		//		//motorola
+		//		for(int i=0;i<size;i++){
+		//			BitStrMotorola.append(DataFormats.getInstance().hexToBinary(dataList.get(i)));	
+		//		}
+		//
+		//		for(int i=0;i<size;i++){
+		//			System.out.println(DataFormats.getInstance().hexToBinary(dataList.get(i)));
+		//
+		//		}
+		//
+		//		System.out.println("motol "+BitStrMotorola);
+		//		System.out.println(t.matrixSubBinStr(BitStrIntel.toString(), 15, 8, 1));
+
+
 	}
-
-
-
 	/**
-	 * can信息字符串的切割提取
-	 * @param dataStr "T127FFFFF800111213141516170000\r"或者"t127800111213141516170000\r"
-	 * \r为换行符,尽量不要用\\r
-	 * @return CanData对象
+	 * 由can信息字符串转换成矩阵分布图的字符串
+	 * @param messageStr "t32186211F553238765AB\r"
+	 * @return [[7,7,50],[3,5,0],[0,5,0],[1,5,0]...]
 	 */
-	public CanMsgDataBean splitDataStr(String dataStr){
-		CanMsgDataBean cd=new CanMsgDataBean();
-		dataStr=dataStr.trim();
-		dataStr=dataStr.replace("\\r","");
-		dataStr=dataStr.replace("\r","");
-		if(dataStr.startsWith("t")){
-			String id=dataStr.substring(1,4);
-			cd.setId(id);
-			int dcl=Integer.parseInt(dataStr.substring(4,5));
-			cd.setDcl(dcl);
-			String data=dataStr.substring(5,(dcl<<1)+5);
-			ArrayList<String> dataList=new ArrayList<String>();
-			for(int i=0;i<dcl<<1;i=i+2){
-				dataList.add(data.substring(i,i+2));
-			}
-			cd.setData(dataList);
-			if((dcl<<1)+9==dataStr.length()){
-				String interval=dataStr.substring((dcl<<1)+5,(dcl<<1)+9); 
-				cd.setInterval(interval);
-			}
-		}else if(dataStr.startsWith("T")){
-			String id=dataStr.substring(1,9);
-			cd.setId(id);
-			int dcl=Integer.parseInt(dataStr.substring(9,10));
-			cd.setDcl(dcl);
-			String data=dataStr.substring(10,(dcl<<1)+10);
-			ArrayList<String> dataList=new ArrayList<String>();
-			for(int i=0;i<dcl<<1;i=i+2){
-				dataList.add(data.substring(i,i+2));
-			}
-			cd.setData(dataList);
-			if((dcl<<1)+14==dataStr.length()){
-				String interval=dataStr.substring((dcl<<1)+10,(dcl<<1)+14); 
-				cd.setInterval(interval);
-			}
-		}else{
-			System.err.print("can信息格式不正确");
-		}
-		return cd;
-
-	}
 	/**
-	 * canData对象信息解析
-	 * @param cd
-	 */
-	public void parseCanData(CanMsgDataBean cd){
-		DataFormats dataFormat=DataFormats.getInstance();
-		int id=Integer.parseInt(cd.getId(),16);
-		ArrayList<CanSignalBean> canSignalList=canSignalMap.get(id);
-		if(canSignalList==null||canSignalList.size()==0){
-			System.err.print("id:"+id+"找不到对应数据库信息");
-		}else{
-			StringBuffer BitStrIntel=new StringBuffer();
-			StringBuffer BitStrMotorola=new StringBuffer();
-			int dataSize=cd.getData().size();
-			/**
-			 * intel can二进制矩阵字符串
-			 */
-			for(int i=dataSize-1;i>=0;i--){
-				BitStrIntel.append(dataFormat.hexToBinary(cd.getData().get(i)));
-			}
-			/**
-			 * motorola can二进制矩阵字符串
-			 */
-			for(int i=0;i<dataSize;i++){
-				BitStrMotorola.append(dataFormat.hexToBinary(cd.getData().get(i)));
-			}
-			/**
-			 * 遍历相同id下的信号数据库信息,把can信息从can矩阵中提取解析出来
-			 */
-			for(CanSignalBean csb:canSignalList){
-				String signalName=csb.getSignalName();
-				String matrixSubBinStr="";
-				if(csb.getBitType()==0){//0代表Motorola格式
-					matrixSubBinStr=this.matrixSubBinStr(BitStrMotorola.toString(),csb.getStartBit(),csb.getStartBit(),0);
-				}else{//1代表intel格式
-					matrixSubBinStr=this.matrixSubBinStr(BitStrIntel.toString(),csb.getStartBit(),csb.getBitLength(),1);
-				}
-				double x=Integer.parseInt(matrixSubBinStr,2);
-				double phy=x*csb.getResolutionValue()+csb.getOffsetValue();
-				String unit=csb.getUnit();
-				System.out.println("该条信息为:"+signalName+" "+phy+" "+unit+" "+this.checkDataRange(phy,csb.getMaxPhyValue(),csb.getMinPhyValue()));
-			}
-		}
-	}
-
-
-	/**
-	 * 从can信息矩阵中获取指定长度的二进制字符串
-	 * @param Bit32Str can信息矩阵的一维形式 高位->低位
-	 * @param start 开始位
-	 * @param length 长度
-	 * @param type 0:Motorola 1:Intel
+	 * 根据用户输入的canMessage的id,dcl,信号名称及物理值来编码生成对应的can信息字符串
+	 * @param id 801
+	 * @param dcl 8
+	 * @param sigNamePhyMap 如下：
+	 *   key                         value
+	 *  "HVAC_AAAAAAAAAAAAA1q"       50.0
+		"HVAC_CorrectedCabinTempVD"  1.0
 	 * @return 
 	 */
-	private String matrixSubBinStr(String bitStr,int start,int length,int type){
-		String bitSubStr="";
-		int strLength=bitStr.length();
-		if(type==0){
-			int tempIndex=this.getIndexOf(start);
-			bitSubStr=bitStr.substring(tempIndex,tempIndex+length);
-		}else{
-			bitSubStr=bitStr.substring(strLength-start-length,strLength-start);
+	public String getMessageStr(int id,int dcl,Map<String,Double> sigNamePhyMap){
+		Map<String,String> sigNameIndexMap=this.getSigNameIndexMap(id);//信号名称和它所占矩阵下标(高位->地位)的map数组
+		DataFormats dataFormat=DataFormats.getInstance();
+		/**
+		 * 获取对应id的canSignal列表
+		 */
+		ArrayList<CanSignalBean> canSignalList=LoadDataBase.getCanSignalMap().get(id);
+		if(canSignalList==null||canSignalList.size()==0){
+			System.err.print("id:"+id+"找不到对应数据库信息");
+			return "-1";
 		}
-		return bitSubStr;
+		/**
+		 * 初始化矩阵数组matrixBinList,所有位全部置0,数组长度为dcl乘以8
+		 * 这里从最高位到最低位,以1维数组形式排列
+		 */
+		int totalBitLength=dcl<<3;
+		String[] matrixBinList=new String[totalBitLength];
+		for(int i=0;i<totalBitLength;i++){
+			matrixBinList[i]="0";
+		}
+		/**
+		 * 遍历手工输入的信号及物理值,进行物理值->二进制字符串的转换操作
+		 */
+		Iterator<String> iter = sigNamePhyMap.keySet().iterator();
+		String key="";
+		while (iter.hasNext()) {
+			key = iter.next();
+			CanSignalBean csb=this.findCanSignalBean(canSignalList,key);
+			if(csb.getSignalName()==null){
+				System.err.println(key+" 找不到对应的实体类 ");
+				return "-1";
+			}
+			double phy=sigNamePhyMap.get(key);
+			if(phy<csb.getMinPhyValue()||phy>csb.getMaxPhyValue()){
+				System.err.println("物理值不在范围 信号名称:"+ key+"物理值: "+phy);
+				return "-1";
+			}
+			System.out.println("phy: "+phy+" A: "+csb.getResolutionValue()+" B: "+csb.getOffsetValue());
+			int x=(int) ((phy-csb.getOffsetValue())/csb.getResolutionValue());
+			System.out.println("x "+x);
+			String binStr=dataFormat.decimalToBinary(x,csb.getBitLength());
+			String indexStr=sigNameIndexMap.get(key);
+			System.out.println(binStr);
+			System.out.println(indexStr);
+			String[] binStrList=binStr.split("");
+			String[] indexStrList=indexStr.split(",");
+			/**
+			 * 进行矩阵的一维数组填充
+			 */
+			for(int i=0;i<csb.getBitLength();i++){
+				matrixBinList[Integer.parseInt(indexStrList[i])]=binStrList[i+1];
+			}
+		}
+		
+		/**
+		 * 矩阵的一维数组拼接成字符串,最多64位长度
+		 */
+		StringBuffer resultStr=new StringBuffer();
+		for(int i=totalBitLength-1;i>=0;i--){
+			resultStr.append(matrixBinList[i]);
+		}
+		/**
+		 * 把二进制字符串转换成16进制字符串
+		 */
+		String binStr=resultStr.toString();
+		resultStr.setLength(0);
+		for(int i=0;i<dcl;i++){
+			resultStr.append(dataFormat.binaryToHex(binStr.substring(i<<3,(i<<3)+8)));
+		}
+		String hexId=dataFormat.decimalToHex(id);
+		if(hexId.length()==3){
+			return "t"+hexId+dcl+resultStr.toString().toUpperCase();
+		}else{
+			return "T"+hexId+dcl+resultStr.toString().toUpperCase();
+		}
+	}
 
+	/**
+	 * 根据can信号名称找到它对应的实体类,包含名称、类型、开始位、长度、A、B、C、D等信息
+	 * @param canSignalList can信号实体类数组
+	 * @param canSignalName can信号名称
+	 * @return 对应的实体类 找不到返回空
+	 */
+	private CanSignalBean findCanSignalBean(ArrayList<CanSignalBean> canSignalList,String canSignalName){
+		CanSignalBean csbBean=new CanSignalBean();
+		for(CanSignalBean csb:canSignalList){
+			if(canSignalName!=null&&canSignalName.equals(csb.getSignalName())){
+				csbBean=csb;break;
+			}
+		}
+		return csbBean;
 	}
 	/**
-	 * 从全局静态数组byteIndexArray中查找元素
-	 * @param num 要查找的元素
-	 * @return 找到返回索引下标,没有找到该元素返回-1
+	 * 根据id得到它所包含的信号名称及所占的矩阵索引
+	 * @param id 801
+	 * @return 以信号名称为key,所占索引字符串为value的map数组
+	 * 如下所示：
+	 * key                         value
+	 * HVAC_CompressorComsumpPwr 17,16,31,30,29,28,27,26,25,24,37,36,35,34,33,32,
+	 * HVAC_AAAAAAAAAAAAA        4,3,2,1,0,10,9,8,
+	 * HVAC_CorrectedCabinTempVD 18,17,16,28,27,26,25,24,
+     * HVAC_PTCPwrAct            33,32,47,46,45,44,43,42,41,40,
+     * HVAC_RawCabinTemp         7,6,5,4,3,2,1,0,
+     * HVAC_RawCabinTempVD       19,
+     * HVAC_stPTCAct             55,54,53,
 	 */
-	private int getIndexOf(int num){
-		for(int i=0;i<64;i++){
-			if(byteIndexArray[i]==num)
-				return i;
+	private Map<String,String> getSigNameIndexMap(int id){
+		Map<String,String> sigNameIndexMap=new HashMap<String,String>();
+		
+		ArrayList<CanSignalBean> canSignalList=LoadDataBase.getCanSignalMap().get(id);
+		if(canSignalList==null||canSignalList.size()==0){
+			System.err.print("id:"+id+"找不到对应数据库信息");
+			return sigNameIndexMap;
 		}
-		return -1;
-	}
-	/**
-	 * 判断物理值数据是否符合范围
-	 * @param data 要判断的数据
-	 * @param max 最大值
-	 * @param min 最小值
-	 * @return 判断信息 high:过高 low:过低 normal:正常
-	 */
-	private String checkDataRange(double data,double max,double min){
-		String message="";
-		if(data>max){
-			message="high";
-		}else if(data<min){
-			message="low";
-		}else{
-			message="normal";
+		/**
+		 * 遍历相同id下的信号数据库信息,把can信息从can矩阵中提取解析出来
+		 */
+		String matrixIndexStr="";
+		for(CanSignalBean csb:canSignalList){
+			if(csb.getBitType()==0){
+				matrixIndexStr=this.subStrMotorolaIndex(csb.getStartBit(),csb.getBitLength());//调用专门的Motorola字符串截取函数
+			}else{
+				matrixIndexStr=this.subStrIntelIndex(csb.getStartBit(),csb.getBitLength());//调用专门的Intel字符串截取函数
+			}
+			sigNameIndexMap.put(csb.getSignalName(),matrixIndexStr);
+			System.out.println(csb.getSignalName()+" "+matrixIndexStr);
 		}
-		return message;
+		return sigNameIndexMap;
+
+
 	}
 
+	/**
+	 * 进行Motorola格式索引字符串的截取,用于生成heatmap的矩阵,右对齐
+	 * @param start 起始位
+	 * @param length 长度
+	 * @return 截取后的字符串 "17,16,31,30,29,28,27,26,25,24,"
+	 */
+	private String subStrMotorolaIndex(int start,int length){
+		StringBuffer result=new StringBuffer(); //结果字符串
+		int startRowIndex=start>>3;  //起止位所在的行 (0-7)
+		int curRowRightLen=start%8+1;//这个字符及它右侧总共的字符数+1代表算上自身 (1-8)
+		if(curRowRightLen>=length){
+			result.append(this.subStringIndex(byteIndexMatrix[startRowIndex],8-curRowRightLen,8-curRowRightLen+length));
+		}else{
+			result.append(this.subStringIndex(byteIndexMatrix[startRowIndex],8-curRowRightLen,8));
+			int anotherRows=(length-curRowRightLen)>>3; //计算还需要几整行的数据
+			int remainder=(length-curRowRightLen)%8;    //整除8后的余数
+			for(int i=0;i<anotherRows;i++){
+				result.append(this.subStringIndex(byteIndexMatrix[++startRowIndex],0,8));
+			}
+			if(remainder!=0){
+				result.append(this.subStringIndex(byteIndexMatrix[++startRowIndex],8-remainder,8));
+			}
+		}
+		return result.toString();
+	}
+	/**
+	 * 进行intel格式索引字符串的截取,用于生成heatmap的矩阵,左对齐
+	 * @param start 起始位
+	 * @param length 长度
+	 * @return 截取后的字符串 "39,31,30,29,28,27,26,25,24,23,22,21,20,19,18,17,"
+	 */
+	private String subStrIntelIndex(int start,int length){
+		StringBuffer result=new StringBuffer();
+		ArrayList<String> resultList=new ArrayList<String>(); //结果字符串数组0
+		int startRowIndex=start>>3;//起止位所在的行 (0-7)
+			int curRowLeftLen=8-start%8;//这个字符及它左侧总共的字符数代表算上自身 (1-8)
+			if(curRowLeftLen>=length){
+				resultList.add(this.subStringIndex(byteIndexMatrix[startRowIndex],curRowLeftLen-length,curRowLeftLen));
+			}else{
+				resultList.add(this.subStringIndex(byteIndexMatrix[startRowIndex],0,curRowLeftLen));
+				int anotherRows=(length-curRowLeftLen)>>3; //计算还需要几整行的数据
+				int remainder=(length-curRowLeftLen)%8; //整除8后的余数
+				for(int i=0;i<anotherRows;i++){
+					resultList.add(this.subStringIndex(byteIndexMatrix[++startRowIndex],0,8));
+				}
+				if(remainder!=0){
+					resultList.add(this.subStringIndex(byteIndexMatrix[++startRowIndex],0,remainder));
+				}
+			}
+			for(int i=resultList.size()-1;i>=0;i--)
+				result.append(resultList.get(i));
+			return result.toString();
+	}
+
+	/**
+	 * 自定义索引截取函数,被subStrMotorolaIndex和subStrIntelIndex两个方法调用
+	 * @param row 行号
+	 * @param start 开始位
+	 * @param length 长度
+	 * @return "17,16,"
+	 */
+	private String subStringIndex(int[] row,int start,int length){
+		StringBuffer result=new StringBuffer();
+		for(int i=start;i<length;i++){
+			result.append(row[i]).append(",");
+		}
+		return result.toString();
+	}
 }

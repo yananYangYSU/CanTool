@@ -119,7 +119,7 @@ public class UncodeCanMsg {
 				cd.setDcl(dcl);
 				String data=dataStr.substring(5,(dcl<<1)+5);
 				ArrayList<String> dataList=new ArrayList<String>();
-				for(int i=0;i<dcl<<1;i=i+2){
+				for(int i=0;i<(dcl<<1);i=i+2){
 					dataList.add(data.substring(i,i+2));
 				}
 				cd.setData(dataList);
@@ -134,7 +134,7 @@ public class UncodeCanMsg {
 				cd.setDcl(dcl);
 				String data=dataStr.substring(10,(dcl<<1)+10);
 				ArrayList<String> dataList=new ArrayList<String>();
-				for(int i=0;i<dcl<<1;i=i+2){
+				for(int i=0;i<(dcl<<1);i=i+2){
 					dataList.add(data.substring(i,i+2));
 				}
 				cd.setData(dataList);
