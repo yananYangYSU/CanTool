@@ -167,37 +167,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 function queryByTime(){	
 	var startTime=document.getElementById("startTime").value;
 	var endTime=document.getElementById("endTime").value;
-	//if(compareCalendar(startTime,endTime)){
+	if(startTime==""){
+		alert("请输入起始日期");
+	}else if(endTime==""){
+		alert("请输入起始日期");
+	}else if(startTime<endTime){
+	
 		window.location="QueryByTime.do?startTime="+startTime+"&endTime="+endTime+"&page=1";
-	//}else{
-	//	alert("请重新输入日期");
-	//}
+		
+	}else{
+		alert("日期顺序输入错误，请重新输入日期");
+	}
 	
 }
 function exportCSV(){	
 	var startTime=document.getElementById("startTime").value;
 	var endTime=document.getElementById("endTime").value;
-	//if(compareCalendar(startTime,endTime)){
 		window.location="exportCSVData.do?startTime="+startTime+"&endTime="+endTime;
-	//}else{
-	//	alert("请重新输入日期");
-	//}
-	
 }
-function compareCalendar(dt1,dt2){
-		//DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        //Date dt1 = df.parse(date1);
-        //Date dt2 = df.parse(date2);
-        if (dt1.getTime() > dt2.getTime()) {
-            System.out.println("dt2,dt1");
-            return false;
-        } else if (dt1.getTime() < dt2.getTime()) {
-            System.out.println("dt1,dt2");
-            return true;
-        } else {
-            return true;
-        }
-}
+
 </script>
   </body>
 </html>
