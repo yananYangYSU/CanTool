@@ -43,48 +43,50 @@
 	<div class="page-container">
 
 		<form action="login.do" method="post" class="form form-horizontal"
-			id="loginDeviceForm" name="loginDeviceForm">
+			id="loginDeviceForm" name="loginDeviceForm" style="border: #CCC solid 1px; width: 415px;margin: 0 auto;">
 
-			<div class="row cl">
-				<label class="form-label col-xs-4 col-sm-2"><span
+			<div class="row cl" style="width: 415px;">
+				<label class="form-label col-xs-4 col-sm-2" style="width: 110px;"><span
 					class="c-red">*</span>端口名称：</label>
-				<div class="formControls col-xs-8 col-sm-9">
-					<select name="selectPort" class="input w50" id="selectPort"
+				<div class="formControls col-xs-8 col-sm-9" style=" width: 300px;">
+					<select name="selectPort" class="input w50" id="selectPort" style="width: 120px; "
 						onChange="setType();">
 						<option value="">请选择端口</option>
-					</select> <input type='hidden' id="portName" name="portName" value="">
+					</select> <input type='hidden' id="portName" name="portName" value="" >
 					<span id="name_notice" class="c-red"></span>
 				</div>
 			</div>
-			<div class="row cl">
-				<label class="form-label col-xs-4 col-sm-2"><span
+			<div class="row cl" style="width: 235px;">
+				<label class="form-label col-xs-4 col-sm-2"style="width:110px"><span
 					class="c-red">*</span>波特率：</label>
-				<div class="formControls col-xs-8 col-sm-9">
+				<div class="formControls col-xs-8 col-sm-9"style="width: 105px;">
 					<input type="text" class="input w50" value="8"
 						placeholder="请输入波特率(必填)" maxlength='10' id="baudRate"
-						name="baudRate"> <span id="rate_notice" class="c-red"></span>
+						name="baudRate"style="width:100px"> 
+						<span id="rate_notice" class="c-red"></span>
 				</div>
 			</div>
-			<div class="row cl">
-				<label class="form-label col-xs-4 col-sm-2"><span
+			<div class="row cl" style="width: 235px;">
+				<label class="form-label col-xs-4 col-sm-2"style="width:110px"><span
 					class="c-red">*</span>数据位：</label>
-				<div class="formControls col-xs-8 col-sm-9">
+				<div class="formControls col-xs-8 col-sm-9"style="width: 105px;">
 					<input type="text" class="input w50" value="8"
-						placeholder="请输入数据位(必填)" maxlength='2' id="dataBit" name="dataBit">
+						placeholder="请输入数据位(必填)" maxlength='2' id="dataBit" 
+						name="dataBit"style="width:100px">
 					<span id="databit_notice" class="c-red"></span>
 				</div>
 			</div>
-			<div class="row cl">
-				<label class="form-label col-xs-4 col-sm-2"><span
+			<div class="row cl" style="width: 235px;"">
+				<label class="form-label col-xs-4 col-sm-2"style="width:110px"><span
 					class="c-red">*</span>停止位：</label>
-				<div class="formControls col-xs-8 col-sm-9">
+				<div class="formControls col-xs-8 col-sm-9"style="width: 105px;">
 					<input type="text" class="input w50" value="1"
-						placeholder="请输入停止位(必填)" maxlength='2' id="stopBit" name="stopBit">
+						placeholder="请输入停止位(必填)" maxlength='2' id="stopBit" name="stopBit"style="width: 100px;">
 					<span id="stopbit_notice" class="c-red"></span>
 				</div>
 			</div>
-			<div class="row cl">
-				<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+			<div class="row cl" style="width: 250px;margin: 0 auto;margin-top: 10px;">
+				<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2"style="width: 215px;">
 					<button onClick="loginDevice();" class="btn btn-primary radius"
 						type="button">
 						<i class="Hui-iconfont">&#xe632;</i>确认接入
