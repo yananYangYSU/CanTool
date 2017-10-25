@@ -66,6 +66,7 @@
 .open2 {
 	top: 2px;
 	right: 1px;
+	cursor:pointer; 
 }
 
 .close1 {
@@ -75,20 +76,20 @@
 }
 
 .close2 {
+	cursor:pointer; 
 	left: 0px;
 	top: 0px;
 	border: 2px solid rgba(0, 0, 0, 0.1);
 }
 .b67jihuo{
 	 display:block;}
- .aa {
+.aa {
 	width: 50px;
 	height: 32px;
-	padding-top:3px;
-	font-size: 14px;
-	float:right; 
-	/*  border: teal solid 1px; */ 
-	
+	padding-top:8px;
+	font-size: 12px;
+	float:right;
+	/* border: teal solid 1px; */
 }
 #box1{
 width: 550px;
@@ -113,7 +114,7 @@ height: 50px;
 						</div>
 					</div>
 					 <div class="aa">
-  <span id="password_notice" class="c-red">${canState}</span>
+  <span id="state-notice" class="c-green" style="font-size:12px">${canState}</span>
   </div>
 				</div>
 			</div>
@@ -210,16 +211,20 @@ function xuan1(){
         var div2=document.getElementById("div2");
         var div1=document.getElementById("div1");
         var canState="${canState}";
-        if(canState=="关闭"){
+        if(canState=="已关闭"){
+        	 document.getElementById("state-notice").className="c-red";
 	         div1.className=(div1.className=="close1")?"open1":"close1";
 	   		 div2.className=(div2.className=="close2")?"open2":"close2";
         }
         div2.onclick=function(){
-        	if(canState=="关闭"){
+        	if(canState=="已关闭"){
 	        	$.post("openCantool.do",{},
 				function(data){
 						if(data==1){
-							canState="开启";
+							canState="已开启";
+							document.getElementById("state-notice").className="c-green";
+							document.getElementById("state-notice").innerHTML="已开启";
+							
 							div1.className=(div1.className=="close1")?"open1":"close1";
    		 					div2.className=(div2.className=="close2")?"open2":"close2";
 						}else{
@@ -230,7 +235,9 @@ function xuan1(){
         		$.post("closeCantool.do",{},
 				function(data){
 						if(data==1){
-							canState="关闭";
+							canState="已关闭";
+							document.getElementById("state-notice").className="c-red";
+							document.getElementById("state-notice").innerHTML="已关闭";
 							div1.className=(div1.className=="close1")?"open1":"close1";
    		 					div2.className=(div2.className=="close2")?"open2":"close2";
 						}else{

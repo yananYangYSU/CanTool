@@ -25,9 +25,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <meta name="renderer" content="webkit">
 
-
-<!-- <link rel="stylesheet" type="text/css"
+<!-- 
+<link rel="stylesheet" type="text/css"
 	href="css/jh/H-ui.min.css" /> -->
+	
+	
+	
 	
 <link rel="stylesheet" type="text/css"
 	href="lib/Hui-iconfont/1.0.8/iconfont.css" /> 
@@ -38,7 +41,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script src="css/jh/pintuer.js"></script>
 
 <style type="text/css">
-<style>
 	  .ui-progressbar {
 	    position: relative;
 	  }
@@ -95,7 +97,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </style>
   <script src="js/jquery-1.9.1.js"></script> 
 <script src="js/My97DatePicker/WdatePicker.js"></script>
-</style>
 
   </head>
   
@@ -121,23 +122,28 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          
  	</li>
 		  <li style="padding-right:10px;"><span class="r">共有数据：<strong>${totleCount }</strong> 条</span></li>
-     <li style="margin-left: 275px;">
-     <button class="btn btn-primary radius" style="height: 40px;background-color: rgb(90,152,222); color: white;"
+     <li style="margin-left: 270px;">
+     <button class="btn btn-primary radius" style="height: 40px;width:85px; background-color: rgb(90,152,222); color: white;"
 						type="button" onclick="exportCSV();">
-						<i class="Hui-iconfont">&#xe632;</i>导出
-					</button>
+						<i class="Hui-iconfont">&#xe632;</i>导出数据
+					</button><!--class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2"   style="margin-left: 275px;"   -->
+					
      </li>
       </ul>
     </div>
-    <table class="table table-hover text-center">
-      <tr>
+    <table class="table table-hover text-center" style="text-align: center; font-size: 14px;">
+      <tr style="text-align: center; font-size: 18px;">
         <th width="15%">ID</th>
 		<th width="15%">Name</th>
 		<th width="10%">DLC</th>
 		<th width="30%">Data</th>
 		<th width="30%">Time</th>
       </tr>
+      <tr style="text-align: center; font-size: 14px;">
+      <td style="text-align: right; font-size: 18px;">
      ${Str }
+     </td>
+     </tr>
       <tr>
         <td colspan="5">
 					<div class="pagelist">

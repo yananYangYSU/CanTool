@@ -19,7 +19,7 @@ public class CodeCanMsg {
 		{15,14,13,12,11,10,9,8},
 		{23,22,21,20,19,18,17,16},
 		{31,30,29,28,27,26,25,24},
-		{39,28,37,36,35,34,33,32},
+		{39,38,37,36,35,34,33,32},
 		{47,46,45,44,43,42,41,40},
 		{55,54,53,52,51,50,49,48},
 		{63,62,61,60,59,58,57,56}
@@ -47,11 +47,12 @@ public class CodeCanMsg {
 		 * t32186211F553238765AB//
 		 */
 		Map<String,Double> sigNamePhyMap =new HashMap<String,Double>();
-		sigNamePhyMap.put("HVAC_AAAAAAAAAAAAA",50.0);
-		sigNamePhyMap.put("HVAC_CorrectedCabinTempVD",1.0);
+		sigNamePhyMap.put("HVAC_ACPCommand",2.0);
+		sigNamePhyMap.put("HVAC_ACPSpeedSet",4300.0);
+		sigNamePhyMap.put("HVAC_Checksum",195.0);
 		//String dataStr="1111111122222222111101010101001100100011100001110110010110101011";
 		CodeCanMsg t=new CodeCanMsg();
-		System.out.print(t.getMessageStr(801,8, sigNamePhyMap));
+		System.out.print(t.getMessageStr(864,8,sigNamePhyMap));
 		//System.out.println(t.subStrIntel(12, 12));
 		//System.out.println("解析后id:"+Integer.parseInt("321",16));
 		//System.out.println(	t.indexStrProcess(t.parseCanData(UncodeCanMsg.getInstance().splitDataStr("t32186211F553238765AB"))));
@@ -107,7 +108,7 @@ public class CodeCanMsg {
 	 *   key                         value
 	 *  "HVAC_AAAAAAAAAAAAA1q"       50.0
 		"HVAC_CorrectedCabinTempVD"  1.0
-	 * @return 
+	 * @return "t3938000000003B000000"
 	 */
 	public String getMessageStr(int id,int dcl,Map<String,Double> sigNamePhyMap){
 		Map<String,String> sigNameIndexMap=this.getSigNameIndexMap(id);//信号名称和它所占矩阵下标(高位->地位)的map数组
@@ -125,10 +126,19 @@ public class CodeCanMsg {
 		 * 这里从最高位到最低位,以1维数组形式排列
 		 */
 		int totalBitLength=dcl<<3;
-		String[] matrixBinList=new String[totalBitLength];
-		for(int i=0;i<totalBitLength;i++){
-			matrixBinList[i]="0";
+		Map<Integer,String> matrixBinListMap=new HashMap<Integer,String>();
+		//String[] matrixBinList=new String[totalBitLength];
+		for(int i=totalBitLength-1;i>=0;i--){
+			matrixBinListMap.put(i,"0");
+			//matrixBinList[i]="0";
 		}
+		for(int i=totalBitLength-1;i>=0;i--){
+			//resultStr.append(matrixBinList[i]);
+			System.out.print(matrixBinListMap.get(i));
+		}
+		System.out.println();
+
+
 		/**
 		 * 遍历手工输入的信号及物理值,进行物理值->二进制字符串的转换操作
 		 */
@@ -157,23 +167,23 @@ public class CodeCanMsg {
 			String[] indexStrList=indexStr.split(",");
 			/**
 			 * 进行矩阵的一维数组填充
-			 */
+			 */ 
 			for(int i=0;i<csb.getBitLength();i++){
-				matrixBinList[Integer.parseInt(indexStrList[i])]=binStrList[i+1];
+				matrixBinListMap.put(Integer.parseInt(indexStrList[i]),binStrList[i+1]);
 			}
 		}
-		
+
 		/**
 		 * 矩阵的一维数组拼接成字符串,最多64位长度
 		 */
 		StringBuffer resultStr=new StringBuffer();
-		for(int i=totalBitLength-1;i>=0;i--){
-			resultStr.append(matrixBinList[i]);
+		for(int i=totalBitLength-1;i>=0;i--){ 
+			resultStr.append(matrixBinListMap.get(i));
 		}
 		/**
 		 * 把二进制字符串转换成16进制字符串
 		 */
-		String binStr=resultStr.toString();
+		String binStr=dataFormat.reverseStr(resultStr.toString());
 		resultStr.setLength(0);
 		for(int i=0;i<dcl;i++){
 			resultStr.append(dataFormat.binaryToHex(binStr.substring(i<<3,(i<<3)+8)));
@@ -210,14 +220,14 @@ public class CodeCanMsg {
 	 * HVAC_CompressorComsumpPwr 17,16,31,30,29,28,27,26,25,24,37,36,35,34,33,32,
 	 * HVAC_AAAAAAAAAAAAA        4,3,2,1,0,10,9,8,
 	 * HVAC_CorrectedCabinTempVD 18,17,16,28,27,26,25,24,
-     * HVAC_PTCPwrAct            33,32,47,46,45,44,43,42,41,40,
-     * HVAC_RawCabinTemp         7,6,5,4,3,2,1,0,
-     * HVAC_RawCabinTempVD       19,
-     * HVAC_stPTCAct             55,54,53,
+	 * HVAC_PTCPwrAct            33,32,47,46,45,44,43,42,41,40,
+	 * HVAC_RawCabinTemp         7,6,5,4,3,2,1,0,
+	 * HVAC_RawCabinTempVD       19,
+	 * HVAC_stPTCAct             55,54,53,
 	 */
 	private Map<String,String> getSigNameIndexMap(int id){
 		Map<String,String> sigNameIndexMap=new HashMap<String,String>();
-		
+
 		ArrayList<CanSignalBean> canSignalList=LoadDataBase.getCanSignalMap().get(id);
 		if(canSignalList==null||canSignalList.size()==0){
 			System.err.print("id:"+id+"找不到对应数据库信息");
@@ -233,8 +243,7 @@ public class CodeCanMsg {
 			}else{
 				matrixIndexStr=this.subStrIntelIndex(csb.getStartBit(),csb.getBitLength());//调用专门的Intel字符串截取函数
 			}
-			sigNameIndexMap.put(csb.getSignalName(),matrixIndexStr);
-			System.out.println(csb.getSignalName()+" "+matrixIndexStr);
+			sigNameIndexMap.put(csb.getSignalName(),matrixIndexStr); 
 		}
 		return sigNameIndexMap;
 
@@ -250,12 +259,12 @@ public class CodeCanMsg {
 	private String subStrMotorolaIndex(int start,int length){
 		StringBuffer result=new StringBuffer(); //结果字符串
 		int startRowIndex=start>>3;  //起止位所在的行 (0-7)
-		int curRowRightLen=start%8+1;//这个字符及它右侧总共的字符数+1代表算上自身 (1-8)
-		if(curRowRightLen>=length){
-			result.append(this.subStringIndex(byteIndexMatrix[startRowIndex],8-curRowRightLen,8-curRowRightLen+length));
-		}else{
-			result.append(this.subStringIndex(byteIndexMatrix[startRowIndex],8-curRowRightLen,8));
-			int anotherRows=(length-curRowRightLen)>>3; //计算还需要几整行的数据
+			int curRowRightLen=start%8+1;//这个字符及它右侧总共的字符数+1代表算上自身 (1-8)
+			if(curRowRightLen>=length){
+				result.append(this.subStringIndex(byteIndexMatrix[startRowIndex],8-curRowRightLen,8-curRowRightLen+length));
+			}else{
+				result.append(this.subStringIndex(byteIndexMatrix[startRowIndex],8-curRowRightLen,8));
+				int anotherRows=(length-curRowRightLen)>>3; //计算还需要几整行的数据
 			int remainder=(length-curRowRightLen)%8;    //整除8后的余数
 			for(int i=0;i<anotherRows;i++){
 				result.append(this.subStringIndex(byteIndexMatrix[++startRowIndex],0,8));
@@ -263,8 +272,8 @@ public class CodeCanMsg {
 			if(remainder!=0){
 				result.append(this.subStringIndex(byteIndexMatrix[++startRowIndex],8-remainder,8));
 			}
-		}
-		return result.toString();
+			}
+			return result.toString();
 	}
 	/**
 	 * 进行intel格式索引字符串的截取,用于生成heatmap的矩阵,左对齐
