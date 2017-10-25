@@ -45,15 +45,15 @@
 		<form action="login.do" method="post" class="form form-horizontal"
 			id="loginDeviceForm" name="loginDeviceForm" style="border: #CCC solid 1px; width: 550px;margin: 0 auto;">
 
-			<div class="row cl" style="border: yellow solid 1px; width: 540px;">
-				<label class="form-label col-xs-4 col-sm-2" style="border: red solid 1px; width: 110px;left:20px;"><span
+			<div class="row cl" style="width: 540px;">
+				<label class="form-label col-xs-4 col-sm-2" style="width: 110px;left:20px;"><span
 					class="c-red">*</span>端口名称：</label>
-				<div class="formControls col-xs-8 col-sm-9" style="border:  #CCC  solid 1px;  width: 420px;">
-					<select name="selectPort" class="input w50" id="selectPort" style="width: 150px; border: blue solid 1px; "
+				<div class="formControls col-xs-8 col-sm-9" style=" width: 420px;">
+					<select name="selectPort" class="input w50" id="selectPort" style="width: 150px; "
 						onChange="setType();">
 						<option value="">请选择端口</option>
 					</select> <input type='hidden' id="portName" name="portName" value="" >
-					<span id="name_notice" class="c-red" style="border: yellow solid 1px; width:250px;"></span>
+					<span id="name_notice" class="c-red" style="width:250px;"></span>
 				</div>
 			</div>
 			<div class="row cl" style="width: 235px;">
