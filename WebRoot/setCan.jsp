@@ -272,9 +272,13 @@ function xuan1(){
 							id:id,
 							messageListStr:messageListStr
 						},function(data){
-							if(data=='-1')
-								Showbo.Msg.alert("转换失败,请检查数据是否有误");
-							else{
+							if(data=='-1'){
+								Showbo.Msg.alert("转换失败,物理值不在合适范围!");
+							}else if(data=='-2'){
+								Showbo.Msg.alert("转换失败,找不到对应名称的canSignal!");
+							}else if(data=='-3'){
+								Showbo.Msg.alert("转换失败,找不到对应id的canMessage!");
+							}else{
 								document.getElementById("messageStr").value=data;
 							}
 								
