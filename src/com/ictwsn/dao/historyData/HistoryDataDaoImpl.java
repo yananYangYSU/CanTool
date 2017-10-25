@@ -73,7 +73,7 @@ public class HistoryDataDaoImpl extends MySQLBaseDao implements HistoryDataDao {
 				signal.add(message);
 				for(int i=0;i<canPhy.size();i++) {
 					CanPhyDataBean canphy=canPhy.get(i);
-					String signalStr=canphy.getSignalName()+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+canphy.getPhyValue()+canphy.getUnit()+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+canphy.getHexStr()+"&nbsp;&nbsp;&nbsp;"+canphy.getBinaryStr();
+					String signalStr="<tr><td width=\"140px\">"+canphy.getSignalName()+"</td><td width=\"140px\">"+canphy.getPhyValue()+canphy.getUnit()+"</td><td width=\"140px\">"+"["+canphy.getHexStr().toString().toUpperCase()+"]"+"</td><td width=\"140px\">"+"["+canphy.getBinaryStr()+"]"+"</td></tr>";
 					signal.add(signalStr);
 				}
 				DataMap.put(key, signal);

@@ -25,11 +25,11 @@ public class HistoryDataServiceImpl implements HistoryDataService {
 		while(it.hasNext()) {
 			int key=(Integer) it.next();
 			ArrayList<String> signalList=map.get(key);
-			historyData.append("<li><a href=\"showMatrixTable.do?messageStr=").append(signalList.get(0)).append("\"><span class=\"folder\">").append(signalList.get(1)).append("</span></a>\n").append("<ul style=\"display:none\">\n");		
+			historyData.append("<li><a href=\"showMatrixTable.do?messageStr=").append(signalList.get(0)).append("\"><span class=\"folder\">").append(signalList.get(1)).append("</span></a>\n").append("<ul style=\"display:none\">\n").append("<li><table class=\"table table-hover text-center\">");		
 			for(int i=2;i<signalList.size();i++) {
-				historyData.append("<li><span class=\"file\">").append(signalList.get(i)).append("</span></li>\n");
+				historyData.append(signalList.get(i));
 			}
-			historyData.append("</ul></li>\n");
+			historyData.append("</table></li></ul></li>\n");
 		}
 		return historyData.toString();
 	}
