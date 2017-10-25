@@ -45,9 +45,19 @@
 #text-div {
 	width: 365px;
 	height: 100%;
-	left: 600px;
+	left: 750px;
 	top: 0px;
 	position: absolute;
+	/* border: teal solid 1px; */
+}
+#aaa{
+width: 3px;
+	height: 100%;
+	left: 620px;
+	top: 0px;
+	position: absolute;
+	/* border: teal solid 1px; */
+	background-color: #CCC;
 }
 
 #div2 {
@@ -66,7 +76,7 @@
 .open2 {
 	top: 2px;
 	right: 1px;
-	cursor:pointer; 
+	cursor: pointer;
 }
 
 .close1 {
@@ -76,31 +86,35 @@
 }
 
 .close2 {
-	cursor:pointer; 
+	cursor: pointer;
 	left: 0px;
 	top: 0px;
 	border: 2px solid rgba(0, 0, 0, 0.1);
 }
-.b67jihuo{
-	 display:block;}
+
+.b67jihuo {
+	display: block;
+}
+
 .aa {
 	width: 50px;
 	height: 32px;
-	padding-top:8px;
+	padding-top: 8px;
 	font-size: 12px;
-	float:right;
+	float: right;
 	/* border: teal solid 1px; */
 }
-#box1{
-width: 550px;
-height: 50px;
-/* border: teal solid 1px; */
+
+#box1 {
+	width: 550px;
+	height: 50px;
+	/* border: teal solid 1px; */
 }
 </style>
 </head>
 <body>
 	<div class="page-container">
-	
+
 		<form action="" method="post" class="form form-horizontal"
 			id="form-article-add">
 			<!-- <div id="box1"> -->
@@ -113,14 +127,14 @@ height: 50px;
 							<div id="div2" class="open2"></div>
 						</div>
 					</div>
-					 <div class="aa">
-  <span id="state-notice" class="c-green" style="font-size:12px">${canState}</span>
-  </div>
+					<div class="aa">
+						<span id="state-notice" class="c-green" style="font-size: 12px">${canState}</span>
+					</div>
 				</div>
 			</div>
-			
+
 			<div class="row cl">
-				<label class="form-label col-xs-4 col-sm-2"><span
+				<label class="form-label col-xs-4 col-sm-2" style="margin-top: 7px;"><span
 					class="c-red">*</span>发送速率：</label>
 				<div class="formControls col-xs-8 col-sm-9">
 					<input type="text" class="input w50" value="${canSpeed}"
@@ -140,51 +154,72 @@ height: 50px;
 				</div>
 			</div>
 		</form>
+<div id="aaa">
 
+</div>
 
-		<div id="text-div">
+		<div id="text-div" >
 			<!-- style="border: teal solid 1px;" -->
 			<form action="" method="post" class="form form-horizontal"
 				id="form-article-add1">
 				<div class="row cl" style="margin-top: 35px;">
-					<label class="form-label col-xs-4 col-sm-2"><span
+					<label class="form-label col-xs-4 col-sm-2" style="width: 70px;margin-top: 5px;"><span
 						class="c-red">*</span>ID：</label>
 					<div class="formControls col-xs-8 col-sm-9">
 						<select name="messageIdSelect" id="messageIdSelect" class="input"
-							style="width:200px; line-height:17px;" onChange="loadSignalStr();">
+							style="width: 300px; line-height: 17px;"
+							onChange="loadSignalStr();">
 							<option value="">请选择ID</option>
-							 <c:forEach var="list" items="${cmbList}">
-			                   <option value="${list.id}">${list.id}</option>
-				             </c:forEach>
-						</select> <span id="speed_notice" class="c-red"></span>
-						<input type="hidden" value="" id="messageId" name="messageId">
+							<c:forEach var="list" items="${cmbList}">
+								<option value="${list.id}">${list.id}</option>
+							</c:forEach>
+						</select> <span id="speed_notice" class="c-red"></span> <input
+							type="hidden" value="" id="messageId" name="messageId">
 					</div>
 				</div>
-			
+				<div class="row cl" style="width: 550px;">
+						
+						<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2"
+							style="width: 500px;margin-left: 0px;">
+							
+	<label class="form-label col-xs-4 col-sm-2"
+							style="width: 82px; margin-left: -10px;margin-top: 7px;"><span
+							class="c-red">*</span>周期：</label>
+							
+							<input type="text" class="input w50" value="${canSpeed}"
+								style="width: 300px;" maxlength='5' placeholder="请输入发送速率(必填)"
+								id="canSpeed" name="canSpeed">
+							
+						</div>
+					</div>
+
 				<div class="field" style="margin-top: 10px;">
 					<textarea class="input" name="sdescription" id="sdescription"
-						style="width:300px;height:150px"></textarea>
-					<div class="row cl">
-						<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-							<button onclick="xuan1()"
-								class="btn btn-primary radius" type="button"
-								style="margin-left: 150px;">
+						style="width: 375px; height: 200px"></textarea>
+					<div class="row cl" style="width: 550px;">
+						
+						<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2"
+							style="width: 500px;margin-left: 0px;">
+							
+							<button onclick="xuan1()" class="btn btn-primary radius"
+								type="button" style="margin-left: 310px; margin-top: 3px;">
 								<i class="Hui-iconfont">&#xe632;</i>生成
 							</button>
 						</div>
 					</div>
 
 
-					<div id="send" class="row cl" style="display: none;margin-top: 10px;">
-						<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2" style="margin-left: -16px;width: 320px;">
+					<div id="send" class="row cl"
+						style="display: none; margin-top: 10px;">
+						<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2"
+							style="margin-left: -16px; width: 420px;">
 
-							<input type="text" class="input w50" value=""
-								maxlength='5' id="messageStr" name="messageStr"
-								style="width:200px; line-height:17px;float: left;"> 
+							<input type="text" class="input w50" value="" maxlength='5'
+								id="messageStr" name="messageStr"
+								style="width: 300px; line-height: 17px; float: left;">
 
-							<button onclick="sendMessage();"
-								class="btn btn-primary radius" type="button"
-								style="margin-left: 17px;">
+							<button onclick="sendMessage();" class="btn btn-primary radius"
+								type="button" style="margin-left: 12px; margin-top: 3px;">
 								<i class="Hui-iconfont">&#xe632;</i>发送
 							</button>
 
@@ -194,106 +229,122 @@ height: 50px;
 			</form>
 		</div>
 	</div>
-<script type="text/javascript">
-function xuan1(){
-	var box6=document.getElementById("send");
-	document.getElementById("send").style.display="block";
-	box6.className="b67jihuo";
-	produce();
-	
-}
-</script>
+	<script type="text/javascript">
+		function xuan1() {
+			var box6 = document.getElementById("send");
+			document.getElementById("send").style.display = "block";
+			box6.className = "b67jihuo";
+			produce();
+
+		}
+	</script>
 
 	<script type="text/javascript" src="js/jquery-1.9.1.js"></script>
 	<script type="text/javascript" src="js/showBo.js"></script>
 	<script type="text/javascript">
-	window.onload=function(){
-        var div2=document.getElementById("div2");
-        var div1=document.getElementById("div1");
-        var canState="${canState}";
-        if(canState=="已关闭"){
-        	 document.getElementById("state-notice").className="c-red";
-	         div1.className=(div1.className=="close1")?"open1":"close1";
-	   		 div2.className=(div2.className=="close2")?"open2":"close2";
-        }
-        div2.onclick=function(){
-        	if(canState=="已关闭"){
-	        	$.post("openCantool.do",{},
-				function(data){
-						if(data==1){
-							canState="已开启";
-							document.getElementById("state-notice").className="c-green";
-							document.getElementById("state-notice").innerHTML="已开启";
-							
-							div1.className=(div1.className=="close1")?"open1":"close1";
-   		 					div2.className=(div2.className=="close2")?"open2":"close2";
-						}else{
-							Showbo.Msg.alert("端口连接异常!");
-						}
-				});
-        	}else{
-        		$.post("closeCantool.do",{},
-				function(data){
-						if(data==1){
-							canState="已关闭";
-							document.getElementById("state-notice").className="c-red";
-							document.getElementById("state-notice").innerHTML="已关闭";
-							div1.className=(div1.className=="close1")?"open1":"close1";
-   		 					div2.className=(div2.className=="close2")?"open2":"close2";
-						}else{
-							Showbo.Msg.alert("端口连接异常!");
-						}
-				});
-        	}
-         
-        }
-}
+		window.onload = function() {
+			var div2 = document.getElementById("div2");
+			var div1 = document.getElementById("div1");
+			var canState = "${canState}";
+			if (canState == "已关闭") {
+				document.getElementById("state-notice").className = "c-red";
+				div1.className = (div1.className == "close1") ? "open1"
+						: "close1";
+				div2.className = (div2.className == "close2") ? "open2"
+						: "close2";
+			}
+			div2.onclick = function() {
+				if (canState == "已关闭") {
+					$
+							.post(
+									"openCantool.do",
+									{},
+									function(data) {
+										if (data == 1) {
+											canState = "已开启";
+											document
+													.getElementById("state-notice").className = "c-green";
+											document
+													.getElementById("state-notice").innerHTML = "已开启";
+
+											div1.className = (div1.className == "close1") ? "open1"
+													: "close1";
+											div2.className = (div2.className == "close2") ? "open2"
+													: "close2";
+										} else {
+											Showbo.Msg.alert("端口连接异常!");
+										}
+									});
+				} else {
+					$
+							.post(
+									"closeCantool.do",
+									{},
+									function(data) {
+										if (data == 1) {
+											canState = "已关闭";
+											document
+													.getElementById("state-notice").className = "c-red";
+											document
+													.getElementById("state-notice").innerHTML = "已关闭";
+											div1.className = (div1.className == "close1") ? "open1"
+													: "close1";
+											div2.className = (div2.className == "close2") ? "open2"
+													: "close2";
+										} else {
+											Showbo.Msg.alert("端口连接异常!");
+										}
+									});
+				}
+
+			}
+		}
 		function getSelectedMsgValue() {
-			var clientIds=document.getElementById("messageIdSelect");
-			for ( var i=0;i<clientIds.length;i++){
-				if (clientIds[i].selected == true){
-					document.getElementById("messageId").value=clientIds[i].value;
-	            	return clientIds[i].value;
+			var clientIds = document.getElementById("messageIdSelect");
+			for (var i = 0; i < clientIds.length; i++) {
+				if (clientIds[i].selected == true) {
+					document.getElementById("messageId").value = clientIds[i].value;
+					return clientIds[i].value;
 				}
 			}
 		}
-		function loadSignalStr(){
-		    var id=getSelectedMsgValue();
-			$.post("getCanSignalListStr.do",{
-							id:id
-						},function(data){
-								document.getElementById("sdescription").value=data;
-						});
+		function loadSignalStr() {
+			var id = getSelectedMsgValue();
+			$.post("getCanSignalListStr.do", {
+				id : id
+			}, function(data) {
+				document.getElementById("sdescription").value = data;
+			});
 		}
-		function produce(){
-		    var id=document.getElementById("messageId").value;
-			var messageListStr=document.getElementById("sdescription").value;
-			$.post("produceCanMessage.do",{
-							id:id,
-							messageListStr:messageListStr
-						},function(data){
-							if(data=='-1'){
-								Showbo.Msg.alert("转换失败,物理值不在合适范围!");
-							}else if(data=='-2'){
-								Showbo.Msg.alert("转换失败,找不到对应名称的canSignal!");
-							}else if(data=='-3'){
-								Showbo.Msg.alert("转换失败,找不到对应id的canMessage!");
-							}else{
-								document.getElementById("messageStr").value=data;
-							}
-								
-						});
+		function produce() {
+			var id = document.getElementById("messageId").value;
+			var messageListStr = document.getElementById("sdescription").value;
+			$.post("produceCanMessage.do", {
+				id : id,
+				messageListStr : messageListStr
+			}, function(data) {
+				if (data == '-1') {
+					Showbo.Msg.alert("转换失败,物理值不在合适范围!");
+				} else if (data == '-2') {
+					Showbo.Msg.alert("转换失败,找不到对应名称的canSignal!");
+				} else if (data == '-3') {
+					Showbo.Msg.alert("转换失败,找不到对应id的canMessage!");
+				} else {
+					document.getElementById("messageStr").value = data;
+				}
+
+			});
 		}
-		function sendMessage(){
-			var messageStr=document.getElementById("messageStr").value;
-			$.post("sendMessage.do",{
-							messageStr:messageStr
-						},function(data){
-							if(data==1)
-								Showbo.Msg.alert("发送成功!");
-							else
-								Showbo.Msg.alert("发送失败!");
-						});
+		function sendMessage() {
+			var messageStr = document.getElementById("messageStr").value;
+			$.post("sendMessage.do", {
+				messageStr : messageStr
+			}, function(data) {
+				if (data == 1)
+					Showbo.Msg.alert("发送成功!");
+				else
+					Showbo.Msg.alert("发送失败!");
+			});
 		}
 
 		function updateCanSpeed() {
