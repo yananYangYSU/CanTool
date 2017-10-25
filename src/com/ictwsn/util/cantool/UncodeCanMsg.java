@@ -53,48 +53,7 @@ public class UncodeCanMsg {
 		
 		//String dataStr="1111111122222222111101010101001100100011100001110110010110101011";
 		UncodeCanMsg t=new UncodeCanMsg();
-		//System.out.println(t.subStrIntelBin("7654321076543210765432107654321076543210765432107654321076543210", 12, 12));
-		//System.out.println(t.subStrMotorolaBin("7654321076543210765432107654321076543210765432107654321076543210", 11, 12));
-		t.parseCanData(t.splitDataStr("t39380000003C00000000"));
-		//System.out.println("解析后id:"+Integer.parseInt("321",16));
-		//t.parseCanData(t.splitDataStr(dataStr));
-		/*Pattern p=Pattern.compile("[a-]{1,}@[0-9]{1}",Pattern.DOTALL);
-		Matcher m=p.matcher("SG_ CDU_HVACAutoModeButtonSt : 2|00001@0+ (1,0) [0|1] \"\"  HVAC");
-		while(m.find()){
-			System.out.println(m.group());
-		}*/
-
-//		ArrayList<String> dataList=t.splitDataStr(dataStr).getData();
-//		StringBuffer BitStrIntel=new StringBuffer();
-//		StringBuffer BitStrMotorola=new StringBuffer();
-//
-//		int size=dataList.size();
-//		//intel
-//		for(int i=size-1;i>=0;i--){
-//			BitStrIntel.append(DataFormats.getInstance().hexToBinary(dataList.get(i)));
-//		}
-//		System.out.println("----intel matrix-----");
-//
-//		for(int i=0;i<size;i++){
-//			System.out.println(DataFormats.getInstance().hexToBinary(dataList.get(i)));
-//		}
-//		System.out.println("intel "+BitStrIntel);
-//	
-//		System.out.println(t.matrixSubBinStr(BitStrIntel.toString(), 15, 8, 0));
-//		System.out.println("----motorola-----");
-//		//motorola
-//		for(int i=0;i<size;i++){
-//			BitStrMotorola.append(DataFormats.getInstance().hexToBinary(dataList.get(i)));	
-//		}
-//
-//		for(int i=0;i<size;i++){
-//			System.out.println(DataFormats.getInstance().hexToBinary(dataList.get(i)));
-//
-//		}
-//
-//		System.out.println("motol "+BitStrMotorola);
-//		System.out.println(t.matrixSubBinStr(BitStrIntel.toString(), 15, 8, 1));
-		
+		t.parseCanData(t.splitDataStr("t35880100003F000C0000"));
 	
 	}
 
@@ -205,7 +164,6 @@ public class UncodeCanMsg {
 				cpdb.setHexStr(Integer.toHexString(Integer.parseInt(matrixSubBinStr,2)));//2进制转成16进制
 				cpdb.setTime(cd.getTime());
 				cpdbList.add(cpdb);
-				System.out.println(cpdb.getSignalName()+"\t "+cpdb.getPhyValue());
 			}
 			return cpdbList;
 		}

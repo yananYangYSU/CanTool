@@ -144,7 +144,7 @@ public class CodeCanMsg {
 			}
 			double phy=sigNamePhyMap.get(key);
 			if(phy<csb.getMinPhyValue()||phy>csb.getMaxPhyValue()){
-				System.err.println("物理值不在范围 信号名称:"+ key+"物理值: "+phy);
+				System.err.println("物理值不在范围 信号名称:"+ key+"物理值: "+phy+" ("+csb.getMaxPhyValue()+" "+csb.getMaxPhyValue()+")");
 				return "-1";
 			}
 			System.out.println("phy: "+phy+" A: "+csb.getResolutionValue()+" B: "+csb.getOffsetValue());

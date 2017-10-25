@@ -71,6 +71,22 @@ public class DataFormats {
 		return result;//进行补位操作,左端补0凑成8位二进制数
 	}
 	/**
+	 * 10进制数转指定位数16进制数
+	 * @param decimal 10进制数
+	 * @return 指定位数16进制数
+	 */
+	public String decimalToHex(int decimal,int length){
+		StringBuffer zeroStr=new StringBuffer();
+		for(int i=0;i<length;i++){
+			zeroStr.append("0");
+		}
+		String binStr=Integer.toHexString(decimal).toUpperCase();//10进制转2进制
+		return zeroStr.substring(0,length-binStr.length())+binStr;//进行补位操作,左端补0凑成8位二进制数
+	}
+	public static void main(String[] args){
+		System.out.println(DataFormats.getInstance().decimalToHex(65535,4));
+	}
+	/**
 	 * 字符串倒置输出 8位一组 倒置输出
 	 * @param oldStr 旧字符串 例如:"111111112222222"
 	 * @return 倒置后的新字符串 例如:"222222211111111"
