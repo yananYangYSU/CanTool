@@ -48,10 +48,10 @@ font-weight: bold;
    <div id="main" style="margin-left: 50px; "> <!--   font-family:"Microsoft YaHei","simsun","Helvetica Neue", Arial, Helvetica, sans-serif; -->
 <table class="table table-hover" ><!-- text-center  style="width: 800px; border-top: #CCC solid 1px; border-bottom: #CCC solid 1px;" -->
 <tr style="text-align: center;">
-<th style="width:150px;text-align: center;">Time</th>
-<th style=" width:80px ;text-align: center;">ID</th>
-<th style=" width:100px;text-align: center;">Name</th>
-<th style=" width: 100px;text-align: center;">DLC</th>
+<th style="width:230px;text-align: center; border-right: teal solid 1px;">Time</th>
+<th style=" width:90px ;text-align: center; border-right: teal solid 1px;">ID</th>
+<th style=" width:110px;text-align: center; border-right: teal solid 1px;">Name</th>
+<th style=" width: 70px;text-align: center; border-right: teal solid 1px;">DLC</th>
 <th >Data</th>
 </tr>
 <tr>
