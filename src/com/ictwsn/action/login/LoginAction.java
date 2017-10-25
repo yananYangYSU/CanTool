@@ -1,5 +1,6 @@
 ﻿package com.ictwsn.action.login;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import javax.annotation.Resource;
@@ -12,14 +13,10 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
 import com.ictwsn.service.login.LoginService;
-import com.ictwsn.util.GetHttpType;
-import com.ictwsn.util.rxtx.SerialPortListener;
-
+import com.ictwsn.util.cantool.CanMessageStore;
 
 /**
  * 系统用户登录控制类
@@ -41,7 +38,11 @@ public class LoginAction{
 	 * @return
 	 */
 	@RequestMapping("/listPort.do")
-	public String listPort(HttpServletRequest request,HttpServletResponse response){
+	public String listPort(HttpServletRequest request,HttpServletResponse response,Model model){
+		
+		model.addAttribute("baudRate",CanMessageStore.getInstance().getBaudRate());
+		model.addAttribute("dataBit",CanMessageStore.getInstance().getDataBit());
+		model.addAttribute("stopBit",CanMessageStore.getInstance().getStopBit());
 		return "listPort";
 	}
 	/**
@@ -51,7 +52,7 @@ public class LoginAction{
 	 * @return
 	 */
 	@RequestMapping("/index.do")
-	public String index(HttpServletRequest request,HttpServletResponse response){
+	public String index(HttpServletRequest request,HttpServletResponse response,HttpSession session){
 		return "index";
 	}
 	/**
@@ -99,6 +100,7 @@ public class LoginAction{
 	@RequestMapping("/logoff.do")
 	public String logoff(HttpServletRequest request,HttpSession session){
 		try{
+			System.out.println("log off");
 			lService.logoff();
 			session.removeAttribute("portName");
 			session.removeAttribute("baudRate");
@@ -113,7 +115,4 @@ public class LoginAction{
 		}
 
 	}
-
-
-
 }

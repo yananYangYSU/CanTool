@@ -12,9 +12,11 @@ import com.ictwsn.util.CurrentConn;
  *
  */
 public class CanMessageStore {
-	private static String canAcceptMsgStr="";
 	private static int canState=1;//默认开启
 	private static int canSpeed=0;//默认0ms
+	private static int baudRate=9600;
+	private static int dataBit=8;
+	private static int stopBit=1;
 	
 	private CanMessageStore(){}//禁止实例化
 	private static CanMessageStore store = null;  //CurrentConn类单例对象
@@ -28,7 +30,7 @@ public class CanMessageStore {
 	public void setMessage(String messageStr){
 		CanMsgDataBean cmdb=UncodeCanMsg.getInstance().splitDataStr(messageStr);
 		if(cmdb.getDcl()!=-1){//数据合法
-			CanMessageStore.canAcceptMsgStr=messageStr;
+			//CanMessageStore.canAcceptMsgStr=messageStr;
 			insertCanMessage(cmdb);
 		}
 
@@ -65,6 +67,24 @@ public class CanMessageStore {
 	}
 	public int getCanSpeed(){
 		return canSpeed; 
+	}
+	public int getBaudRate() {
+		return baudRate;
+	}
+	public void setBaudRate(int baudRate) {
+		CanMessageStore.baudRate = baudRate;
+	}
+	public int getDataBit() {
+		return dataBit;
+	}
+	public void setDataBit(int DataBit) {
+		CanMessageStore.dataBit = DataBit;
+	}
+	public int getStopBit() {
+		return stopBit;
+	}
+	public void setStopBit(int stopBit) {
+		CanMessageStore.stopBit = stopBit;
 	}
 	public static void main(String[] a){
 		//CanMessageStore.setMessage("t03d80011223344556677\r");//存储起来

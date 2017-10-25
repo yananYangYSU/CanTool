@@ -7,8 +7,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONArray;
-
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.ictwsn.service.systemSet.SystemSetService;
 import com.ictwsn.util.cantool.CanMessageStore;
 import com.ictwsn.util.cantool.CodeCanMsg;
+import com.ictwsn.util.format.DataFormats;
 import com.ictwsn.util.rxtx.SerialPortListener;
 /**
  * 超级管理员控制类
@@ -39,7 +38,7 @@ public class SystemAction {
 	@RequestMapping("/openCantool.do")
 	public void openCantool(HttpServletRequest request,HttpServletResponse response){
 		try{
-			SerialPortListener.getInstance().write("O\r");
+			SerialPortListener.getInstance().write("O1\r");
 			CanMessageStore.getInstance().setCanState(1);
 			response.getWriter().print(1);
 		}catch(Exception e){
@@ -77,7 +76,6 @@ public class SystemAction {
 			response.getWriter().print(0);
 		}
 	}
-
 	/**
 	 * 查看cantool装置的信息
 	 * @param request
@@ -129,7 +127,8 @@ public class SystemAction {
 	@RequestMapping("/produceCanMessage.do")
 	public void produceCanMessage(HttpServletRequest request,HttpServletResponse response,Model model,
 			@RequestParam(value="id",required=true) Integer id,
-			@RequestParam(value="messageListStr",required=true) String messageListStr){
+			@RequestParam(value="messageListStr",required=true) String messageListStr,
+			@RequestParam(value="canTempt",required=false) Integer canTempt) throws IOException{
 		try{
 			Map<String,Double> sigNamePhyMap =new HashMap<String,Double>();
 			String[] msgRows=messageListStr.split("\n");
@@ -139,10 +138,17 @@ public class SystemAction {
 					sigNamePhyMap.put(msg[0],Double.valueOf(msg[1]));
 				}
 			}
-			response.getWriter().print(CodeCanMsg.getInstance().getMessageStr(id,sService.getDclById(id),sigNamePhyMap));
+			String result=CodeCanMsg.getInstance().getMessageStr(id,sService.getDclById(id),sigNamePhyMap);
+			if(result.length()>2){
+				if(canTempt>0&&canTempt<=65535){
+					result=result+DataFormats.getInstance().decimalToHex(canTempt,4);
+				}
+			}
+			response.getWriter().print(result);
 		}catch(Exception e){
 			logger.error("getStatus error"+e);
-			e.printStackTrace();
+			//e.printStackTrace();
+			response.getWriter().print("-4");
 		}
 	}
 	/**
@@ -156,7 +162,6 @@ public class SystemAction {
 	public void sendMessage(HttpServletRequest request,HttpServletResponse response,
 			@RequestParam(value="messageStr",required=true) String messageStr) throws IOException{
 		try{
-			System.out.println(messageStr);
 			SerialPortListener.getInstance().write(messageStr+"\r");
 			response.getWriter().print(1);
 		}catch(Exception e){

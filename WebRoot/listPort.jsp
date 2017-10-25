@@ -60,8 +60,8 @@
 				<label class="form-label col-xs-4 col-sm-2"style="width:110px;left:20px"><span
 					class="c-red">*</span>波特率：</label>
 				<div class="formControls col-xs-8 col-sm-9"style="width: 105px;">
-					<input type="text" class="input w50" value="8"
-						placeholder="请输入波特率(必填)" maxlength='10' id="baudRate"
+					<input type="text" class="input w50" value="${baudRate}"
+						placeholder="请输入波特率" maxlength='10' id="baudRate"
 						name="baudRate"style="width:100px"> 
 						<span id="rate_notice" class="c-red"></span>
 				</div>
@@ -70,8 +70,8 @@
 				<label class="form-label col-xs-4 col-sm-2"style="width:110px;left:20px"><span
 					class="c-red">*</span>数据位：</label>
 				<div class="formControls col-xs-8 col-sm-9"style="width: 105px;">
-					<input type="text" class="input w50" value="8"
-						placeholder="请输入数据位(必填)" maxlength='2' id="dataBit" 
+					<input type="text" class="input w50" value="${dataBit}"
+						placeholder="请输入数据位" maxlength='2' id="dataBit" 
 						name="dataBit"style="width:100px">
 					<span id="databit_notice" class="c-red"></span>
 				</div>
@@ -80,8 +80,8 @@
 				<label class="form-label col-xs-4 col-sm-2"style="width:110px;left:20px"><span
 					class="c-red">*</span>停止位：</label>
 				<div class="formControls col-xs-8 col-sm-9"style="width: 105px;">
-					<input type="text" class="input w50" value="1"
-						placeholder="请输入停止位(必填)" maxlength='2' id="stopBit" name="stopBit"style="width: 100px;">
+					<input type="text" class="input w50" value="${stopBit}"
+						placeholder="请输入停止位" maxlength='2' id="stopBit" name="stopBit"style="width: 100px;">
 					<span id="stopbit_notice" class="c-red"></span>
 				</div>
 			</div>
@@ -91,20 +91,12 @@
 						type="button">
 						<i class="Hui-iconfont">&#xe632;</i>确认接入
 					</button>
-					<button class="btn btn-default radius" type="reset">&nbsp;&nbsp;保存&nbsp;&nbsp;</button>
+					<button class="btn btn-default radius" onClick="saveUserSet();" type="button">&nbsp;&nbsp;保存&nbsp;&nbsp;</button>
 				</div>
 			</div>
 		</form>
 	</div>
-
-	<!--_footer 作为公共模版分离出去-->
-	<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
-	<script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
-	<script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script>
-	<script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script>
-	<!--/_footer 作为公共模版分离出去-->
-
-	<!--请在下方写此页面业务相关的脚本-->
+	<script type='text/javascript' src='js/jquery-1.9.1.js'></script>
 	<script type='text/javascript' src='<%=basePath%>dwr/util.js'></script>
 	<script type='text/javascript' src='<%=basePath%>dwr/interface/lService.js'></script>
 	<script type='text/javascript' src='<%=basePath%>dwr/engine.js'></script>
@@ -113,7 +105,6 @@
 		$(document).ready(function() {
 			document.getElementById("name_notice").innerHTML = "正在搜索可用端口...";
 			searchPort();
-			
 		});
 		function setType() {
 			var ports = document.getElementById("selectPort");
@@ -123,6 +114,19 @@
 					break;
 				}
 			}
+		}
+		function saveUserSet() {
+			var baudRate = document.getElementById("baudRate").value;
+			var dataBit = document.getElementById("dataBit").value;
+			var stopBit = document.getElementById("stopBit").value;
+			lService.saveCanSet(baudRate,dataBit,stopBit,callback);
+				function callback(data) {
+					if(data>0){
+							Showbo.Msg.alert("用户参数保存成功!");
+						}else{
+							Showbo.Msg.alert("用户参数保存失败!");
+						}
+				}
 		}
 		function loginDevice() {
 			var portName = document.getElementById("portName").value;
@@ -158,7 +162,6 @@
 		}
 
 		function searchPort() {
-		    document.getElementById("name_notice").innerHTML = "端口搜索完毕,发现2个端口";
 			lService.getAvaPort(callback);
 			function callback(data) {
 				document.loginDeviceForm.selectPort.length = 0;
@@ -169,9 +172,9 @@
 					document.getElementById("selectPort").options.add(new Option(data[i], i));
 				}
 				if(j>0)
-					document.getElementById("name_notice").innerHTML = "端口搜索完毕,发现"+j+"个端口";
+					document.getElementById("name_notice").innerHTML = "搜索完毕,发现"+j+"个端口";
 				else
-					document.getElementById("name_notice").innerHTML = "端口搜索完毕,未找到端口";
+					document.getElementById("name_notice").innerHTML = "搜索完毕,未找到端口";
 			}
 		}
 	
