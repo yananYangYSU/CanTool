@@ -1,5 +1,8 @@
 package com.ictwsn.util.format;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 数据格式化工具类
  * @author YangYanan
@@ -72,14 +75,19 @@ public class DataFormats {
 	 * @param oldStr 旧字符串 例如:"12345"
 	 * @return 倒置后的新字符串 例如:"54321"
 	 */
-	/*public String reverseStr(String oldStr){
+	public String reverseStr(String oldStr){
 		char[] tmp=oldStr.toCharArray();
 		int length=tmp.length;
-		String newStr="";
-		for(int i=length-1;i>=0;i--)
-			newStr+=tmp[i];
-		return newStr;
-	}*/
+		int rows=length>>3;
+		List<String> rowsList=new ArrayList<String>();
+		for(int i=0;i<rows;i++){
+			rowsList.add(oldStr.substring((i<<3),(i<<3)+8));
+		}
+		StringBuffer newStr=new StringBuffer();
+		for(int i=rows-1;i>=0;i--)
+			newStr.append(rowsList.get(i));
+		return newStr.toString();
+	}
 	
 
 }
