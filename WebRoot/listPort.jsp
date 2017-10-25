@@ -46,7 +46,7 @@
 			id="loginDeviceForm" name="loginDeviceForm" style="border: #CCC solid 1px; width: 550px;margin: 0 auto;">
 
 			<div class="row cl" style="border: yellow solid 1px; width: 540px;">
-				<label class="form-label col-xs-4 col-sm-2" style="border: red solid 1px; width: 110px;left:30px;"><span
+				<label class="form-label col-xs-4 col-sm-2" style="border: red solid 1px; width: 110px;left:20px;"><span
 					class="c-red">*</span>端口名称：</label>
 				<div class="formControls col-xs-8 col-sm-9" style="border:  #CCC  solid 1px;  width: 420px;">
 					<select name="selectPort" class="input w50" id="selectPort" style="width: 150px; border: blue solid 1px; "
@@ -57,7 +57,7 @@
 				</div>
 			</div>
 			<div class="row cl" style="width: 235px;">
-				<label class="form-label col-xs-4 col-sm-2"style="width:110px;left:30px"><span
+				<label class="form-label col-xs-4 col-sm-2"style="width:110px;left:20px"><span
 					class="c-red">*</span>波特率：</label>
 				<div class="formControls col-xs-8 col-sm-9"style="width: 105px;">
 					<input type="text" class="input w50" value="8"
@@ -67,7 +67,7 @@
 				</div>
 			</div>
 			<div class="row cl" style="width: 235px;">
-				<label class="form-label col-xs-4 col-sm-2"style="width:110px;left:30px"><span
+				<label class="form-label col-xs-4 col-sm-2"style="width:110px;left:20px"><span
 					class="c-red">*</span>数据位：</label>
 				<div class="formControls col-xs-8 col-sm-9"style="width: 105px;">
 					<input type="text" class="input w50" value="8"
@@ -77,7 +77,7 @@
 				</div>
 			</div>
 			<div class="row cl" style="width: 235px;"">
-				<label class="form-label col-xs-4 col-sm-2"style="width:110px;left:30px"><span
+				<label class="form-label col-xs-4 col-sm-2"style="width:110px;left:20px"><span
 					class="c-red">*</span>停止位：</label>
 				<div class="formControls col-xs-8 col-sm-9"style="width: 105px;">
 					<input type="text" class="input w50" value="1"
@@ -158,6 +158,7 @@
 		}
 
 		function searchPort() {
+		    document.getElementById("name_notice").innerHTML = "端口搜索完毕,发现2个端口";
 			lService.getAvaPort(callback);
 			function callback(data) {
 				document.loginDeviceForm.selectPort.length = 0;
