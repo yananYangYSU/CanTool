@@ -86,7 +86,7 @@ public class SystemAction {
 	@RequestMapping("/canStatus.do")
 	public String canStatus(HttpServletRequest request,HttpServletResponse response,Model model){
 		try{
-			 String canState=CanMessageStore.getInstance().getCanState()==0?"关闭":"开启";
+			 String canState=CanMessageStore.getInstance().getCanState()==0?"已关闭":"已开启";
 			 model.addAttribute("canState",canState);
 			 model.addAttribute("canSpeed",CanMessageStore.getInstance().getCanSpeed());
 			 return "canStatus";
@@ -105,7 +105,7 @@ public class SystemAction {
 	@RequestMapping("/setCan.do")
 	public String setCan(HttpServletRequest request,HttpServletResponse response,Model model){
 		try{
-			 String canState=CanMessageStore.getInstance().getCanState()==0?"关闭":"开启";
+			 String canState=CanMessageStore.getInstance().getCanState()==0?"已关闭":"已开启";
 			 model.addAttribute("canState",canState);
 			 model.addAttribute("canSpeed",CanMessageStore.getInstance().getCanSpeed());
 			 model.addAttribute("cmbList",sService.getCanMessageList());

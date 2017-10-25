@@ -55,7 +55,7 @@ public class UncodeCanMsg {
 		UncodeCanMsg t=new UncodeCanMsg();
 		//System.out.println(t.subStrIntelBin("7654321076543210765432107654321076543210765432107654321076543210", 12, 12));
 		//System.out.println(t.subStrMotorolaBin("7654321076543210765432107654321076543210765432107654321076543210", 11, 12));
-		t.parseCanData(t.splitDataStr("t358801000007001C0000"));
+		t.parseCanData(t.splitDataStr("t39380000003C00000000"));
 		//System.out.println("解析后id:"+Integer.parseInt("321",16));
 		//t.parseCanData(t.splitDataStr(dataStr));
 		/*Pattern p=Pattern.compile("[a-]{1,}@[0-9]{1}",Pattern.DOTALL);
@@ -188,7 +188,6 @@ public class UncodeCanMsg {
 			for(int i=0;i<dataSize;i++){
 				BitStrMatrix.append(dataFormat.hexToBinary(cd.getData().get(i)));
 			}
-			System.out.println(BitStrMatrix);
 			/**
 			 * 遍历相同id下的信号数据库信息,把can信息从can矩阵中提取解析出来
 			 */

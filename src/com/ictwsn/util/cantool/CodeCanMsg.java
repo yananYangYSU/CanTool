@@ -119,7 +119,7 @@ public class CodeCanMsg {
 		ArrayList<CanSignalBean> canSignalList=LoadDataBase.getCanSignalMap().get(id);
 		if(canSignalList==null||canSignalList.size()==0){
 			System.err.print("id:"+id+"找不到对应数据库信息");
-			return "-1";
+			return "-3";
 		}
 		/**
 		 * 初始化矩阵数组matrixBinList,所有位全部置0,数组长度为dcl乘以8
@@ -127,18 +127,9 @@ public class CodeCanMsg {
 		 */
 		int totalBitLength=dcl<<3;
 		Map<Integer,String> matrixBinListMap=new HashMap<Integer,String>();
-		//String[] matrixBinList=new String[totalBitLength];
 		for(int i=totalBitLength-1;i>=0;i--){
 			matrixBinListMap.put(i,"0");
-			//matrixBinList[i]="0";
 		}
-		for(int i=totalBitLength-1;i>=0;i--){
-			//resultStr.append(matrixBinList[i]);
-			System.out.print(matrixBinListMap.get(i));
-		}
-		System.out.println();
-
-
 		/**
 		 * 遍历手工输入的信号及物理值,进行物理值->二进制字符串的转换操作
 		 */
@@ -149,7 +140,7 @@ public class CodeCanMsg {
 			CanSignalBean csb=this.findCanSignalBean(canSignalList,key);
 			if(csb.getSignalName()==null){
 				System.err.println(key+" 找不到对应的实体类 ");
-				return "-1";
+				return "-2";
 			}
 			double phy=sigNamePhyMap.get(key);
 			if(phy<csb.getMinPhyValue()||phy>csb.getMaxPhyValue()){
@@ -183,7 +174,7 @@ public class CodeCanMsg {
 		/**
 		 * 把二进制字符串转换成16进制字符串
 		 */
-		String binStr=dataFormat.reverseStr(resultStr.toString());
+		String binStr=dataFormat.reverseStr(resultStr.toString());//倒置
 		resultStr.setLength(0);
 		for(int i=0;i<dcl;i++){
 			resultStr.append(dataFormat.binaryToHex(binStr.substring(i<<3,(i<<3)+8)));

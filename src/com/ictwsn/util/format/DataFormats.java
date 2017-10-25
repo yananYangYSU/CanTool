@@ -71,9 +71,9 @@ public class DataFormats {
 		return result;//进行补位操作,左端补0凑成8位二进制数
 	}
 	/**
-	 * 字符串倒置输出
-	 * @param oldStr 旧字符串 例如:"12345"
-	 * @return 倒置后的新字符串 例如:"54321"
+	 * 字符串倒置输出 8位一组 倒置输出
+	 * @param oldStr 旧字符串 例如:"111111112222222"
+	 * @return 倒置后的新字符串 例如:"222222211111111"
 	 */
 	public String reverseStr(String oldStr){
 		char[] tmp=oldStr.toCharArray();
