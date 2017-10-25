@@ -43,10 +43,10 @@
 	<div class="page-container">
 
 		<form action="login.do" method="post" class="form form-horizontal"
-			id="loginDeviceForm" name="loginDeviceForm" style="border: #CCC solid 1px; width: 415px;margin: 0 auto;">
+			id="loginDeviceForm" name="loginDeviceForm" style="border: #CCC solid 1px; width: 450px;margin: 0 auto;">
 
 			<div class="row cl" style="width: 415px;">
-				<label class="form-label col-xs-4 col-sm-2" style="width: 110px;"><span
+				<label class="form-label col-xs-4 col-sm-2" style="width: 110px;left:20px;"><span
 					class="c-red">*</span>端口名称：</label>
 				<div class="formControls col-xs-8 col-sm-9" style=" width: 300px;">
 					<select name="selectPort" class="input w50" id="selectPort" style="width: 120px; "
@@ -57,7 +57,7 @@
 				</div>
 			</div>
 			<div class="row cl" style="width: 235px;">
-				<label class="form-label col-xs-4 col-sm-2"style="width:110px"><span
+				<label class="form-label col-xs-4 col-sm-2"style="width:110px;left:20px"><span
 					class="c-red">*</span>波特率：</label>
 				<div class="formControls col-xs-8 col-sm-9"style="width: 105px;">
 					<input type="text" class="input w50" value="8"
@@ -67,7 +67,7 @@
 				</div>
 			</div>
 			<div class="row cl" style="width: 235px;">
-				<label class="form-label col-xs-4 col-sm-2"style="width:110px"><span
+				<label class="form-label col-xs-4 col-sm-2"style="width:110px;left:20px"><span
 					class="c-red">*</span>数据位：</label>
 				<div class="formControls col-xs-8 col-sm-9"style="width: 105px;">
 					<input type="text" class="input w50" value="8"
@@ -77,7 +77,7 @@
 				</div>
 			</div>
 			<div class="row cl" style="width: 235px;"">
-				<label class="form-label col-xs-4 col-sm-2"style="width:110px"><span
+				<label class="form-label col-xs-4 col-sm-2"style="width:110px;left:20px"><span
 					class="c-red">*</span>停止位：</label>
 				<div class="formControls col-xs-8 col-sm-9"style="width: 105px;">
 					<input type="text" class="input w50" value="1"
