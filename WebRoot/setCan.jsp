@@ -187,7 +187,7 @@ width: 3px;
 							class="c-red">*</span>周期：</label>
 							
 							<input type="text" class="input w50" value="0"
-								style="width: 300px;" maxlength='5' placeholder="请输入发送速率(必填)"
+								style="width: 300px;" maxlength='5' placeholder="请输入发送周期(必填)"
 								id="canTempt" name="canTempt">
 							
 						</div>
