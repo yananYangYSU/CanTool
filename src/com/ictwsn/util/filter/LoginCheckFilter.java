@@ -29,15 +29,15 @@ public class LoginCheckFilter implements Filter {
 		HttpServletRequest r =(HttpServletRequest)request;
 		HttpSession session = r.getSession();
 		String requestUri = r.getRequestURI();
-		if(requestUri.endsWith("login.jsp") || requestUri.endsWith("login.do"))
+		if(requestUri.endsWith("login.do")||requestUri.endsWith("listPort.do"))
 		{
 			chain.doFilter(request,response);
 			return;
-		}else if(session.getAttribute("RoleBean")!=null){
+		}else if(session.getAttribute("portName")!=null){
 			chain.doFilter(request,response);
 			return;
 		}else{
-			((HttpServletResponse)response).sendRedirect("login.jsp");
+			((HttpServletResponse)response).sendRedirect("listPort.do");
 			return;
 		}
 

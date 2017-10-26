@@ -1,6 +1,9 @@
 package com.ictwsn.util.cantool;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import com.ictwsn.bean.CanMsgDataBean;
 import com.ictwsn.bean.CanPhyDataBean;
 import com.ictwsn.bean.CanSignalBean;
@@ -53,7 +56,7 @@ public class UncodeCanMsg {
 		
 		//String dataStr="1111111122222222111101010101001100100011100001110110010110101011";
 		UncodeCanMsg t=new UncodeCanMsg();
-		t.parseCanData(t.splitDataStr("t35880100003F000C0000"));
+		t.parseCanData(t.splitDataStr("t31d80011223344556677"));
 	
 	}
 
@@ -61,13 +64,21 @@ public class UncodeCanMsg {
 
 	/**
 	 * can信息字符串的切割提取
-	 * @param dataStr "T127FFFFF800111213141516170000\r"或者"t127800111213141516170000\r"
+	 * @param dataStr "T127FFFFF80011121314151617\r"或者"t12780011121314151617\r"
 	 * \r为换行符,不要用\\r
 	 * @return CanData对象
 	 */
+	String regex="(t[0-9A-Fa-f]{3}[0-8]{1}[0-9A-Fa-f]{0,16})|(T[0-9A-Fa-f]{8}[0-8]{1}[0-9A-Fa-f]{0,16})";
 	public CanMsgDataBean splitDataStr(String dataStr){
 		CanMsgDataBean cd=new CanMsgDataBean();
 		dataStr=dataStr.trim();
+		Pattern p=Pattern.compile(regex,Pattern.DOTALL);
+		Matcher m=p.matcher(dataStr);
+		if(!m.matches()){
+			System.err.println("canMessage信息格式有误");
+			cd.setDcl(-1);
+			return cd;
+		}
 		//dataStr=dataStr.replace("\\r","");
 		//dataStr=dataStr.replace("\r","");
 		try{
@@ -130,7 +141,7 @@ public class UncodeCanMsg {
 		
 		if(canSignalList==null||canSignalList.size()==0){
 			System.err.print("id:"+id+"找不到对应数据库信息");
-			return null;
+			return cpdbList;
 		}else{
 			//StringBuffer BitStrIntel=new StringBuffer();
 			StringBuffer BitStrMatrix=new StringBuffer();

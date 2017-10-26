@@ -26,9 +26,9 @@ public class DataFormats {
 	 * @return 8位2进制,左端补0
 	 */
 	public String hexToBinary(String hexStr){
-		String zeroStr="00000000";
-		String binStr=Integer.toBinaryString(Integer.parseInt(hexStr,16));//16进制转2进制
-		return zeroStr.substring(0,8-binStr.length())+binStr;//进行补位操作,左端补0凑成8位二进制数
+		String zeroStr = "00000000";
+		String binStr = Integer.toBinaryString(Integer.parseInt(hexStr, 16));
+		return zeroStr.substring(0, 8 - binStr.length()) + binStr;//进行补位操作,左端补0凑成8位二进制数
 	}
 	/**
 	 * 8位2进制数转2位16进制数
@@ -104,6 +104,6 @@ public class DataFormats {
 			newStr.append(rowsList.get(i));
 		return newStr.toString();
 	}
-	
+
 
 }
