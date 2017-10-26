@@ -32,11 +32,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 	
 	
+<link rel="stylesheet" type="text/css" href="css/showBo.css"/>
 <link rel="stylesheet" type="text/css"
 	href="lib/Hui-iconfont/1.0.8/iconfont.css" /> 
 	<link rel="stylesheet" href="css/jh/pintuer.css">
 <link rel="stylesheet" href="css/jh/admin.css">
 
+<script type="text/javascript" src="js/showBo.js"></script>
 <script src="css/jh/jquery.js"></script>
 <script src="css/jh/pintuer.js"></script>
 
@@ -174,15 +176,15 @@ function queryByTime(){
 	var startTime=document.getElementById("startTime").value;
 	var endTime=document.getElementById("endTime").value;
 	if(startTime==""){
-		alert("请输入起始日期");
+		Showbo.Msg.alert("请输入起始日期");
 	}else if(endTime==""){
-		alert("请输入截止日期");
+		Showbo.Msg.alert("请输入截止日期");
 	}else if(startTime<endTime){
 	
 		window.location="QueryByTime.do?startTime="+startTime+"&endTime="+endTime+"&page=1";
 		
 	}else{
-		alert("日期顺序输入错误，请重新输入日期");
+		Showbo.Msg.alert("日期顺序输入错误，请重新输入日期");
 	}
 	
 }

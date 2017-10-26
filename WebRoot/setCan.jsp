@@ -45,7 +45,7 @@
 #text-div {
 	width: 365px;
 	height: 100%;
-	left: 750px;
+	left: 530px;
 	top: 0px;
 	position: absolute;
 	/* border: teal solid 1px; */
@@ -53,7 +53,7 @@
 #aaa{
 width: 3px;
 	height: 100%;
-	left: 620px;
+	left: 480px;
 	top: 0px;
 	position: absolute;
 	/* border: teal solid 1px; */
@@ -195,7 +195,7 @@ width: 3px;
 
 				<div class="field" style="margin-top: 10px;">
 					<textarea class="input" name="sdescription" id="sdescription"
-						style="width: 375px; height: 200px"></textarea>
+						style="width: 375px; height: 150px"></textarea>
 					<div class="row cl" style="width: 550px;">
 						
 						<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2"
