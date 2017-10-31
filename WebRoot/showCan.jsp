@@ -46,13 +46,13 @@ font-weight: bold;
     <div class="panel-head"><strong class="icon-reorder"> Can信息组成列表</strong> <a href="" style="float:right; display:none;">添加字段</a></div>
   
    <div id="main" style="margin-left: 50px; "> <!--   font-family:"Microsoft YaHei","simsun","Helvetica Neue", Arial, Helvetica, sans-serif; -->
-<table class="table table-hover" style="width: 750px;"><!-- text-center  style="width: 800px; border-top: #CCC solid 1px; border-bottom: #CCC solid 1px;" -->
+<table class="table table-hover" style="width: 800px;"><!-- text-center  style="width: 800px; border-top: #CCC solid 1px; border-bottom: #CCC solid 1px;" -->
 <tr style="text-align: center;">
 <th style="width:160px;text-align: center;">Time</th>
 <th style=" width:70px ;text-align: center;">ID</th>
 <th style=" width:70px;text-align: center;">Name</th>
 <th style=" width: 70px;text-align: center;">DLC</th>
-<th style=" width: 170px;text-align: center;">Data</th>
+<th style=" width: 220px;text-align:center;">Data</th>
 </tr>
 <tr>
 <td colspan="5">

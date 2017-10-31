@@ -36,11 +36,29 @@
 	href="static/h-ui.admin/skin/default/skin.css" id="skin" />
 <link rel="stylesheet" type="text/css"
 	href="static/h-ui.admin/css/style.css" />
-
+<style type="text/css">
+  .header{
+  background-image:url(css/jh/bg.jpg);
+  }
+  .leftnav-title{
+  background-color:rgb(21,124,176);
+  }
+</style>
 
 </head>
 <body>
-	<div class="page-container">
+<div class="header bg-main" style="height: 120px;">
+  <div class="logo margin-big-left fadein-top" style="height: 120px;">
+    <h1><img src="images/y1.jpg" class="radius-circle rotate-hover" height="50" alt="" />CANTool后台管理中心</h1>
+  
+  </div>
+  <!-- <div class="head-l"><a class="button button-little bg-green" href="index.do"><span class="icon-home"></span> 前台首页</a> &nbsp;&nbsp; &nbsp;&nbsp;
+  					  <a class="button button-little bg-red" href="logoff.do"><span class="icon-power-off"></span>断开连接</a>
+ 
+  </div> -->
+  
+</div>
+	<div class="page-container" style="margin-top: 40px;">
 
 		<form action="login.do" method="post" class="form form-horizontal"
 			id="loginDeviceForm" name="loginDeviceForm" style="border: #CCC solid 1px; width: 550px;margin: 0 auto;">
