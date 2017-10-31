@@ -58,7 +58,7 @@
   </div> -->
   
 </div>
-	<div class="page-container" style="margin-top: 40px;">
+	<div class="page-container" style="margin-top: 0px;">
 
 		<form action="login.do" method="post" class="form form-horizontal"
 			id="loginDeviceForm" name="loginDeviceForm" style="border: #CCC solid 1px; width: 550px;margin: 0 auto;">

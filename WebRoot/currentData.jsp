@@ -53,7 +53,7 @@
 	position: absolute;
 	width: 600px;
 	height: 280px;
-	left: -190px;
+	left: -130px;
 	top: 0px;
 	float:none;
 	/* border: teal solid 1px; */
@@ -239,7 +239,7 @@ setInterval(function() {
 			}	
 		});
 	}
-},5000);
+},500);
 			$(document).ready(function() {
 								Highcharts.setOptions({
 									global : {
@@ -273,13 +273,14 @@ setInterval(function() {
 																						tempData=returnedData;
 																				}
 																		     }
-																		}, 1000);
+																		}, 50);
 															},
 														},
 													},
 													title : {
 														text : '${signalName}'
 													},
+													
 													xAxis : {
 														type : 'datetime',
 														tickPixelInterval : 150,
@@ -292,11 +293,20 @@ setInterval(function() {
 														title : {
 															text : '物理值'
 														},
-														plotLines : [ {
-															value : 0,
-															width : 1,
-															color : '#808080'
-														} ]
+														 plotLines: [{            
+										                    value: ${maxPhyValue},
+										                    dashStyle : "Dash",
+										                    width: 2,
+										                    color: '#ff0000',
+										                    zIndex:1
+										                },{
+										                	value: ${minPhyValue},
+										                	dashStyle : "Dash",
+										                    width: 2,
+										                    color: '#2649CA' ,
+										                    zIndex:1       	
+										                }],
+														 
 
 													},
 													tooltip : {
@@ -430,7 +440,7 @@ setInterval(function() {
 					    tempData=returnedData;
 						}
 			}
-            }, 1000);
+            }, 50);
         }
     });
 });

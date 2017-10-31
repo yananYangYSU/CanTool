@@ -117,9 +117,9 @@
 			</div>
 		</div>
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>总线周期：</label>
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>总线速率：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input w50" readonly value="${canSpeed}ms" name="canCycle">
+				<input type="text" class="input w50" readonly value="${canSpeed}Kbit" name="canCycle">
 				<span id="password_notice" class="c-red"></span>
 			</div>
 		</div>

@@ -45,20 +45,12 @@
 #text-div {
 	width: 365px;
 	height: 100%;
-	left: 530px;
+	left: 520px;
 	top: 0px;
 	position: absolute;
 	/* border: teal solid 1px; */
 }
-#aaa{
-width: 3px;
-	height: 100%;
-	left: 480px;
-	top: 0px;
-	position: absolute;
-	/* border: teal solid 1px; */
-	background-color: #CCC;
-}
+
 
 #div2 {
 	width: 40px;
@@ -138,8 +130,8 @@ width: 3px;
 					class="c-red">*</span>发送速率：</label>
 				<div class="formControls col-xs-8 col-sm-9">
 					<input type="text" class="input w50" value="${canSpeed}"
-						maxlength='5' placeholder="请输入发送速率(必填)" id="canSpeed"
-						name="canSpeed">单位:ms <span id="speed_notice"
+						maxlength='4' placeholder="请输入发送速率(必填)" id="canSpeed"
+						name="canSpeed">Kbit<span id="speed_notice"
 						class="c-red"></span>
 				</div>
 			</div>
@@ -154,17 +146,14 @@ width: 3px;
 				</div>
 			</div>
 		</form>
-<div id="aaa">
 
-</div>
 
 		<div id="text-div" >
 			<!-- style="border: teal solid 1px;" -->
 			<form action="" method="post" class="form form-horizontal"
 				id="form-article-add1">
 				<div class="row cl" style="margin-top: 35px;">
-					<label class="form-label col-xs-4 col-sm-2" style="width: 70px;margin-top: 5px;"><span
-						class="c-red">*</span>ID：</label>
+					<label class="form-label col-xs-4 col-sm-2" style="width: 70px;margin-top: 5px;">ID:</label>
 					<div class="formControls col-xs-8 col-sm-9">
 						<select name="messageIdSelect" id="messageIdSelect" class="input"
 							style="width: 300px; line-height: 17px;"
@@ -182,12 +171,10 @@ width: 3px;
 						<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2"
 							style="width: 500px;margin-left: 0px;">
 							
-	<label class="form-label col-xs-4 col-sm-2"
-							style="width: 82px; margin-left: -10px;margin-top: 7px;"><span
-							class="c-red">*</span>周期：</label>
+	<label class="form-label col-xs-4 col-sm-2" style="width: 70px;margin-top: 5px;">周期:</label>
 							
 							<input type="text" class="input w50" value="0"
-								style="width: 300px;" maxlength='5' placeholder="请输入发送周期(必填)"
+								style="width: 300px;" maxlength='5' placeholder="请输入发送速率(必填)"
 								id="canTempt" name="canTempt">
 							
 						</div>
@@ -338,7 +325,7 @@ function xuan1(){
 		function updateCanSpeed() {
 			var canSpeed = document.getElementById("canSpeed").value;
 
-			var isNum = /^[0-9]{0,}$/;
+			var isNum = /^[0-8]{1,4}$/;
 			if (canSpeed == '') {
 				document.getElementById("speed_notice").innerHTML = "*请填写内容!";
 				document.getElementById("canSpeed").focus();
@@ -347,8 +334,8 @@ function xuan1(){
 				document.getElementById("speed_notice").innerHTML = "*请填写数字!";
 				document.getElementById("canSpeed").focus();
 				return 0;
-			} else if (canSpeed<0||canSpeed>65535) {
-				document.getElementById("speed_notice").innerHTML = "*请填写0-65535的数字!";
+			} else if (canSpeed<10||canSpeed>1024) {
+				document.getElementById("speed_notice").innerHTML = "*请填写0-8的数字!";
 				document.getElementById("canSpeed").focus();
 				return 0;
 			}

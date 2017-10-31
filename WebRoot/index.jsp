@@ -48,23 +48,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         background: white;
         box-shadow: 0px 2px 4px rgba(0,0,0,0.4);
     }
-    .open1{
-        background: rgba(0,184,0,0.8);
-    }
-    .open2{
-        top: 2px;
-        right: 1px;
-    }
-    .close1{
-        background: rgba(255,255,255,0.4);
-        border:3px solid rgba(0,0,0,0.15);
-        border-left: transparent;
-    }
-    .close2{
-        left: 0px;
-        top: 0px;
-        border:2px solid rgba(0,0,0,0.1);
-    }
+   
   </style>   
 </head>
 <body style="background-color:#f2f9fd;"><!--  -->
@@ -114,22 +98,11 @@ $(function(){
   })
 });
 </script>
-<script type="text/javascript">
-window.onload=function(){
-        var div2=document.getElementById("div2");
-        var div1=document.getElementById("div1");
-        div2.onclick=function(){
-         div1.className=(div1.className=="close1")?"open1":"close1";
-   		 div2.className=(div2.className=="close2")?"open2":"close2";
-        }
-    }
-    /*
-    */
-    </script>
+
 <ul class="bread">
   <li><a href="" class="icon-home"> 首页</a></li>
   <li><a href="" id="a_leader_txt">管理中心</a></li>
-  <li><b>当前用户：</b><span style="color:red;">19组</span>
+  <li><b>当前用户：</b><span style="color:red;">19组&nbsp;&nbsp;&nbsp;<a style="color:#666;" href="logoff.do">断开连接</a></span>
 </ul>
 <div class="admin">
   <iframe scrolling="auto" rameborder="0" src="canStatus.do" name="right" width="100%" height="100%"></iframe>
